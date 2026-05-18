@@ -1,69 +1,60 @@
-def allocate_payment_fifo(credits,payment_amount):
+def allocate_payment_fifo(credits, payment_amount):
     """
-    Allocate a payment against customer credit entries using FIFO.
+    Allocate payment using FIFO.
 
-    FIFO means First In, First Out:
-    the oldest pending balance is adjusted first.
-
-    Args:
-        credits (list): List of credit records.
-        payment_amount (float): Amount paid by customer.
+    FIFO = First In, First Out.
+    Oldest pending balance is adjusted first.
 
     Returns:
-        list: Updated credit records with remaining balances.
+        dict with:
+        - updated_credits
+        - advance_payment
     """
+
     remaining_payment = payment_amount
 
     for credit in credits:
         if remaining_payment <= 0:
             break
 
-
         current_remaining = credit["remaining"]
 
-
         if current_remaining <= remaining_payment:
-            remaining_payment = current_remaining
+            remaining_payment = remaining_payment - current_remaining
             credit["remaining"] = 0
         else:
             credit["remaining"] = current_remaining - remaining_payment
             remaining_payment = 0
 
-
     return {
         "updated_credits": credits,
-        "advance_payment": remaining_payment
+        "advance_payment": remaining_payment,
     }
 
 
-
-def allocate_payment_lifo(credits,payment_amount):
-
+def allocate_payment_lifo(credits, payment_amount):
     """
-    Allocate a payment against customer credit entries using LIFO.
+    Allocate payment using LIFO.
 
-    LIFO means Last In, First Out:
-    the latest pending balance is adjusted first.
-
-    Args:
-        credits (list): List of credit records.
-        payment_amount (float): Amount paid by customer.
+    LIFO = Last In, First Out.
+    Latest pending balance is adjusted first.
 
     Returns:
-        list: Updated credit records with remaining balances.
+        dict with:
+        - updated_credits
+        - advance_payment
     """
 
     remaining_payment = payment_amount
 
     for credit in reversed(credits):
-        if remaining_payment <= 0 :
+        if remaining_payment <= 0:
             break
-
 
         current_remaining = credit["remaining"]
 
         if current_remaining <= remaining_payment:
-            remaining_payment -= current_remaining
+            remaining_payment = remaining_payment - current_remaining
             credit["remaining"] = 0
         else:
             credit["remaining"] = current_remaining - remaining_payment
@@ -71,17 +62,23 @@ def allocate_payment_lifo(credits,payment_amount):
 
     return {
         "updated_credits": credits,
-        "advance_payment": remaining_payment
+        "advance_payment": remaining_payment,
     }
-
 
 
 def allocate_payment_to_specific_date(credits, payment_amount, target_date):
     """
-    Allocate payment against one specific credit date.
+    Allocate payment against one selected credit date.
 
-    If payment is more than the selected date balance,
-    the extra amount is returned as advance_payment.
+    Example:
+    If customer has balances on 2026-03-01 and 2026-03-03,
+    owner can choose to adjust payment only against 2026-03-03.
+
+    Returns:
+        dict with:
+        - updated_credits
+        - advance_payment
+        - date_found
     """
 
     advance_payment = 0
@@ -92,7 +89,7 @@ def allocate_payment_to_specific_date(credits, payment_amount, target_date):
             date_found = True
             current_remaining = credit["remaining"]
 
-            if payment_amount >= current_remaining:
+            if current_remaining <= payment_amount:
                 credit["remaining"] = 0
                 advance_payment = payment_amount - current_remaining
             else:
@@ -104,5 +101,5 @@ def allocate_payment_to_specific_date(credits, payment_amount, target_date):
     return {
         "updated_credits": credits,
         "advance_payment": advance_payment,
-        "date_found": date_found
+        "date_found": date_found,
     }
