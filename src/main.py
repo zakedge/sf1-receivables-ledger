@@ -6,6 +6,7 @@ from payment_allocator import (
     allocate_payment_to_specific_date,
 )
 from aging import split_balances_by_age
+from validator import validate_payment, validate_credits
 
 
 with open("data/sample_credits.json", "r") as file:
@@ -13,6 +14,25 @@ with open("data/sample_credits.json", "r") as file:
 
 with open("data/sample_payment.json", "r") as file:
     payment = json.load(file)
+
+
+payment_errors = validate_payment(payment)
+credit_errors = validate_credits(credits)
+
+all_errors = payment_errors + credit_errors
+
+if all_errors:
+    error_report = {
+        "status": "FAILED",
+        "errors": all_errors,
+    }
+
+    with open("output/error_report.json", "w") as file:
+        json.dump(error_report, file, indent=4)
+
+    print("Validation failed.")
+    print("Output file: output/error_report.json")
+    raise SystemExit
 
 
 customer_name = payment["customer_name"]
@@ -48,6 +68,7 @@ aging_result = split_balances_by_age(
 )
 
 customer_balance_report = {
+    "status": "SUCCESS",
     "customer_name": customer_name,
     "payment_date": payment["payment_date"],
     "payment_amount": payment_amount,
@@ -61,4 +82,5 @@ with open("output/customer_balance_report.json", "w") as file:
     json.dump(customer_balance_report, file, indent=4)
 
 print("Customer balance report generated successfully.")
+
 print("Output file: output/customer_balance_report.json")
