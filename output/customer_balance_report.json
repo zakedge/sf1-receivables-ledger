@@ -1,0 +1,38 @@
+{
+    "customer_name": "Sample Customer",
+    "payment_amount": 6000,
+    "updated_credits": [
+        {
+            "date": "2026-03-01",
+            "amount": 5000,
+            "remaining": 0
+        },
+        {
+            "date": "2026-03-03",
+            "amount": 10000,
+            "remaining": 9000
+        },
+        {
+            "date": "2026-03-10",
+            "amount": 7000,
+            "remaining": 7000
+        }
+    ],
+    "advance_payment": 0,
+    "aging": {
+        "last_7_days": [
+            {
+                "date": "2026-03-03",
+                "amount": 10000,
+                "remaining": 9000
+            },
+            {
+                "date": "2026-03-10",
+                "amount": 7000,
+                "remaining": 7000
+            }
+        ],
+        "old_balance": 0,
+        "old_balance_breakdown": []
+    }
+}

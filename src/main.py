@@ -20,11 +20,16 @@ aging_result = split_balances_by_age(
     reference_date="2026-03-10"
 )
 
-print("Updated Credits:")
-print(updated_credits)
+customer_balance_report = {
+    "customer_name": "Sample Customer",
+    "payment_amount": payment_amount,
+    "updated_credits": updated_credits,
+    "advance_payment": advance_payment,
+    "aging": aging_result,
+}
 
-print("\nAdvance Payment:")
-print(advance_payment)
+with open("output/customer_balance_report.json", "w") as file:
+    json.dump(customer_balance_report, file, indent=4)
 
-print("\nAging Result:")
-print(aging_result)
+print("Customer balance report generated successfully.")
+print("Output file: output/customer_balance_report.json")
