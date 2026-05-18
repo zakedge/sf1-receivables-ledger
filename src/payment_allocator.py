@@ -30,7 +30,10 @@ def allocate_payment_fifo(credits,payment_amount):
             remaining_payment = 0
 
 
-    return credits
+    return {
+        "updated_credits": credits,
+        "advance_payment": remaining_payment
+    }
 
 
 
@@ -66,30 +69,40 @@ def allocate_payment_lifo(credits,payment_amount):
             credit["remaining"] = current_remaining - remaining_payment
             remaining_payment = 0
 
-    return credits
+    return {
+        "updated_credits": credits,
+        "advance_payment": remaining_payment
+    }
 
 
 
-def allocate_payment_to_specific_date(credits,payment_amount,target_date):
-
-   """
+def allocate_payment_to_specific_date(credits, payment_amount, target_date):
+    """
     Allocate payment against one specific credit date.
 
-    Example:
-    If customer has balances on 2026-03-01 and 2026-03-03,
-    the owner can choose to adjust payment only against 2026-03-03.
+    If payment is more than the selected date balance,
+    the extra amount is returned as advance_payment.
     """
 
-   for credit in credits:
+    advance_payment = 0
+    date_found = False
+
+    for credit in credits:
         if credit["date"] == target_date:
-         current_remaining = credit["remaining"]
+            date_found = True
+            current_remaining = credit["remaining"]
 
+            if payment_amount >= current_remaining:
+                credit["remaining"] = 0
+                advance_payment = payment_amount - current_remaining
+            else:
+                credit["remaining"] = current_remaining - payment_amount
+                advance_payment = 0
 
-         if payment_amount >= current_remaining:
-             credit["remaining"] = 0
-
-         else:
-            credit["remaining"] = current_remaining - payment_amount
             break
 
-   return credits
+    return {
+        "updated_credits": credits,
+        "advance_payment": advance_payment,
+        "date_found": date_found
+    }
