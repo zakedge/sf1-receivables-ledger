@@ -1,6 +1,7 @@
 import json
 
 from aging import split_balances_by_age
+from config_loader import load_config
 from logger import setup_logger
 from payment_allocator import (
     allocate_payment_fifo,
@@ -10,14 +11,16 @@ from payment_allocator import (
 from validator import validate_credits, validate_payment
 
 
-logger = setup_logger()
+config = load_config()
+
+logger = setup_logger(config["log_file"])
 logger.info("Application started")
 
 
-with open("data/sample_credits.json", "r") as file:
+with open(config["credits_input_file"], "r") as file:
     credits = json.load(file)
 
-with open("data/sample_payment.json", "r") as file:
+with open(config["payment_input_file"], "r") as file:
     payment = json.load(file)
 
 logger.info("Input files loaded successfully")
@@ -34,13 +37,13 @@ if all_errors:
         "errors": all_errors,
     }
 
-    with open("output/error_report.json", "w") as file:
+    with open(config["error_output_file"], "w") as file:
         json.dump(error_report, file, indent=4)
 
     logger.error("Validation failed: %s", all_errors)
 
     print("Validation failed.")
-    print("Output file: output/error_report.json")
+    print(f"Output file: {config['error_output_file']}")
 
     raise SystemExit
 
@@ -94,10 +97,10 @@ customer_balance_report = {
     "aging": aging_result,
 }
 
-with open("output/customer_balance_report.json", "w") as file:
+with open(config["success_output_file"], "w") as file:
     json.dump(customer_balance_report, file, indent=4)
 
 logger.info("Customer balance report generated successfully")
 
 print("Customer balance report generated successfully.")
-print("Output file: output/customer_balance_report.json")
+print(f"Output file: {config['success_output_file']}")

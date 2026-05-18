@@ -1,0 +1,7 @@
+{
+  "credits_input_file": "data/sample_credits.json",
+  "payment_input_file": "data/sample_payment.json",
+  "success_output_file": "output/customer_balance_report.json",
+  "error_output_file": "output/error_report.json",
+  "log_file": "logs/app.log"
+}
