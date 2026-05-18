@@ -1,6 +1,8 @@
 {
     "customer_name": "Sample Customer",
+    "payment_date": "2026-03-10",
     "payment_amount": 6000,
+    "allocation_method": "FIFO",
     "updated_credits": [
         {
             "date": "2026-03-01",
