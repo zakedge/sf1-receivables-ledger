@@ -1,12 +1,12 @@
+import json
+
 from payment_allocator import allocate_payment_fifo
 from aging import split_balances_by_age
 
 
-credits = [
-    {"date": "2026-03-01", "amount": 5000, "remaining": 5000},
-    {"date": "2026-03-03", "amount": 10000, "remaining": 10000},
-    {"date": "2026-03-10", "amount": 7000, "remaining": 7000},
-]
+with open("data/sample_credits.json", "r") as file:
+    credits = json.load(file)
+
 
 payment_amount = 6000
 
