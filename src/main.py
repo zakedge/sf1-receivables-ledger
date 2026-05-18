@@ -1,12 +1,17 @@
 import json
 
+from aging import split_balances_by_age
+from logger import setup_logger
 from payment_allocator import (
     allocate_payment_fifo,
     allocate_payment_lifo,
     allocate_payment_to_specific_date,
 )
-from aging import split_balances_by_age
-from validator import validate_payment, validate_credits
+from validator import validate_credits, validate_payment
+
+
+logger = setup_logger()
+logger.info("Application started")
 
 
 with open("data/sample_credits.json", "r") as file:
@@ -14,6 +19,8 @@ with open("data/sample_credits.json", "r") as file:
 
 with open("data/sample_payment.json", "r") as file:
     payment = json.load(file)
+
+logger.info("Input files loaded successfully")
 
 
 payment_errors = validate_payment(payment)
@@ -30,9 +37,15 @@ if all_errors:
     with open("output/error_report.json", "w") as file:
         json.dump(error_report, file, indent=4)
 
+    logger.error("Validation failed: %s", all_errors)
+
     print("Validation failed.")
     print("Output file: output/error_report.json")
+
     raise SystemExit
+
+
+logger.info("Validation passed")
 
 
 customer_name = payment["customer_name"]
@@ -59,6 +72,9 @@ else:
     raise ValueError("Invalid allocation method")
 
 
+logger.info("Payment allocation completed using method: %s", allocation_method)
+
+
 updated_credits = allocation_result["updated_credits"]
 advance_payment = allocation_result["advance_payment"]
 
@@ -81,6 +97,7 @@ customer_balance_report = {
 with open("output/customer_balance_report.json", "w") as file:
     json.dump(customer_balance_report, file, indent=4)
 
-print("Customer balance report generated successfully.")
+logger.info("Customer balance report generated successfully")
 
+print("Customer balance report generated successfully.")
 print("Output file: output/customer_balance_report.json")
