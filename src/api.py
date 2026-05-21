@@ -2,10 +2,19 @@ import json
 from datetime import datetime, timedelta
 
 from fastapi import FastAPI, Form, Query, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from starlette.middleware.sessions import SessionMiddleware
 
 from src.aging import split_balances_by_age
+from src.auth import (
+    PAGE_ACCESS_OPTIONS,
+    authenticate_user,
+    create_user,
+    load_users,
+    user_has_access,
+    users_exist,
+)
 from src.config_loader import load_config
 from src.payment_allocator import (
     allocate_payment_fifo,
@@ -15,10 +24,68 @@ from src.payment_allocator import (
 from src.validator import validate_credits, validate_payment
 
 
+config = load_config()
+
 app = FastAPI(title="Strangler Fig Receivables Ledger")
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=config["session_secret_key"],
+)
 
 templates = Jinja2Templates(directory="templates")
 
+
+# -------------------------
+# Auth helpers
+# -------------------------
+
+def get_logged_in_user(request: Request):
+    username = request.session.get("username")
+
+    if not username:
+        return None
+
+    users = load_users()
+
+    for user in users:
+        if user["username"] == username:
+            return user
+
+    return None
+
+
+def redirect_to_login():
+    return RedirectResponse(url="/login", status_code=303)
+
+
+def require_page_access(request: Request, page_key: str):
+    if not users_exist():
+        return RedirectResponse(url="/setup-admin", status_code=303)
+
+    user = get_logged_in_user(request)
+
+    if not user:
+        return redirect_to_login()
+
+    if not user_has_access(user, page_key):
+        return templates.TemplateResponse(
+            request,
+            "dashboard.html",
+            {
+                "total_customers": 0,
+                "total_areas": 0,
+                "total_pending": 0,
+                "message": None,
+                "errors": ["You do not have access to this page."],
+            },
+        )
+
+    return None
+
+
+# -------------------------
+# Data helpers
+# -------------------------
 
 def load_customers_from_config():
     config = load_config()
@@ -313,14 +380,6 @@ def build_payment_page_context(
 
 
 def build_last_7_day_columns(reference_date):
-    """
-    Build 7 date columns ending on reference_date.
-
-    Example:
-    reference_date = 2026-03-31
-    returns 25-Mar to 31-Mar
-    """
-
     reference = datetime.strptime(reference_date, "%Y-%m-%d").date()
     start_date = reference - timedelta(days=6)
 
@@ -340,10 +399,6 @@ def build_last_7_day_columns(reference_date):
 
 
 def build_last_7_days_report_rows(customers, reference_date):
-    """
-    Build Excel-style last 7 days report rows for all customers.
-    """
-
     date_columns = build_last_7_day_columns(reference_date)
     date_keys = [column["date_key"] for column in date_columns]
 
@@ -411,8 +466,176 @@ def build_last_7_days_report_rows(customers, reference_date):
     return date_columns, rows
 
 
+# -------------------------
+# Auth routes
+# -------------------------
+
+@app.get("/setup-admin", response_class=HTMLResponse)
+def show_setup_admin(request: Request):
+    if users_exist():
+        return RedirectResponse(url="/login", status_code=303)
+
+    return templates.TemplateResponse(
+        request,
+        "setup_admin.html",
+        {
+            "message": None,
+            "errors": None,
+        },
+    )
+
+
+@app.post("/setup-admin", response_class=HTMLResponse)
+def setup_admin(
+    request: Request,
+    username: str = Form(...),
+    password: str = Form(...),
+):
+    if users_exist():
+        return RedirectResponse(url="/login", status_code=303)
+
+    all_pages = [page["key"] for page in PAGE_ACCESS_OPTIONS]
+
+    success, message = create_user(
+        username=username.strip(),
+        password=password,
+        allowed_pages=all_pages,
+        is_admin=True,
+    )
+
+    if not success:
+        return templates.TemplateResponse(
+            request,
+            "setup_admin.html",
+            {
+                "message": None,
+                "errors": [message],
+            },
+        )
+
+    request.session["username"] = username.strip()
+
+    return RedirectResponse(url="/", status_code=303)
+
+
+@app.get("/login", response_class=HTMLResponse)
+def show_login(request: Request):
+    if not users_exist():
+        return RedirectResponse(url="/setup-admin", status_code=303)
+
+    return templates.TemplateResponse(
+        request,
+        "login.html",
+        {
+            "message": None,
+            "errors": None,
+        },
+    )
+
+
+@app.post("/login", response_class=HTMLResponse)
+def login(
+    request: Request,
+    username: str = Form(...),
+    password: str = Form(...),
+):
+    user = authenticate_user(username.strip(), password)
+
+    if not user:
+        return templates.TemplateResponse(
+            request,
+            "login.html",
+            {
+                "message": None,
+                "errors": ["Invalid username or password"],
+            },
+        )
+
+    request.session["username"] = user["username"]
+
+    return RedirectResponse(url="/", status_code=303)
+
+
+@app.get("/logout")
+def logout(request: Request):
+    request.session.clear()
+
+    return RedirectResponse(url="/login", status_code=303)
+
+
+@app.get("/users", response_class=HTMLResponse)
+def show_users(request: Request):
+    access_response = require_page_access(request, "user_management")
+
+    if access_response:
+        return access_response
+
+    return templates.TemplateResponse(
+        request,
+        "users.html",
+        {
+            "users": load_users(),
+            "page_options": PAGE_ACCESS_OPTIONS,
+            "message": None,
+            "errors": None,
+        },
+    )
+
+
+@app.post("/users", response_class=HTMLResponse)
+def create_new_user(
+    request: Request,
+    username: str = Form(...),
+    password: str = Form(...),
+    allowed_pages: list[str] = Form([]),
+):
+    access_response = require_page_access(request, "user_management")
+
+    if access_response:
+        return access_response
+
+    success, message = create_user(
+        username=username.strip(),
+        password=password,
+        allowed_pages=allowed_pages,
+        is_admin=False,
+    )
+
+    if not success:
+        return templates.TemplateResponse(
+            request,
+            "users.html",
+            {
+                "users": load_users(),
+                "page_options": PAGE_ACCESS_OPTIONS,
+                "message": None,
+                "errors": [message],
+            },
+        )
+
+    return templates.TemplateResponse(
+        request,
+        "users.html",
+        {
+            "users": load_users(),
+            "page_options": PAGE_ACCESS_OPTIONS,
+            "message": message,
+            "errors": None,
+        },
+    )
+
+
+# -------------------------
+# App routes
+# -------------------------
+
 @app.get("/", response_class=HTMLResponse)
 def dashboard(request: Request):
+    access_response = require_page_access(request, "dashboard")
+
+    if access_response:
+        return access_response
+
     customers = load_customers_from_config()
     areas = load_areas_from_config()
 
@@ -435,6 +658,11 @@ def dashboard(request: Request):
 
 @app.get("/add-customer", response_class=HTMLResponse)
 def show_add_customer(request: Request):
+    access_response = require_page_access(request, "add_customer")
+
+    if access_response:
+        return access_response
+
     areas = load_areas_from_config()
 
     return templates.TemplateResponse(
@@ -454,6 +682,11 @@ def add_customer(
     new_customer_name: str = Form(...),
     area: str = Form(...),
 ):
+    access_response = require_page_access(request, "add_customer")
+
+    if access_response:
+        return access_response
+
     customers = load_customers_from_config()
     areas = load_areas_from_config()
 
@@ -521,6 +754,11 @@ def add_customer(
 
 @app.get("/import-customers", response_class=HTMLResponse)
 def show_import_customers(request: Request):
+    access_response = require_page_access(request, "import_customers")
+
+    if access_response:
+        return access_response
+
     return templates.TemplateResponse(
         request,
         "import_customers.html",
@@ -533,6 +771,11 @@ def show_import_customers(request: Request):
 
 @app.post("/import-customers", response_class=HTMLResponse)
 def import_customers(request: Request):
+    access_response = require_page_access(request, "import_customers")
+
+    if access_response:
+        return access_response
+
     config = load_config()
     customers = load_customers_from_config()
     areas = load_areas_from_config()
@@ -616,6 +859,11 @@ def import_customers(request: Request):
 
 @app.get("/all-balances", response_class=HTMLResponse)
 def all_balances(request: Request):
+    access_response = require_page_access(request, "all_balances")
+
+    if access_response:
+        return access_response
+
     customers = load_customers_from_config()
     rows = build_all_balance_rows(customers)
 
@@ -636,6 +884,11 @@ def show_add_payment(
     area: str = Query(None),
     customer_id: str = Query(None),
 ):
+    access_response = require_page_access(request, "add_payment")
+
+    if access_response:
+        return access_response
+
     customers = load_customers_from_config()
 
     context = build_payment_page_context(
@@ -656,6 +909,11 @@ def process_payment(
     allocation_method: str = Form(...),
     target_date: str = Form(None),
 ):
+    access_response = require_page_access(request, "add_payment")
+
+    if access_response:
+        return access_response
+
     config = load_config()
     customers = load_customers_from_config()
 
@@ -778,6 +1036,11 @@ def last_7_days_report(
     request: Request,
     reference_date: str = Query("2026-03-31"),
 ):
+    access_response = require_page_access(request, "last_7_days_report")
+
+    if access_response:
+        return access_response
+
     customers = load_customers_from_config()
 
     date_columns, rows = build_last_7_days_report_rows(

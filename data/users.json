@@ -1,0 +1,28 @@
+[
+    {
+        "username": "Azhar",
+        "salt": "245b69e43818d5eeefe67d34daa51a98",
+        "password_hash": "6bc8ca601bdc0f7b8caae6b68855247f6933080849f692f11d4ff54ac331fe9d",
+        "allowed_pages": [
+            "dashboard",
+            "add_customer",
+            "import_customers",
+            "all_balances",
+            "add_payment",
+            "last_7_days_report",
+            "user_management"
+        ],
+        "is_admin": true,
+        "is_active": true
+    },
+    {
+        "username": "Betu",
+        "salt": "81d082b9c1726b892722ae9c8cf15949",
+        "password_hash": "6babd7ec155c4198cf883a0a2ba8c1270d933781a8ba06905d6775d6b8bec43d",
+        "allowed_pages": [
+            "add_payment"
+        ],
+        "is_admin": false,
+        "is_active": true
+    }
+]

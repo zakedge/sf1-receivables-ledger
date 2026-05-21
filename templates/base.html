@@ -124,6 +124,11 @@
             background: white;
         }
 
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+
         button {
             margin-top: 20px;
             background: #111827;
@@ -244,12 +249,15 @@
 <body>
     <div class="top-menu">
         <div class="brand">Strangler Fig Ledger</div>
+
         <a href="/">Dashboard</a>
         <a href="/add-customer">Add Customer</a>
         <a href="/import-customers">Import Customers</a>
         <a href="/all-balances">All Balances</a>
         <a href="/add-payment">Add Payment</a>
         <a href="/last-7-days-report">Last 7 Days Report</a>
+        <a href="/users">Users</a>
+        <a href="/logout">Logout</a>
     </div>
 
     <div class="layout">
@@ -265,6 +273,10 @@
             <h3>Reports</h3>
             <a href="/">Dashboard</a>
             <a href="/last-7-days-report">Last 7 Days Report</a>
+
+            <h3>Admin</h3>
+            <a href="/users">User Management</a>
+            <a href="/logout">Logout</a>
         </div>
 
         <div class="content">

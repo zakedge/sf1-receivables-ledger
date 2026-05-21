@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h1>User Management</h1>
+    <p class="subtitle">Add users and assign page access.</p>
+
+    <form method="post" action="/users">
+        <label>Username</label>
+        <input type="text" name="username" required>
+
+        <label>Password</label>
+        <input type="password" name="password" required>
+
+        <h3>Page Access</h3>
+
+        {% for page in page_options %}
+            <label>
+                <input
+                    type="checkbox"
+                    name="allowed_pages"
+                    value="{{ page.key }}"
+                    style="width: auto;"
+                >
+                {{ page.label }}
+            </label>
+        {% endfor %}
+
+        <button type="submit">Create User</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2>Existing Users</h2>
+
+    {% if users %}
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Admin</th>
+                <th>Active</th>
+                <th>Allowed Pages</th>
+            </tr>
+
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.is_admin }}</td>
+                    <td>{{ user.is_active }}</td>
+                    <td>{{ user.allowed_pages }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="empty">No users found.</p>
+    {% endif %}
+</div>
+{% endblock %}
