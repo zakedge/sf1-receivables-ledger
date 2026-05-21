@@ -1,7 +1,8 @@
 {
+    "status": "SUCCESS",
     "customer_name": "Sample Customer",
     "payment_date": "2026-03-10",
-    "payment_amount": 6000,
+    "payment_amount": 6000.0,
     "allocation_method": "FIFO",
     "updated_credits": [
         {
@@ -12,7 +13,7 @@
         {
             "date": "2026-03-03",
             "amount": 10000,
-            "remaining": 9000
+            "remaining": 9000.0
         },
         {
             "date": "2026-03-10",
@@ -26,7 +27,7 @@
             {
                 "date": "2026-03-03",
                 "amount": 10000,
-                "remaining": 9000
+                "remaining": 9000.0
             },
             {
                 "date": "2026-03-10",

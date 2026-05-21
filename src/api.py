@@ -22,9 +22,9 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/", response_class=HTMLResponse)
 def show_form(request: Request):
     return templates.TemplateResponse(
+        request,
         "index.html",
         {
-            "request": request,
             "report": None,
             "errors": None,
         },
@@ -61,9 +61,9 @@ def process_payment(
 
     if all_errors:
         return templates.TemplateResponse(
+            request,
             "index.html",
             {
-                "request": request,
                 "report": None,
                 "errors": all_errors,
             },
@@ -83,14 +83,12 @@ def process_payment(
         )
 
     else:
-        all_errors = ["Invalid allocation method"]
-
         return templates.TemplateResponse(
+            request,
             "index.html",
             {
-                "request": request,
                 "report": None,
-                "errors": all_errors,
+                "errors": ["Invalid allocation method"],
             },
         )
 
@@ -117,9 +115,9 @@ def process_payment(
         json.dump(report, file, indent=4)
 
     return templates.TemplateResponse(
+        request,
         "index.html",
         {
-            "request": request,
             "report": report,
             "errors": None,
         },
