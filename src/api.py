@@ -19,14 +19,42 @@ app = FastAPI(title="Strangler Fig Receivables Ledger")
 templates = Jinja2Templates(directory="templates")
 
 
+def load_credits_from_config():
+    config = load_config()
+
+    with open(config["credits_input_file"], "r") as file:
+        credits = json.load(file)
+
+    return credits
+
+
+def get_available_transaction_dates(credits):
+    """
+    Return only dates that have pending transaction balances.
+    These dates will be shown in the SPECIFIC_DATE dropdown.
+    """
+
+    transaction_dates = []
+
+    for credit in credits:
+        if credit["remaining"] > 0:
+            transaction_dates.append(credit["date"])
+
+    return transaction_dates
+
+
 @app.get("/", response_class=HTMLResponse)
 def show_form(request: Request):
+    credits = load_credits_from_config()
+    transaction_dates = get_available_transaction_dates(credits)
+
     return templates.TemplateResponse(
         request,
         "index.html",
         {
             "report": None,
             "errors": None,
+            "transaction_dates": transaction_dates,
         },
     )
 
@@ -41,9 +69,8 @@ def process_payment(
     target_date: str = Form(None),
 ):
     config = load_config()
-
-    with open(config["credits_input_file"], "r") as file:
-        credits = json.load(file)
+    credits = load_credits_from_config()
+    transaction_dates = get_available_transaction_dates(credits)
 
     payment = {
         "customer_name": customer_name,
@@ -66,6 +93,7 @@ def process_payment(
             {
                 "report": None,
                 "errors": all_errors,
+                "transaction_dates": transaction_dates,
             },
         )
 
@@ -89,6 +117,7 @@ def process_payment(
             {
                 "report": None,
                 "errors": ["Invalid allocation method"],
+                "transaction_dates": transaction_dates,
             },
         )
 
@@ -100,14 +129,18 @@ def process_payment(
         reference_date=payment_date,
     )
 
+    total_pending = sum(credit["remaining"] for credit in updated_credits)
+
     report = {
         "status": "SUCCESS",
         "customer_name": customer_name,
         "payment_date": payment_date,
         "payment_amount": payment_amount,
         "allocation_method": allocation_method,
+        "target_date": target_date,
         "updated_credits": updated_credits,
         "advance_payment": advance_payment,
+        "total_pending": total_pending,
         "aging": aging_result,
     }
 
@@ -120,5 +153,6 @@ def process_payment(
         {
             "report": report,
             "errors": None,
+            "transaction_dates": transaction_dates,
         },
     )

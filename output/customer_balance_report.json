@@ -2,8 +2,9 @@
     "status": "SUCCESS",
     "customer_name": "Sample Customer",
     "payment_date": "2026-03-10",
-    "payment_amount": 6000.0,
+    "payment_amount": 2000.0,
     "allocation_method": "SPECIFIC_DATE",
+    "target_date": "2026-03-03",
     "updated_credits": [
         {
             "date": "2026-03-01",
@@ -13,7 +14,7 @@
         {
             "date": "2026-03-03",
             "amount": 10000,
-            "remaining": 10000
+            "remaining": 8000.0
         },
         {
             "date": "2026-03-10",
@@ -22,12 +23,13 @@
         }
     ],
     "advance_payment": 0,
+    "total_pending": 20000.0,
     "aging": {
         "last_7_days": [
             {
                 "date": "2026-03-03",
                 "amount": 10000,
-                "remaining": 10000
+                "remaining": 8000.0
             },
             {
                 "date": "2026-03-10",
