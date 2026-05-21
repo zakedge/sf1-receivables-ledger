@@ -19,13 +19,17 @@ app = FastAPI(title="Strangler Fig Receivables Ledger")
 templates = Jinja2Templates(directory="templates")
 
 
-def load_credits_from_config():
+def load_customers_from_config():
     config = load_config()
 
-    with open(config["credits_input_file"], "r") as file:
-        credits = json.load(file)
+    with open(config["customers_input_file"], "r") as file:
+        customers = json.load(file)
 
-    return credits
+    return customers
+
+
+def get_customer_names(customers):
+    return list(customers.keys())
 
 
 def get_available_transaction_dates(credits):
@@ -45,7 +49,11 @@ def get_available_transaction_dates(credits):
 
 @app.get("/", response_class=HTMLResponse)
 def show_form(request: Request):
-    credits = load_credits_from_config()
+    customers = load_customers_from_config()
+    customer_names = get_customer_names(customers)
+
+    selected_customer = customer_names[0]
+    credits = customers[selected_customer]
     transaction_dates = get_available_transaction_dates(credits)
 
     return templates.TemplateResponse(
@@ -54,6 +62,8 @@ def show_form(request: Request):
         {
             "report": None,
             "errors": None,
+            "customer_names": customer_names,
+            "selected_customer": selected_customer,
             "transaction_dates": transaction_dates,
         },
     )
@@ -69,7 +79,23 @@ def process_payment(
     target_date: str = Form(None),
 ):
     config = load_config()
-    credits = load_credits_from_config()
+    customers = load_customers_from_config()
+    customer_names = get_customer_names(customers)
+
+    if customer_name not in customers:
+        return templates.TemplateResponse(
+            request,
+            "index.html",
+            {
+                "report": None,
+                "errors": ["Selected customer does not exist"],
+                "customer_names": customer_names,
+                "selected_customer": customer_name,
+                "transaction_dates": [],
+            },
+        )
+
+    credits = customers[customer_name]
     transaction_dates = get_available_transaction_dates(credits)
 
     payment = {
@@ -93,6 +119,8 @@ def process_payment(
             {
                 "report": None,
                 "errors": all_errors,
+                "customer_names": customer_names,
+                "selected_customer": customer_name,
                 "transaction_dates": transaction_dates,
             },
         )
@@ -117,6 +145,8 @@ def process_payment(
             {
                 "report": None,
                 "errors": ["Invalid allocation method"],
+                "customer_names": customer_names,
+                "selected_customer": customer_name,
                 "transaction_dates": transaction_dates,
             },
         )
@@ -153,6 +183,8 @@ def process_payment(
         {
             "report": report,
             "errors": None,
+            "customer_names": customer_names,
+            "selected_customer": customer_name,
             "transaction_dates": transaction_dates,
         },
     )

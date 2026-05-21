@@ -1,4 +1,5 @@
 {
+  "customers_input_file": "data/customers.json",
   "credits_input_file": "data/sample_credits.json",
   "payment_input_file": "data/sample_payment.json",
   "success_output_file": "output/customer_balance_report.json",

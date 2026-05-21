@@ -174,9 +174,14 @@
             <p class="subtitle">Payment allocation and aging report</p>
 
             <form method="post" action="/process-payment">
-                <label>Customer Name</label>
-                <input type="text" name="customer_name" value="Sample Customer" required>
-
+                <label>Customer</label>
+                <select name="customer_name">
+                    {% for customer_name in customer_names %}
+                      <option value="{{ customer_name }}" {% if customer_name == selected_customer %}selected{% endif %}>
+                          {{ customer_name }}
+                     </option>
+                    {% endfor %}
+                </select>
                 <label>Payment Date</label>
                 <input type="date" name="payment_date" value="2026-03-10" required>
 
