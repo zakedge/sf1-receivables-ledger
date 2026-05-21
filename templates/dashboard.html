@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h1>Dashboard</h1>
+    <p class="subtitle">Overview of receivables ledger.</p>
+
+    <div class="summary-grid">
+        <div class="summary-box">
+            <span>Total Customers</span>
+            <strong>{{ total_customers }}</strong>
+        </div>
+
+        <div class="summary-box">
+            <span>Total Pending</span>
+            <strong>{{ total_pending }}</strong>
+        </div>
+
+        <div class="summary-box">
+            <span>Total Areas</span>
+            <strong>{{ total_areas }}</strong>
+        </div>
+    </div>
+</div>
+{% endblock %}

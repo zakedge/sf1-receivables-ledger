@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Strangler Fig Ledger</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        .top-menu {
+            background: white;
+            border-bottom: 1px solid #ddd;
+            padding: 0 20px;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            height: 50px;
+            overflow-x: auto;
+        }
+
+        .brand {
+            font-weight: bold;
+            color: #111827;
+            white-space: nowrap;
+        }
+
+        .top-menu a {
+            text-decoration: none;
+            color: #1f3a8a;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .top-menu a:hover {
+            text-decoration: underline;
+        }
+
+        .layout {
+            display: flex;
+        }
+
+        .side-menu {
+            width: 220px;
+            background: white;
+            min-height: calc(100vh - 50px);
+            border-right: 1px solid #ddd;
+            padding: 20px;
+        }
+
+        .side-menu h3 {
+            font-size: 14px;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        .side-menu a {
+            display: block;
+            color: #1f3a8a;
+            text-decoration: none;
+            margin: 9px 0;
+            font-size: 14px;
+        }
+
+        .side-menu a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 17px;
+            margin-top: 20px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 14px;
+            font-weight: bold;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 11px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        input, select {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: white;
+        }
+
+        button {
+            margin-top: 20px;
+            background: #111827;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #374151;
+        }
+
+        .secondary-button {
+            background: #4b5563;
+        }
+
+        .errors {
+            background: #ffe5e5;
+            border-left: 5px solid #cc0000;
+        }
+
+        .success {
+            background: #eef9f0;
+            border-left: 5px solid #1f8f3a;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .summary-box {
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .summary-box span {
+            display: block;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .summary-box strong {
+            font-size: 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+            background: white;
+        }
+
+        th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 9px;
+            text-align: left;
+        }
+
+        th {
+            background: #f3f4f6;
+        }
+
+        .empty {
+            color: #777;
+            background: #f8f8f8;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .hint {
+            font-size: 13px;
+            color: #666;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 760px) {
+            .layout {
+                display: block;
+            }
+
+            .side-menu {
+                width: auto;
+                min-height: auto;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .content {
+                padding: 12px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-menu">
+        <div class="brand">Strangler Fig Ledger</div>
+        <a href="/">Dashboard</a>
+        <a href="/add-customer">Add Customer</a>
+        <a href="/import-customers">Import Customers</a>
+        <a href="/all-balances">All Balances</a>
+        <a href="/add-payment">Add Payment</a>
+    </div>
+
+    <div class="layout">
+        <div class="side-menu">
+            <h3>Customers</h3>
+            <a href="/add-customer">Add Customer</a>
+            <a href="/import-customers">Import Customer List</a>
+
+            <h3>Ledger</h3>
+            <a href="/all-balances">All Transactions & Balances</a>
+            <a href="/add-payment">Add Payment</a>
+
+            <h3>Reports</h3>
+            <a href="/">Dashboard</a>
+        </div>
+
+        <div class="content">
+            {% if message %}
+                <div class="card success">
+                    <h2>Success</h2>
+                    <p>{{ message }}</p>
+                </div>
+            {% endif %}
+
+            {% if errors %}
+                <div class="card errors">
+                    <h2>Errors</h2>
+                    <ul>
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>

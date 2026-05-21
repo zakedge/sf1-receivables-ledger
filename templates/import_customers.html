@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h1>Import Customers</h1>
+    <p class="subtitle">
+        Imports customers from <strong>data/customer_import.json</strong>.
+    </p>
+
+    <p>
+        Expected format:
+    </p>
+
+    <pre>
+[
+  {
+    "customer_name": "Retailer A",
+    "area": "Dekaha"
+  }
+]
+    </pre>
+
+    <form method="post" action="/import-customers">
+        <button type="submit" class="secondary-button">Import Customers</button>
+    </form>
+</div>
+{% endblock %}

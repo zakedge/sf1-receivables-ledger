@@ -136,6 +136,7 @@ def generate_next_customer_id(customers):
         return "CUST001"
 
     next_number = max(existing_numbers) + 1
+
     return f"CUST{next_number:03d}"
 
 
@@ -158,11 +159,10 @@ def get_customer_options(customers, selected_area=None):
 
     for customer_id, customer in customers.items():
         customer_area = customer.get("area", "")
+        customer_name = customer.get("customer_name", "")
 
         if selected_area and customer_area != selected_area:
             continue
-
-        customer_name = customer.get("customer_name", "")
 
         customer_options.append(
             {
@@ -190,7 +190,52 @@ def calculate_total_pending(credits):
     return sum(credit.get("remaining", 0) for credit in credits)
 
 
-def build_template_context(
+def calculate_total_pending_all_customers(customers):
+    total = 0
+
+    for customer in customers.values():
+        credits = customer.get("credits", [])
+        total += calculate_total_pending(credits)
+
+    return total
+
+
+def build_all_balance_rows(customers):
+    rows = []
+
+    for customer_id, customer in customers.items():
+        customer_name = customer.get("customer_name", "")
+        area = customer.get("area", "")
+        credits = customer.get("credits", [])
+
+        if not credits:
+            rows.append(
+                {
+                    "customer_id": customer_id,
+                    "customer_name": customer_name,
+                    "area": area,
+                    "date": "-",
+                    "amount": 0,
+                    "remaining": 0,
+                }
+            )
+
+        for credit in credits:
+            rows.append(
+                {
+                    "customer_id": customer_id,
+                    "customer_name": customer_name,
+                    "area": area,
+                    "date": credit.get("date", ""),
+                    "amount": credit.get("amount", 0),
+                    "remaining": credit.get("remaining", 0),
+                }
+            )
+
+    return rows
+
+
+def build_payment_page_context(
     customers,
     selected_customer_id="",
     selected_area="",
@@ -200,14 +245,12 @@ def build_template_context(
 ):
     areas = load_areas_from_config()
 
-    # If no area selected, choose first area that has customers.
     if not selected_area:
         for area in areas:
             if get_customer_options(customers, selected_area=area):
                 selected_area = area
                 break
 
-    # If still no area selected, use first area from master list.
     if not selected_area and areas:
         selected_area = areas[0]
 
@@ -216,7 +259,6 @@ def build_template_context(
         selected_area=selected_area,
     )
 
-    # If selected area has no customers, auto-switch to first area that has customers.
     if not customer_options:
         for area in areas:
             area_customer_options = get_customer_options(
@@ -271,20 +313,40 @@ def build_template_context(
 
 
 @app.get("/", response_class=HTMLResponse)
-def show_form(
-    request: Request,
-    area: str = Query(None),
-    customer_id: str = Query(None),
-):
+def dashboard(request: Request):
     customers = load_customers_from_config()
+    areas = load_areas_from_config()
 
-    context = build_template_context(
-        customers=customers,
-        selected_customer_id=customer_id or "",
-        selected_area=area or "",
+    total_customers = len(customers)
+    total_areas = len(areas)
+    total_pending = calculate_total_pending_all_customers(customers)
+
+    return templates.TemplateResponse(
+        request,
+        "dashboard.html",
+        {
+            "total_customers": total_customers,
+            "total_areas": total_areas,
+            "total_pending": total_pending,
+            "message": None,
+            "errors": None,
+        },
     )
 
-    return templates.TemplateResponse(request, "index.html", context)
+
+@app.get("/add-customer", response_class=HTMLResponse)
+def show_add_customer(request: Request):
+    areas = load_areas_from_config()
+
+    return templates.TemplateResponse(
+        request,
+        "add_customer.html",
+        {
+            "areas": areas,
+            "message": None,
+            "errors": None,
+        },
+    )
 
 
 @app.post("/add-customer", response_class=HTMLResponse)
@@ -300,19 +362,26 @@ def add_customer(
     cleaned_area = area.strip()
 
     if not cleaned_name:
-        context = build_template_context(
-            customers=customers,
-            selected_area=cleaned_area,
-            errors=["Customer name cannot be empty"],
+        return templates.TemplateResponse(
+            request,
+            "add_customer.html",
+            {
+                "areas": areas,
+                "message": None,
+                "errors": ["Customer name cannot be empty"],
+            },
         )
-        return templates.TemplateResponse(request, "index.html", context)
 
     if not cleaned_area:
-        context = build_template_context(
-            customers=customers,
-            errors=["Area is required"],
+        return templates.TemplateResponse(
+            request,
+            "add_customer.html",
+            {
+                "areas": areas,
+                "message": None,
+                "errors": ["Area is required"],
+            },
         )
-        return templates.TemplateResponse(request, "index.html", context)
 
     if cleaned_area not in areas:
         areas.append(cleaned_area)
@@ -320,12 +389,15 @@ def add_customer(
         save_areas_to_config(areas)
 
     if customer_exists_in_area(customers, cleaned_name, cleaned_area):
-        context = build_template_context(
-            customers=customers,
-            selected_area=cleaned_area,
-            errors=["Customer already exists in this area"],
+        return templates.TemplateResponse(
+            request,
+            "add_customer.html",
+            {
+                "areas": areas,
+                "message": None,
+                "errors": ["Customer already exists in this area"],
+            },
         )
-        return templates.TemplateResponse(request, "index.html", context)
 
     customer_id = generate_next_customer_id(customers)
 
@@ -337,14 +409,27 @@ def add_customer(
 
     save_customers_to_config(customers)
 
-    context = build_template_context(
-        customers=customers,
-        selected_customer_id=customer_id,
-        selected_area=cleaned_area,
-        message=f"Customer added successfully: {cleaned_name} - {cleaned_area}",
+    return templates.TemplateResponse(
+        request,
+        "add_customer.html",
+        {
+            "areas": areas,
+            "message": f"Customer added successfully: {cleaned_name} - {cleaned_area}",
+            "errors": None,
+        },
     )
 
-    return templates.TemplateResponse(request, "index.html", context)
+
+@app.get("/import-customers", response_class=HTMLResponse)
+def show_import_customers(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "import_customers.html",
+        {
+            "message": None,
+            "errors": None,
+        },
+    )
 
 
 @app.post("/import-customers", response_class=HTMLResponse)
@@ -358,29 +443,37 @@ def import_customers(request: Request):
             imported_customers = json.load(file)
 
     except FileNotFoundError:
-        context = build_template_context(
-            customers=customers,
-            errors=["Customer import file not found"],
+        return templates.TemplateResponse(
+            request,
+            "import_customers.html",
+            {
+                "message": None,
+                "errors": ["Customer import file not found"],
+            },
         )
-        return templates.TemplateResponse(request, "index.html", context)
 
     except json.JSONDecodeError:
-        context = build_template_context(
-            customers=customers,
-            errors=["Customer import file is not valid JSON"],
+        return templates.TemplateResponse(
+            request,
+            "import_customers.html",
+            {
+                "message": None,
+                "errors": ["Customer import file is not valid JSON"],
+            },
         )
-        return templates.TemplateResponse(request, "index.html", context)
 
     if not isinstance(imported_customers, list):
-        context = build_template_context(
-            customers=customers,
-            errors=["Customer import file must contain a list"],
+        return templates.TemplateResponse(
+            request,
+            "import_customers.html",
+            {
+                "message": None,
+                "errors": ["Customer import file must contain a list"],
+            },
         )
-        return templates.TemplateResponse(request, "index.html", context)
 
     imported_count = 0
     skipped_count = 0
-    last_imported_customer_id = ""
 
     for customer in imported_customers:
         customer_name = customer.get("customer_name", "").strip()
@@ -405,7 +498,6 @@ def import_customers(request: Request):
             "credits": [],
         }
 
-        last_imported_customer_id = customer_id
         imported_count += 1
 
     areas.sort()
@@ -413,18 +505,47 @@ def import_customers(request: Request):
     save_areas_to_config(areas)
     save_customers_to_config(customers)
 
-    selected_area = ""
-    if last_imported_customer_id:
-        selected_area = customers[last_imported_customer_id]["area"]
-
-    context = build_template_context(
-        customers=customers,
-        selected_customer_id=last_imported_customer_id,
-        selected_area=selected_area,
-        message=f"Imported {imported_count} customers. Skipped {skipped_count}.",
+    return templates.TemplateResponse(
+        request,
+        "import_customers.html",
+        {
+            "message": f"Imported {imported_count} customers. Skipped {skipped_count}.",
+            "errors": None,
+        },
     )
 
-    return templates.TemplateResponse(request, "index.html", context)
+
+@app.get("/all-balances", response_class=HTMLResponse)
+def all_balances(request: Request):
+    customers = load_customers_from_config()
+    rows = build_all_balance_rows(customers)
+
+    return templates.TemplateResponse(
+        request,
+        "all_balances.html",
+        {
+            "rows": rows,
+            "message": None,
+            "errors": None,
+        },
+    )
+
+
+@app.get("/add-payment", response_class=HTMLResponse)
+def show_add_payment(
+    request: Request,
+    area: str = Query(None),
+    customer_id: str = Query(None),
+):
+    customers = load_customers_from_config()
+
+    context = build_payment_page_context(
+        customers=customers,
+        selected_customer_id=customer_id or "",
+        selected_area=area or "",
+    )
+
+    return templates.TemplateResponse(request, "add_payment.html", context)
 
 
 @app.post("/process-payment", response_class=HTMLResponse)
@@ -440,12 +561,12 @@ def process_payment(
     customers = load_customers_from_config()
 
     if customer_id not in customers:
-        context = build_template_context(
+        context = build_payment_page_context(
             customers=customers,
             selected_customer_id=customer_id,
             errors=["Selected customer does not exist"],
         )
-        return templates.TemplateResponse(request, "index.html", context)
+        return templates.TemplateResponse(request, "add_payment.html", context)
 
     selected_customer = customers[customer_id]
     customer_name = selected_customer.get("customer_name", "")
@@ -469,13 +590,13 @@ def process_payment(
     all_errors = payment_errors + credit_errors
 
     if all_errors:
-        context = build_template_context(
+        context = build_payment_page_context(
             customers=customers,
             selected_customer_id=customer_id,
             selected_area=area,
             errors=all_errors,
         )
-        return templates.TemplateResponse(request, "index.html", context)
+        return templates.TemplateResponse(request, "add_payment.html", context)
 
     if allocation_method == "FIFO":
         allocation_result = allocate_payment_fifo(credits, payment_amount)
@@ -491,13 +612,13 @@ def process_payment(
         )
 
     else:
-        context = build_template_context(
+        context = build_payment_page_context(
             customers=customers,
             selected_customer_id=customer_id,
             selected_area=area,
             errors=["Invalid allocation method"],
         )
-        return templates.TemplateResponse(request, "index.html", context)
+        return templates.TemplateResponse(request, "add_payment.html", context)
 
     updated_credits = allocation_result["updated_credits"]
     advance_payment = allocation_result["advance_payment"]
@@ -543,11 +664,11 @@ def process_payment(
     with open(config["success_output_file"], "w") as file:
         json.dump(report, file, indent=4)
 
-    context = build_template_context(
+    context = build_payment_page_context(
         customers=customers,
         selected_customer_id=customer_id,
         selected_area=area,
         report=report,
     )
 
-    return templates.TemplateResponse(request, "index.html", context)
+    return templates.TemplateResponse(request, "add_payment.html", context)
