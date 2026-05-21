@@ -93,7 +93,7 @@ def process_payment(
     request: Request,
     customer_name: str = Form(...),
     payment_date: str = Form(...),
-    payment_amount: float = Form(...),
+    payment_amount: int = Form(...),
     allocation_method: str = Form(...),
     target_date: str = Form(None),
 ):
