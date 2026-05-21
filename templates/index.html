@@ -150,12 +150,6 @@
             margin-top: 6px;
         }
 
-        .section-divider {
-            border: none;
-            border-top: 1px solid #e5e7eb;
-            margin: 18px 0;
-        }
-
         @media (max-width: 600px) {
             body {
                 margin: 10px;
@@ -185,14 +179,23 @@
 
         <div class="card">
             <h1>Strangler Fig Receivables Ledger</h1>
-            <p class="subtitle">Select a customer, review balances, then enter payment details.</p>
+            <p class="subtitle">Select area, select customer, review balances, then enter payment details.</p>
 
             <form method="get" action="/">
+                <label>Select Area</label>
+                <select name="area">
+                    {% for area in areas %}
+                        <option value="{{ area }}" {% if area == selected_area %}selected{% endif %}>
+                            {{ area }}
+                        </option>
+                    {% endfor %}
+                </select>
+
                 <label>Select Customer</label>
-                <select name="customer_name">
-                    {% for customer_name in customer_names %}
-                        <option value="{{ customer_name }}" {% if customer_name == selected_customer %}selected{% endif %}>
-                            {{ customer_name }}
+                <select name="customer_id">
+                    {% for customer in customer_options %}
+                        <option value="{{ customer.customer_id }}" {% if customer.customer_id == selected_customer_id %}selected{% endif %}>
+                            {{ customer.display_name }}
                         </option>
                     {% endfor %}
                 </select>
@@ -202,85 +205,46 @@
         </div>
 
         <div class="card">
-            <h2>Current Customer Data</h2>
+            <h2>Add New Customer</h2>
 
-            <div class="summary-grid">
-                <div class="summary-box">
-                    <span>Customer</span>
-                    <strong>{{ selected_customer }}</strong>
-                </div>
+            <form method="post" action="/add-customer">
+                <label>Customer Name</label>
+                <input
+                    type="text"
+                    name="new_customer_name"
+                    placeholder="Enter new customer name"
+                    required
+                >
 
-                <div class="summary-box">
-                    <span>Total Pending</span>
-                    <strong>{{ selected_customer_total_pending }}</strong>
-                </div>
-            </div>
-
-            <h3>Current Pending Transactions</h3>
-
-            {% if selected_customer_credits %}
-                <table>
-                    <tr>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Remaining</th>
-                    </tr>
-
-                    {% for credit in selected_customer_credits %}
-                        <tr>
-                            <td>{{ credit.date }}</td>
-                            <td>{{ credit.amount }}</td>
-                            <td>{{ credit.remaining }}</td>
-                        </tr>
+                <label>Area</label>
+                <select name="area">
+                    {% for area in areas %}
+                        <option value="{{ area }}">{{ area }}</option>
                     {% endfor %}
-                </table>
-            {% else %}
-                <p class="empty">No customer balance data available.</p>
-            {% endif %}
+                </select>
+
+                <button type="submit">Add Customer</button>
+            </form>
         </div>
 
         <div class="card">
-            <h2>Add Payment</h2>
+            <h2>Import Customer List</h2>
             <p class="subtitle">
-                Adding payment for: <strong>{{ selected_customer }}</strong>
+                Imports customer names and areas from <strong>data/customer_import.json</strong>.
+                Existing same customer-name + same-area records will be skipped.
             </p>
 
-            <form method="post" action="/process-payment">
-                <input type="hidden" name="customer_name" value="{{ selected_customer }}">
-
-                <label>Payment Date</label>
-                <input type="date" name="payment_date" value="2026-03-10" required>
-
-                <label>Payment Amount</label>
-                <input
-                    type="text"
-                    name="payment_amount"
-                    value=""
-                    inputmode="numeric"
-                    pattern="[0-9]+"
-                    placeholder="Enter payment amount"
-                    required
-                >
-                <p class="hint">Enter whole numbers only. Example: 6000</p>
-
-                <label>Allocation Method</label>
-                <select name="allocation_method">
-                    <option value="FIFO">FIFO - Oldest First</option>
-                    <option value="LIFO">LIFO - Latest First</option>
-                    <option value="SPECIFIC_DATE">Specific Date</option>
-                </select>
-
-                <label>Target Transaction Date, only for Specific Date</label>
-                <select name="target_date">
-                    {% for transaction_date in transaction_dates %}
-                        <option value="{{ transaction_date }}">{{ transaction_date }}</option>
-                    {% endfor %}
-                </select>
-                <p class="hint">Only transaction dates with pending balances are shown here.</p>
-
-                <button type="submit">Generate Report</button>
+            <form method="post" action="/import-customers">
+                <button type="submit" class="secondary-button">Import Customers</button>
             </form>
         </div>
+
+        {% if message %}
+            <div class="card success">
+                <h2>Success</h2>
+                <p>{{ message }}</p>
+            </div>
+        {% endif %}
 
         {% if errors %}
             <div class="card errors">
@@ -293,14 +257,122 @@
             </div>
         {% endif %}
 
+        <div class="card">
+            <h2>Current Customer Data</h2>
+
+            {% if selected_customer_id %}
+                <div class="summary-grid">
+                    <div class="summary-box">
+                        <span>Customer ID</span>
+                        <strong>{{ selected_customer_id }}</strong>
+                    </div>
+
+                    <div class="summary-box">
+                        <span>Customer</span>
+                        <strong>{{ selected_customer_name }}</strong>
+                    </div>
+
+                    <div class="summary-box">
+                        <span>Area</span>
+                        <strong>{{ selected_customer_area }}</strong>
+                    </div>
+
+                    <div class="summary-box">
+                        <span>Total Pending</span>
+                        <strong>{{ selected_customer_total_pending }}</strong>
+                    </div>
+                </div>
+
+                <h3>Current Pending Transactions</h3>
+
+                {% if selected_customer_credits %}
+                    <table>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Remaining</th>
+                        </tr>
+
+                        {% for credit in selected_customer_credits %}
+                            <tr>
+                                <td>{{ credit.date }}</td>
+                                <td>{{ credit.amount }}</td>
+                                <td>{{ credit.remaining }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <p class="empty">No pending transactions for this customer.</p>
+                {% endif %}
+            {% else %}
+                <p class="empty">No customer found for the selected area. Add or import customers first.</p>
+            {% endif %}
+        </div>
+
+        {% if selected_customer_id %}
+            <div class="card">
+                <h2>Add Payment</h2>
+                <p class="subtitle">
+                    Adding payment for:
+                    <strong>{{ selected_customer_name }} - {{ selected_customer_area }}</strong>
+                </p>
+
+                <form method="post" action="/process-payment">
+                    <input type="hidden" name="customer_id" value="{{ selected_customer_id }}">
+
+                    <label>Payment Date</label>
+                    <input type="date" name="payment_date" value="2026-03-10" required>
+
+                    <label>Payment Amount</label>
+                    <input
+                        type="text"
+                        name="payment_amount"
+                        value=""
+                        inputmode="numeric"
+                        pattern="[0-9]+"
+                        placeholder="Enter payment amount"
+                        required
+                    >
+                    <p class="hint">Enter whole numbers only. Example: 6000</p>
+
+                    <label>Allocation Method</label>
+                    <select name="allocation_method">
+                        <option value="FIFO">FIFO - Oldest First</option>
+                        <option value="LIFO">LIFO - Latest First</option>
+                        <option value="SPECIFIC_DATE">Specific Date</option>
+                    </select>
+
+                    <label>Target Transaction Date, only for Specific Date</label>
+                    <select name="target_date">
+                        {% for transaction_date in transaction_dates %}
+                            <option value="{{ transaction_date }}">{{ transaction_date }}</option>
+                        {% endfor %}
+                    </select>
+                    <p class="hint">Only transaction dates with pending balances are shown here.</p>
+
+                    <button type="submit">Generate Report</button>
+                </form>
+            </div>
+        {% endif %}
+
         {% if report %}
             <div class="card success">
                 <h2>Customer Balance Report</h2>
 
                 <div class="summary-grid">
                     <div class="summary-box">
+                        <span>Customer ID</span>
+                        <strong>{{ report.customer_id }}</strong>
+                    </div>
+
+                    <div class="summary-box">
                         <span>Customer</span>
                         <strong>{{ report.customer_name }}</strong>
+                    </div>
+
+                    <div class="summary-box">
+                        <span>Area</span>
+                        <strong>{{ report.area }}</strong>
                     </div>
 
                     <div class="summary-box">
@@ -326,13 +398,18 @@
                     {% endif %}
 
                     <div class="summary-box">
-                        <span>Advance Payment</span>
-                        <strong>{{ report.advance_payment }}</strong>
+                        <span>Previous Pending</span>
+                        <strong>{{ report.previous_total_pending }}</strong>
                     </div>
 
                     <div class="summary-box">
                         <span>Total Pending</span>
                         <strong>{{ report.total_pending }}</strong>
+                    </div>
+
+                    <div class="summary-box">
+                        <span>Advance Payment</span>
+                        <strong>{{ report.advance_payment }}</strong>
                     </div>
 
                     <div class="summary-box">

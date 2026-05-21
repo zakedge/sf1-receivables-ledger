@@ -1,14 +1,14 @@
 [
   {
-    "customer_name": "Retailer C",
+    "customer_name": "Retailer A",
     "area": "Dekaha"
   },
   {
-    "customer_name": "Retailer D",
+    "customer_name": "Retailer A",
     "area": "S Chowk"
   },
   {
-    "customer_name": "Retailer A",
-    "area": "North Market"
+    "customer_name": "Retailer B",
+    "area": "Badi Pul"
   }
 ]
