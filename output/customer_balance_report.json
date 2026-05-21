@@ -4,36 +4,24 @@
     "payment_date": "2026-03-10",
     "payment_amount": 6000.0,
     "allocation_method": "FIFO",
-    "target_date": "2026-03-01",
+    "target_date": "2026-02-28",
     "updated_credits": [
         {
             "date": "2026-03-02",
             "amount": 8000,
-            "remaining": 2000.0
+            "remaining": 0
         },
         {
             "date": "2026-03-06",
             "amount": 4000,
-            "remaining": 4000
+            "remaining": 0
         }
     ],
-    "advance_payment": 0,
-    "total_pending": 6000.0,
+    "advance_payment": 6000.0,
+    "total_pending": 0,
     "aging": {
-        "last_7_days": [
-            {
-                "date": "2026-03-06",
-                "amount": 4000,
-                "remaining": 4000
-            }
-        ],
-        "old_balance": 2000.0,
-        "old_balance_breakdown": [
-            {
-                "date": "2026-03-02",
-                "amount": 8000,
-                "remaining": 2000.0
-            }
-        ]
+        "last_7_days": [],
+        "old_balance": 0,
+        "old_balance_breakdown": []
     }
 }

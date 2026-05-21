@@ -20,6 +20,10 @@ templates = Jinja2Templates(directory="templates")
 
 
 def load_customers_from_config():
+    """
+    Load all customers and their credit balances from customers.json.
+    """
+
     config = load_config()
 
     with open(config["customers_input_file"], "r") as file:
@@ -28,7 +32,22 @@ def load_customers_from_config():
     return customers
 
 
+def save_customers_to_config(customers):
+    """
+    Save updated customer balances back to customers.json.
+    """
+
+    config = load_config()
+
+    with open(config["customers_input_file"], "w") as file:
+        json.dump(customers, file, indent=4)
+
+
 def get_customer_names(customers):
+    """
+    Return customer names for the customer dropdown.
+    """
+
     return list(customers.keys())
 
 
@@ -154,6 +173,9 @@ def process_payment(
     updated_credits = allocation_result["updated_credits"]
     advance_payment = allocation_result["advance_payment"]
 
+    customers[customer_name] = updated_credits
+    save_customers_to_config(customers)
+
     aging_result = split_balances_by_age(
         updated_credits,
         reference_date=payment_date,
@@ -176,6 +198,8 @@ def process_payment(
 
     with open(config["success_output_file"], "w") as file:
         json.dump(report, file, indent=4)
+
+    transaction_dates = get_available_transaction_dates(updated_credits)
 
     return templates.TemplateResponse(
         request,
