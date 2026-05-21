@@ -79,6 +79,14 @@
             background: #374151;
         }
 
+        .secondary-button {
+            background: #4b5563;
+        }
+
+        .secondary-button:hover {
+            background: #6b7280;
+        }
+
         .errors {
             background: #ffe5e5;
             border-left: 5px solid #cc0000;
@@ -142,6 +150,12 @@
             margin-top: 6px;
         }
 
+        .section-divider {
+            border: none;
+            border-top: 1px solid #e5e7eb;
+            margin: 18px 0;
+        }
+
         @media (max-width: 600px) {
             body {
                 margin: 10px;
@@ -171,10 +185,10 @@
 
         <div class="card">
             <h1>Strangler Fig Receivables Ledger</h1>
-            <p class="subtitle">Payment allocation and aging report</p>
+            <p class="subtitle">Select a customer, review balances, then enter payment details.</p>
 
-            <form method="post" action="/process-payment">
-                <label>Customer</label>
+            <form method="get" action="/">
+                <label>Select Customer</label>
                 <select name="customer_name">
                     {% for customer_name in customer_names %}
                         <option value="{{ customer_name }}" {% if customer_name == selected_customer %}selected{% endif %}>
@@ -182,6 +196,57 @@
                         </option>
                     {% endfor %}
                 </select>
+
+                <button type="submit" class="secondary-button">View Customer Data</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Current Customer Data</h2>
+
+            <div class="summary-grid">
+                <div class="summary-box">
+                    <span>Customer</span>
+                    <strong>{{ selected_customer }}</strong>
+                </div>
+
+                <div class="summary-box">
+                    <span>Total Pending</span>
+                    <strong>{{ selected_customer_total_pending }}</strong>
+                </div>
+            </div>
+
+            <h3>Current Pending Transactions</h3>
+
+            {% if selected_customer_credits %}
+                <table>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Remaining</th>
+                    </tr>
+
+                    {% for credit in selected_customer_credits %}
+                        <tr>
+                            <td>{{ credit.date }}</td>
+                            <td>{{ credit.amount }}</td>
+                            <td>{{ credit.remaining }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p class="empty">No customer balance data available.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>Add Payment</h2>
+            <p class="subtitle">
+                Adding payment for: <strong>{{ selected_customer }}</strong>
+            </p>
+
+            <form method="post" action="/process-payment">
+                <input type="hidden" name="customer_name" value="{{ selected_customer }}">
 
                 <label>Payment Date</label>
                 <input type="date" name="payment_date" value="2026-03-10" required>

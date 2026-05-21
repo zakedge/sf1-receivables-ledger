@@ -1,6 +1,6 @@
 import json
 
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI, Form, Query, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
@@ -54,7 +54,6 @@ def get_customer_names(customers):
 def get_available_transaction_dates(credits):
     """
     Return only dates that have pending transaction balances.
-    These dates will be shown in the SPECIFIC_DATE dropdown.
     """
 
     transaction_dates = []
@@ -66,14 +65,30 @@ def get_available_transaction_dates(credits):
     return transaction_dates
 
 
+def calculate_total_pending(credits):
+    """
+    Calculate total pending balance for selected customer.
+    """
+
+    return sum(credit["remaining"] for credit in credits)
+
+
 @app.get("/", response_class=HTMLResponse)
-def show_form(request: Request):
+def show_form(
+    request: Request,
+    customer_name: str = Query(None),
+):
     customers = load_customers_from_config()
     customer_names = get_customer_names(customers)
 
-    selected_customer = customer_names[0]
+    if customer_name and customer_name in customers:
+        selected_customer = customer_name
+    else:
+        selected_customer = customer_names[0]
+
     credits = customers[selected_customer]
     transaction_dates = get_available_transaction_dates(credits)
+    total_pending = calculate_total_pending(credits)
 
     return templates.TemplateResponse(
         request,
@@ -83,6 +98,8 @@ def show_form(request: Request):
             "errors": None,
             "customer_names": customer_names,
             "selected_customer": selected_customer,
+            "selected_customer_credits": credits,
+            "selected_customer_total_pending": total_pending,
             "transaction_dates": transaction_dates,
         },
     )
@@ -110,12 +127,15 @@ def process_payment(
                 "errors": ["Selected customer does not exist"],
                 "customer_names": customer_names,
                 "selected_customer": customer_name,
+                "selected_customer_credits": [],
+                "selected_customer_total_pending": 0,
                 "transaction_dates": [],
             },
         )
 
     credits = customers[customer_name]
     transaction_dates = get_available_transaction_dates(credits)
+    current_total_pending = calculate_total_pending(credits)
 
     payment = {
         "customer_name": customer_name,
@@ -140,6 +160,8 @@ def process_payment(
                 "errors": all_errors,
                 "customer_names": customer_names,
                 "selected_customer": customer_name,
+                "selected_customer_credits": credits,
+                "selected_customer_total_pending": current_total_pending,
                 "transaction_dates": transaction_dates,
             },
         )
@@ -166,6 +188,8 @@ def process_payment(
                 "errors": ["Invalid allocation method"],
                 "customer_names": customer_names,
                 "selected_customer": customer_name,
+                "selected_customer_credits": credits,
+                "selected_customer_total_pending": current_total_pending,
                 "transaction_dates": transaction_dates,
             },
         )
@@ -181,7 +205,7 @@ def process_payment(
         reference_date=payment_date,
     )
 
-    total_pending = sum(credit["remaining"] for credit in updated_credits)
+    total_pending = calculate_total_pending(updated_credits)
 
     report = {
         "status": "SUCCESS",
@@ -209,6 +233,8 @@ def process_payment(
             "errors": None,
             "customer_names": customer_names,
             "selected_customer": customer_name,
+            "selected_customer_credits": updated_credits,
+            "selected_customer_total_pending": total_pending,
             "transaction_dates": transaction_dates,
         },
     )
