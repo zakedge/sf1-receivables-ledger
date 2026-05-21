@@ -9,7 +9,7 @@
         {
             "date": "2026-02-28",
             "amount": 12000,
-            "remaining": 5920.0
+            "remaining": 5870.0
         },
         {
             "date": "2026-03-08",
@@ -18,7 +18,7 @@
         }
     ],
     "advance_payment": 0,
-    "total_pending": 8920.0,
+    "total_pending": 8870.0,
     "aging": {
         "last_7_days": [
             {
@@ -27,12 +27,12 @@
                 "remaining": 3000
             }
         ],
-        "old_balance": 5920.0,
+        "old_balance": 5870.0,
         "old_balance_breakdown": [
             {
                 "date": "2026-02-28",
                 "amount": 12000,
-                "remaining": 5920.0
+                "remaining": 5870.0
             }
         ]
     }

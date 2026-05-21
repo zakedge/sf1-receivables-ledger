@@ -2,6 +2,8 @@
   "credits_input_file": "data/sample_credits.json",
   "payment_input_file": "data/sample_payment.json",
   "customers_input_file": "data/customers.json",
+  "areas_input_file": "data/areas.json",
+  "customer_import_file": "data/customer_import.json",
   "payment_history_file": "data/payment_history.json",
   "success_output_file": "output/customer_balance_report.json",
   "error_output_file": "output/error_report.json",
