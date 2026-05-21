@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h1>Last 7 Days Report</h1>
+    <p class="subtitle">
+        Excel-style customer balance report for the last 7 days.
+    </p>
+
+    <form method="get" action="/last-7-days-report">
+        <label>Reference Date</label>
+        <input type="date" name="reference_date" value="{{ reference_date }}" required>
+
+        <button type="submit" class="secondary-button">Generate Report</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2>Report</h2>
+
+    {% if rows %}
+        <div style="overflow-x: auto;">
+            <table>
+                <tr>
+                    <th>Sr No</th>
+                    <th>Retailer Name</th>
+                    <th>Town</th>
+                    <th>Very Old</th>
+                    <th>Old</th>
+
+                    {% for column in date_columns %}
+                        <th>{{ column.display_name }}</th>
+                    {% endfor %}
+
+                    <th>TOT CG</th>
+                    <th>C/C</th>
+                    <th>Pending</th>
+                </tr>
+
+                {% for row in rows %}
+                    <tr>
+                        <td>{{ row.sr_no }}</td>
+                        <td><strong>{{ row.customer_name }}</strong></td>
+                        <td>{{ row.area }}</td>
+
+                        <td>
+                            {% if row.very_old != 0 %}
+                                {{ row.very_old }}
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if row.old != 0 %}
+                                {{ row.old }}
+                            {% endif %}
+                        </td>
+
+                        {% for column in date_columns %}
+                            <td>
+                                {% if row.date_balances[column.date_key] != 0 %}
+                                    {{ row.date_balances[column.date_key] }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+
+                        <td><strong>{{ row.total_credit_given }}</strong></td>
+                        <td>{{ row.cash_collected }}</td>
+                        <td><strong>{{ row.pending }}</strong></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">No report data available.</p>
+    {% endif %}
+</div>
+{% endblock %}

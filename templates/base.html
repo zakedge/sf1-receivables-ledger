@@ -73,6 +73,7 @@
         .content {
             flex: 1;
             padding: 20px;
+            overflow-x: auto;
         }
 
         .card {
@@ -141,6 +142,10 @@
             background: #4b5563;
         }
 
+        .secondary-button:hover {
+            background: #6b7280;
+        }
+
         .errors {
             background: #ffe5e5;
             border-left: 5px solid #cc0000;
@@ -205,6 +210,14 @@
             margin-top: 6px;
         }
 
+        pre {
+            white-space: pre-wrap;
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
         @media (max-width: 760px) {
             .layout {
                 display: block;
@@ -236,6 +249,7 @@
         <a href="/import-customers">Import Customers</a>
         <a href="/all-balances">All Balances</a>
         <a href="/add-payment">Add Payment</a>
+        <a href="/last-7-days-report">Last 7 Days Report</a>
     </div>
 
     <div class="layout">
@@ -250,6 +264,7 @@
 
             <h3>Reports</h3>
             <a href="/">Dashboard</a>
+            <a href="/last-7-days-report">Last 7 Days Report</a>
         </div>
 
         <div class="content">

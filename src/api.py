@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from fastapi import FastAPI, Form, Query, Request
 from fastapi.responses import HTMLResponse
@@ -310,6 +310,105 @@ def build_payment_page_context(
         "selected_customer_total_pending": selected_customer_total_pending,
         "transaction_dates": transaction_dates,
     }
+
+
+def build_last_7_day_columns(reference_date):
+    """
+    Build 7 date columns ending on reference_date.
+
+    Example:
+    reference_date = 2026-03-31
+    returns 25-Mar to 31-Mar
+    """
+
+    reference = datetime.strptime(reference_date, "%Y-%m-%d").date()
+    start_date = reference - timedelta(days=6)
+
+    columns = []
+
+    for day_offset in range(7):
+        current_date = start_date + timedelta(days=day_offset)
+
+        columns.append(
+            {
+                "date_key": current_date.strftime("%Y-%m-%d"),
+                "display_name": current_date.strftime("%d-%b"),
+            }
+        )
+
+    return columns
+
+
+def build_last_7_days_report_rows(customers, reference_date):
+    """
+    Build Excel-style last 7 days report rows for all customers.
+    """
+
+    date_columns = build_last_7_day_columns(reference_date)
+    date_keys = [column["date_key"] for column in date_columns]
+
+    reference = datetime.strptime(reference_date, "%Y-%m-%d").date()
+    last_7_start = reference - timedelta(days=6)
+
+    rows = []
+    sr_no = 1
+
+    for customer_id, customer in customers.items():
+        customer_name = customer.get("customer_name", "")
+        area = customer.get("area", "")
+        credits = customer.get("credits", [])
+
+        date_balances = {}
+        old_balance = 0
+        very_old_balance = 0
+        total_pending = 0
+
+        for column in date_columns:
+            date_balances[column["date_key"]] = 0
+
+        for credit in credits:
+            credit_date_text = credit.get("date", "")
+            remaining = credit.get("remaining", 0)
+
+            if remaining <= 0:
+                continue
+
+            total_pending += remaining
+
+            try:
+                credit_date = datetime.strptime(
+                    credit_date_text,
+                    "%Y-%m-%d",
+                ).date()
+            except ValueError:
+                continue
+
+            if credit_date_text in date_keys:
+                date_balances[credit_date_text] += remaining
+
+            elif credit_date < last_7_start:
+                old_balance += remaining
+
+        total_credit_given = sum(date_balances.values())
+
+        rows.append(
+            {
+                "sr_no": sr_no,
+                "customer_id": customer_id,
+                "customer_name": customer_name,
+                "area": area,
+                "very_old": very_old_balance,
+                "old": old_balance,
+                "date_balances": date_balances,
+                "total_credit_given": total_credit_given,
+                "cash_collected": 0,
+                "pending": total_pending,
+            }
+        )
+
+        sr_no += 1
+
+    return date_columns, rows
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -672,3 +771,28 @@ def process_payment(
     )
 
     return templates.TemplateResponse(request, "add_payment.html", context)
+
+
+@app.get("/last-7-days-report", response_class=HTMLResponse)
+def last_7_days_report(
+    request: Request,
+    reference_date: str = Query("2026-03-31"),
+):
+    customers = load_customers_from_config()
+
+    date_columns, rows = build_last_7_days_report_rows(
+        customers,
+        reference_date,
+    )
+
+    return templates.TemplateResponse(
+        request,
+        "last_7_days_report.html",
+        {
+            "reference_date": reference_date,
+            "date_columns": date_columns,
+            "rows": rows,
+            "message": None,
+            "errors": None,
+        },
+    )
