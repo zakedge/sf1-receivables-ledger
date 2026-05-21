@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 from fastapi import FastAPI, Form, Query, Request
 from fastapi.responses import HTMLResponse
@@ -41,6 +42,61 @@ def save_customers_to_config(customers):
 
     with open(config["customers_input_file"], "w") as file:
         json.dump(customers, file, indent=4)
+
+
+def load_payment_history():
+    """
+    Load payment history from payment_history.json.
+    """
+
+    config = load_config()
+
+    with open(config["payment_history_file"], "r") as file:
+        payment_history = json.load(file)
+
+    return payment_history
+
+
+def save_payment_history(payment_history):
+    """
+    Save payment history back to payment_history.json.
+    """
+
+    config = load_config()
+
+    with open(config["payment_history_file"], "w") as file:
+        json.dump(payment_history, file, indent=4)
+
+
+def add_payment_history_record(
+    customer_name,
+    payment_date,
+    payment_amount,
+    allocation_method,
+    target_date,
+    advance_payment,
+    total_pending,
+):
+    """
+    Add one payment audit record to payment history.
+    """
+
+    payment_history = load_payment_history()
+
+    history_record = {
+        "customer_name": customer_name,
+        "payment_date": payment_date,
+        "payment_amount": payment_amount,
+        "allocation_method": allocation_method,
+        "target_date": target_date,
+        "advance_payment": advance_payment,
+        "total_pending_after_payment": total_pending,
+        "processed_timestamp": datetime.now().isoformat(timespec="seconds"),
+    }
+
+    payment_history.append(history_record)
+
+    save_payment_history(payment_history)
 
 
 def get_customer_names(customers):
@@ -206,6 +262,16 @@ def process_payment(
     )
 
     total_pending = calculate_total_pending(updated_credits)
+
+    add_payment_history_record(
+        customer_name=customer_name,
+        payment_date=payment_date,
+        payment_amount=payment_amount,
+        allocation_method=allocation_method,
+        target_date=target_date,
+        advance_payment=advance_payment,
+        total_pending=total_pending,
+    )
 
     report = {
         "status": "SUCCESS",
