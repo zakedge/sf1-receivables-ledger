@@ -1,43 +1,39 @@
 {
     "status": "SUCCESS",
-    "customer_name": "Sample Customer",
+    "customer_name": "Retailer B",
     "payment_date": "2026-03-10",
-    "payment_amount": 4000,
+    "payment_amount": 50,
     "allocation_method": "FIFO",
-    "target_date": "2026-03-03",
+    "target_date": "2026-02-28",
     "updated_credits": [
         {
-            "date": "2026-03-01",
-            "amount": 5000,
-            "remaining": 0
+            "date": "2026-02-28",
+            "amount": 12000,
+            "remaining": 5920.0
         },
         {
-            "date": "2026-03-03",
-            "amount": 10000,
-            "remaining": 1000.0
-        },
-        {
-            "date": "2026-03-10",
-            "amount": 7000,
-            "remaining": 7000
+            "date": "2026-03-08",
+            "amount": 3000,
+            "remaining": 3000
         }
     ],
     "advance_payment": 0,
-    "total_pending": 8000.0,
+    "total_pending": 8920.0,
     "aging": {
         "last_7_days": [
             {
-                "date": "2026-03-03",
-                "amount": 10000,
-                "remaining": 1000.0
-            },
-            {
-                "date": "2026-03-10",
-                "amount": 7000,
-                "remaining": 7000
+                "date": "2026-03-08",
+                "amount": 3000,
+                "remaining": 3000
             }
         ],
-        "old_balance": 0,
-        "old_balance_breakdown": []
+        "old_balance": 5920.0,
+        "old_balance_breakdown": [
+            {
+                "date": "2026-02-28",
+                "amount": 12000,
+                "remaining": 5920.0
+            }
+        ]
     }
 }
