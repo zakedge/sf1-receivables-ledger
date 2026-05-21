@@ -7,98 +7,192 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background: #f5f5f5;
+            margin: 16px;
+            background: #f4f6f8;
+            color: #222;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 760px;
             margin: auto;
+        }
+
+        .card {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
         h1 {
             font-size: 24px;
+            margin-bottom: 6px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 17px;
+            margin-top: 20px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-top: 0;
         }
 
         label {
             display: block;
-            margin-top: 12px;
+            margin-top: 14px;
             font-weight: bold;
         }
 
         input, select, button {
             width: 100%;
-            padding: 10px;
+            padding: 11px;
             margin-top: 6px;
             box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        input, select {
+            border: 1px solid #ccc;
+            border-radius: 8px;
         }
 
         button {
-            margin-top: 18px;
-            background: #222;
+            margin-top: 20px;
+            background: #111827;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #374151;
         }
 
         .errors {
             background: #ffe5e5;
-            padding: 12px;
-            margin-top: 20px;
-            border-radius: 6px;
+            border-left: 5px solid #cc0000;
         }
 
-        .report {
-            background: #eef7ee;
-            padding: 12px;
-            margin-top: 20px;
-            border-radius: 6px;
+        .success {
+            background: #eef9f0;
+            border-left: 5px solid #1f8f3a;
         }
 
-        pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            background: #f0f0f0;
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .summary-box {
+            background: #f3f4f6;
             padding: 12px;
-            border-radius: 6px;
+            border-radius: 8px;
+        }
+
+        .summary-box span {
+            display: block;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .summary-box strong {
+            font-size: 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 9px;
+            text-align: left;
+        }
+
+        th {
+            background: #f3f4f6;
+        }
+
+        .empty {
+            color: #777;
+            background: #f8f8f8;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                margin: 10px;
+            }
+
+            .card {
+                padding: 14px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th, td {
+                padding: 7px;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Strangler Fig Receivables Ledger</h1>
 
-        <form method="post" action="/process-payment">
-            <label>Customer Name</label>
-            <input type="text" name="customer_name" value="Sample Customer" required>
+        <div class="card">
+            <h1>Strangler Fig Receivables Ledger</h1>
+            <p class="subtitle">Payment allocation and aging report</p>
 
-            <label>Payment Date</label>
-            <input type="date" name="payment_date" value="2026-03-10" required>
+            <form method="post" action="/process-payment">
+                <label>Customer Name</label>
+                <input type="text" name="customer_name" value="Sample Customer" required>
 
-            <label>Payment Amount</label>
-            <input type="number" name="payment_amount" value="6000" step="0.01" required>
+                <label>Payment Date</label>
+                <input type="date" name="payment_date" value="2026-03-10" required>
 
-            <label>Allocation Method</label>
-            <select name="allocation_method">
-                <option value="FIFO">FIFO - Oldest First</option>
-                <option value="LIFO">LIFO - Latest First</option>
-                <option value="SPECIFIC_DATE">Specific Date</option>
-            </select>
+                <label>Payment Amount</label>
+                <input type="number" name="payment_amount" value="6000" step="0.01" required>
 
-            <label>Target Date, only for Specific Date</label>
-            <input type="date" name="target_date" value="2026-03-03">
+                <label>Allocation Method</label>
+                <select name="allocation_method">
+                    <option value="FIFO">FIFO - Oldest First</option>
+                    <option value="LIFO">LIFO - Latest First</option>
+                    <option value="SPECIFIC_DATE">Specific Date</option>
+                </select>
 
-            <button type="submit">Generate Report</button>
-        </form>
+                <label>Target Date, only for Specific Date</label>
+                <input type="date" name="target_date" value="2026-03-03">
+
+                <button type="submit">Generate Report</button>
+            </form>
+        </div>
 
         {% if errors %}
-            <div class="errors">
-                <h3>Validation Errors</h3>
+            <div class="card errors">
+                <h2>Validation Errors</h2>
                 <ul>
                     {% for error in errors %}
                         <li>{{ error }}</li>
@@ -108,19 +202,109 @@
         {% endif %}
 
         {% if report %}
-            <div class="report">
-                <h3>Customer Balance Report</h3>
+            <div class="card success">
+                <h2>Customer Balance Report</h2>
 
-                <p><strong>Customer:</strong> {{ report.customer_name }}</p>
-                <p><strong>Payment Date:</strong> {{ report.payment_date }}</p>
-                <p><strong>Payment Amount:</strong> {{ report.payment_amount }}</p>
-                <p><strong>Allocation Method:</strong> {{ report.allocation_method }}</p>
-                <p><strong>Advance Payment:</strong> {{ report.advance_payment }}</p>
+                <div class="summary-grid">
+                    <div class="summary-box">
+                        <span>Customer</span>
+                        <strong>{{ report.customer_name }}</strong>
+                    </div>
 
-                <h4>Full Report JSON</h4>
-                <pre>{{ report }}</pre>
+                    <div class="summary-box">
+                        <span>Payment Date</span>
+                        <strong>{{ report.payment_date }}</strong>
+                    </div>
+
+                    <div class="summary-box">
+                        <span>Payment Amount</span>
+                        <strong>{{ report.payment_amount }}</strong>
+                    </div>
+
+                    <div class="summary-box">
+                        <span>Allocation Method</span>
+                        <strong>{{ report.allocation_method }}</strong>
+                    </div>
+
+                    <div class="summary-box">
+                        <span>Advance Payment</span>
+                        <strong>{{ report.advance_payment }}</strong>
+                    </div>
+
+                    <div class="summary-box">
+                        <span>Old Balance</span>
+                        <strong>{{ report.aging.old_balance }}</strong>
+                    </div>
+                </div>
+
+                <h3>Updated Credit Balances</h3>
+
+                {% if report.updated_credits %}
+                    <table>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Remaining</th>
+                        </tr>
+
+                        {% for credit in report.updated_credits %}
+                            <tr>
+                                <td>{{ credit.date }}</td>
+                                <td>{{ credit.amount }}</td>
+                                <td>{{ credit.remaining }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <p class="empty">No updated credit balances available.</p>
+                {% endif %}
+
+                <h3>Last 7 Days Balance</h3>
+
+                {% if report.aging.last_7_days %}
+                    <table>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Remaining</th>
+                        </tr>
+
+                        {% for credit in report.aging.last_7_days %}
+                            <tr>
+                                <td>{{ credit.date }}</td>
+                                <td>{{ credit.amount }}</td>
+                                <td>{{ credit.remaining }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <p class="empty">No pending balance in the last 7 days.</p>
+                {% endif %}
+
+                <h3>Old Balance Breakdown</h3>
+
+                {% if report.aging.old_balance_breakdown %}
+                    <table>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Remaining</th>
+                        </tr>
+
+                        {% for credit in report.aging.old_balance_breakdown %}
+                            <tr>
+                                <td>{{ credit.date }}</td>
+                                <td>{{ credit.amount }}</td>
+                                <td>{{ credit.remaining }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <p class="empty">No old balance breakdown available.</p>
+                {% endif %}
             </div>
         {% endif %}
+
     </div>
 </body>
 </html>
