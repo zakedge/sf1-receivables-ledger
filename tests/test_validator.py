@@ -53,6 +53,20 @@ def test_validate_payment_requires_target_date_for_specific_date_allocation():
     assert "target_date is required for SPECIFIC_DATE allocation" in errors
 
 
+def test_validate_payment_rejects_blank_target_date_for_specific_date_allocation():
+    payment = {
+        "customer_name": "Sample Customer",
+        "payment_date": "2026-03-10",
+        "payment_amount": 6000,
+        "allocation_method": "SPECIFIC_DATE",
+        "target_date": "",
+    }
+
+    errors = validate_payment(payment)
+
+    assert "target_date is required for SPECIFIC_DATE allocation" in errors
+
+
 def test_validate_credits_returns_no_errors_for_valid_credits():
     credits = [
         {"date": "2026-03-01", "amount": 5000, "remaining": 5000},

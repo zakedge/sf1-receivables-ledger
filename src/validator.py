@@ -25,7 +25,7 @@ def validate_payment(payment):
         errors.append("allocation_method must be FIFO, LIFO, or SPECIFIC_DATE")
 
     if payment.get("allocation_method") == "SPECIFIC_DATE":
-        if "target_date" not in payment:
+        if not payment.get("target_date"):
             errors.append("target_date is required for SPECIFIC_DATE allocation")
 
     return errors

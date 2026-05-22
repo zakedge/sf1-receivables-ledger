@@ -1,3 +1,23 @@
+def _allocate_payment_by_order(credits, payment_amount, reverse=False):
+    remaining_payment = payment_amount
+    ordered_credits = reversed(credits) if reverse else credits
+
+    for credit in ordered_credits:
+        if remaining_payment <= 0:
+            break
+
+        current_remaining = credit["remaining"]
+        amount_to_apply = min(current_remaining, remaining_payment)
+
+        credit["remaining"] = current_remaining - amount_to_apply
+        remaining_payment -= amount_to_apply
+
+    return {
+        "updated_credits": credits,
+        "advance_payment": remaining_payment,
+    }
+
+
 def allocate_payment_fifo(credits, payment_amount):
     """
     Allocate payment using FIFO.
@@ -10,26 +30,7 @@ def allocate_payment_fifo(credits, payment_amount):
         - updated_credits
         - advance_payment
     """
-
-    remaining_payment = payment_amount
-
-    for credit in credits:
-        if remaining_payment <= 0:
-            break
-
-        current_remaining = credit["remaining"]
-
-        if current_remaining <= remaining_payment:
-            remaining_payment = remaining_payment - current_remaining
-            credit["remaining"] = 0
-        else:
-            credit["remaining"] = current_remaining - remaining_payment
-            remaining_payment = 0
-
-    return {
-        "updated_credits": credits,
-        "advance_payment": remaining_payment,
-    }
+    return _allocate_payment_by_order(credits, payment_amount, reverse=False)
 
 
 def allocate_payment_lifo(credits, payment_amount):
@@ -44,26 +45,7 @@ def allocate_payment_lifo(credits, payment_amount):
         - updated_credits
         - advance_payment
     """
-
-    remaining_payment = payment_amount
-
-    for credit in reversed(credits):
-        if remaining_payment <= 0:
-            break
-
-        current_remaining = credit["remaining"]
-
-        if current_remaining <= remaining_payment:
-            remaining_payment = remaining_payment - current_remaining
-            credit["remaining"] = 0
-        else:
-            credit["remaining"] = current_remaining - remaining_payment
-            remaining_payment = 0
-
-    return {
-        "updated_credits": credits,
-        "advance_payment": remaining_payment,
-    }
+    return _allocate_payment_by_order(credits, payment_amount, reverse=True)
 
 
 def allocate_payment_to_specific_date(credits, payment_amount, target_date):

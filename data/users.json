@@ -24,5 +24,15 @@
         ],
         "is_admin": false,
         "is_active": true
+    },
+    {
+        "username": "Kaif",
+        "salt": "19f4f181c4558c8b1c6b76304cd0696f",
+        "password_hash": "80b953e067e014420e703e2e915ee8bc0043b5ff1efbe79dda2319522e2024a5",
+        "allowed_pages": [
+            "last_7_days_report"
+        ],
+        "is_admin": false,
+        "is_active": true
     }
 ]

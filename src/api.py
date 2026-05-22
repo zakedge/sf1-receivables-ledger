@@ -1,4 +1,6 @@
 import json
+import os
+import tempfile
 from datetime import datetime, timedelta
 
 from fastapi import FastAPI, Form, Query, Request
@@ -88,10 +90,8 @@ def require_page_access(request: Request, page_key: str):
 # -------------------------
 
 def load_customers_from_config():
-    config = load_config()
-
     try:
-        with open(config["customers_input_file"], "r") as file:
+        with open(config["customers_input_file"], "r", encoding="utf-8") as file:
             customers = json.load(file)
 
         if not isinstance(customers, dict):
@@ -103,18 +103,30 @@ def load_customers_from_config():
         return {}
 
 
-def save_customers_to_config(customers):
-    config = load_config()
+def save_json_file(path, data):
+    directory = os.path.dirname(path) or "."
+    os.makedirs(directory, exist_ok=True)
 
-    with open(config["customers_input_file"], "w") as file:
-        json.dump(customers, file, indent=4)
+    with tempfile.NamedTemporaryFile(
+        "w",
+        encoding="utf-8",
+        dir=directory,
+        delete=False,
+    ) as temp_file:
+        json.dump(data, temp_file, indent=4)
+        temp_file.write("\n")
+        temp_path = temp_file.name
+
+    os.replace(temp_path, path)
+
+
+def save_customers_to_config(customers):
+    save_json_file(config["customers_input_file"], customers)
 
 
 def load_areas_from_config():
-    config = load_config()
-
     try:
-        with open(config["areas_input_file"], "r") as file:
+        with open(config["areas_input_file"], "r", encoding="utf-8") as file:
             areas = json.load(file)
 
         if not isinstance(areas, list):
@@ -127,17 +139,12 @@ def load_areas_from_config():
 
 
 def save_areas_to_config(areas):
-    config = load_config()
-
-    with open(config["areas_input_file"], "w") as file:
-        json.dump(areas, file, indent=4)
+    save_json_file(config["areas_input_file"], areas)
 
 
 def load_payment_history():
-    config = load_config()
-
     try:
-        with open(config["payment_history_file"], "r") as file:
+        with open(config["payment_history_file"], "r", encoding="utf-8") as file:
             payment_history = json.load(file)
 
         if not isinstance(payment_history, list):
@@ -150,10 +157,7 @@ def load_payment_history():
 
 
 def save_payment_history(payment_history):
-    config = load_config()
-
-    with open(config["payment_history_file"], "w") as file:
-        json.dump(payment_history, file, indent=4)
+    save_json_file(config["payment_history_file"], payment_history)
 
 
 def add_payment_history_record(
@@ -404,6 +408,7 @@ def build_last_7_days_report_rows(customers, reference_date):
 
     reference = datetime.strptime(reference_date, "%Y-%m-%d").date()
     last_7_start = reference - timedelta(days=6)
+    very_old_cutoff = reference - timedelta(days=30)
 
     rows = []
     sr_no = 1
@@ -440,6 +445,9 @@ def build_last_7_days_report_rows(customers, reference_date):
 
             if credit_date_text in date_keys:
                 date_balances[credit_date_text] += remaining
+
+            elif credit_date < very_old_cutoff:
+                very_old_balance += remaining
 
             elif credit_date < last_7_start:
                 old_balance += remaining
@@ -781,7 +789,7 @@ def import_customers(request: Request):
     areas = load_areas_from_config()
 
     try:
-        with open(config["customer_import_file"], "r") as file:
+        with open(config["customer_import_file"], "r", encoding="utf-8") as file:
             imported_customers = json.load(file)
 
     except FileNotFoundError:
@@ -980,6 +988,15 @@ def process_payment(
     updated_credits = allocation_result["updated_credits"]
     advance_payment = allocation_result["advance_payment"]
 
+    if allocation_method == "SPECIFIC_DATE" and not allocation_result.get("date_found"):
+        context = build_payment_page_context(
+            customers=customers,
+            selected_customer_id=customer_id,
+            selected_area=area,
+            errors=["Selected target date is not available for this customer"],
+        )
+        return templates.TemplateResponse(request, "add_payment.html", context)
+
     customers[customer_id]["credits"] = updated_credits
     save_customers_to_config(customers)
 
@@ -1034,19 +1051,33 @@ def process_payment(
 @app.get("/last-7-days-report", response_class=HTMLResponse)
 def last_7_days_report(
     request: Request,
-    reference_date: str = Query("2026-03-31"),
+    reference_date: str | None = Query(None),
 ):
     access_response = require_page_access(request, "last_7_days_report")
 
     if access_response:
         return access_response
 
+    if not reference_date:
+        reference_date = datetime.today().strftime("%Y-%m-%d")
+
     customers = load_customers_from_config()
 
-    date_columns, rows = build_last_7_days_report_rows(
-        customers,
-        reference_date,
-    )
+    try:
+        date_columns, rows = build_last_7_days_report_rows(
+            customers,
+            reference_date,
+        )
+        message = None
+        errors = None
+    except ValueError:
+        reference_date = datetime.today().strftime("%Y-%m-%d")
+        date_columns, rows = build_last_7_days_report_rows(
+            customers,
+            reference_date,
+        )
+        message = None
+        errors = ["Invalid reference date. Showing today's report instead."]
 
     return templates.TemplateResponse(
         request,
@@ -1055,7 +1086,7 @@ def last_7_days_report(
             "reference_date": reference_date,
             "date_columns": date_columns,
             "rows": rows,
-            "message": None,
-            "errors": None,
+            "message": message,
+            "errors": errors,
         },
     )

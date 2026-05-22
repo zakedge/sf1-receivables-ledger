@@ -1,39 +1,19 @@
 {
     "status": "SUCCESS",
-    "customer_name": "Retailer B",
+    "customer_id": "CUST005",
+    "customer_name": "ABC",
+    "area": "ALBD",
     "payment_date": "2026-03-10",
-    "payment_amount": 50,
+    "payment_amount": 56,
     "allocation_method": "FIFO",
-    "target_date": "2026-02-28",
-    "updated_credits": [
-        {
-            "date": "2026-02-28",
-            "amount": 12000,
-            "remaining": 5870.0
-        },
-        {
-            "date": "2026-03-08",
-            "amount": 3000,
-            "remaining": 3000
-        }
-    ],
-    "advance_payment": 0,
-    "total_pending": 8870.0,
+    "target_date": null,
+    "updated_credits": [],
+    "advance_payment": 56,
+    "total_pending": 0,
+    "previous_total_pending": 0,
     "aging": {
-        "last_7_days": [
-            {
-                "date": "2026-03-08",
-                "amount": 3000,
-                "remaining": 3000
-            }
-        ],
-        "old_balance": 5870.0,
-        "old_balance_breakdown": [
-            {
-                "date": "2026-02-28",
-                "amount": 12000,
-                "remaining": 5870.0
-            }
-        ]
+        "last_7_days": [],
+        "old_balance": 0,
+        "old_balance_breakdown": []
     }
 }
