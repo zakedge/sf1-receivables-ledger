@@ -29,50 +29,50 @@
 
     {% if rows %}
         <div style="overflow-x: auto;">
-            <table id="reportTable">
+            <table id="reportTable" style="border-collapse: collapse; width: 100%;">
                 <tr>
-                    <th>Sr No</th>
-                    <th>Retailer Name</th>
-                    <th>Area</th>
-                    <th>Very Old</th>
-                    <th>Old</th>
+                    <th style="border: 1px solid #cbd5e1;">Sr No</th>
+                    <th style="border: 1px solid #cbd5e1;">Retailer Name</th>
+                    <th style="border: 1px solid #cbd5e1;">Area</th>
+                    <th style="border: 1px solid #cbd5e1;">Very Old</th>
+                    <th style="border: 1px solid #cbd5e1;">Old</th>
 
                     {% for column in date_columns %}
-                        <th>{{ column.display_name }}</th>
+                        <th style="border: 1px solid #cbd5e1;">{{ column.display_name }}</th>
                     {% endfor %}
 
-                    <th>TOT CG</th>
-                    <th>Pending</th>
+                    <th style="border: 1px solid #cbd5e1;">TOT CG</th>
+                    <th style="border: 1px solid #cbd5e1;">Pending</th>
                 </tr>
 
                 {% for row in rows %}
                     <tr style="{% if loop.index is even %}background: #eef6ff;{% else %}background: #ffffff;{% endif %}">
-                        <td>{{ row.sr_no }}</td>
-                        <td><strong>{{ row.customer_name }}</strong></td>
-                        <td>{{ row.area }}</td>
+                        <td style="border: 1px solid #cbd5e1;">{{ row.sr_no }}</td>
+                        <td style="border: 1px solid #cbd5e1;"><strong>{{ row.customer_name }}</strong></td>
+                        <td style="border: 1px solid #cbd5e1;">{{ row.area }}</td>
 
-                        <td style="text-align: right;">
+                        <td style="border: 1px solid #cbd5e1; text-align: right;">
                             {% if row.very_old != 0 %}
                                 {{ row.very_old }}
                             {% endif %}
                         </td>
 
-                        <td style="text-align: right;">
+                        <td style="border: 1px solid #cbd5e1; text-align: right;">
                             {% if row.old != 0 %}
                                 {{ row.old }}
                             {% endif %}
                         </td>
 
                         {% for column in date_columns %}
-                            <td style="text-align: right;">
+                            <td style="border: 1px solid #cbd5e1; text-align: right;">
                                 {% if row.date_balances[column.date_key] != 0 %}
                                     {{ row.date_balances[column.date_key] }}
                                 {% endif %}
                             </td>
                         {% endfor %}
 
-                        <td style="text-align: right;"><strong>{{ row.total_credit_given }}</strong></td>
-                        <td style="text-align: right;"><strong>{{ row.pending }}</strong></td>
+                        <td style="border: 1px solid #cbd5e1; text-align: right;"><strong>{{ row.total_credit_given }}</strong></td>
+                        <td style="border: 1px solid #cbd5e1; text-align: right;"><strong>{{ row.pending }}</strong></td>
                     </tr>
                 {% endfor %}
             </table>
