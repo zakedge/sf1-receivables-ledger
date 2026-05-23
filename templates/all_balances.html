@@ -8,6 +8,7 @@
     {% if rows %}
         <table>
             <tr>
+                <th>Modified Date</th>
                 <th>Customer ID</th>
                 <th>Customer</th>
                 <th>Area</th>
@@ -20,6 +21,7 @@
 
             {% for row in rows %}
                 <tr>
+                    <td>{{ row.modified_date }}</td>
                     <td>{{ row.customer_id }}</td>
                     <td>{{ row.customer_name }}</td>
                     <td>{{ row.area }}</td>
