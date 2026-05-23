@@ -97,7 +97,7 @@
         <input type="hidden" name="customer_id" value="{{ selected_customer_id }}">
 
         <label for="payment_date">Payment Date</label>
-        <input type="date" name="payment_date" id="payment_date" value="2026-03-10" required>
+        <input type="date" name="payment_date" id="payment_date" required>
 
         <label for="payment_amount">Payment Amount</label>
         <input
@@ -159,6 +159,11 @@
         </div>
 
         <div class="summary-box">
+            <span>Mode</span>
+            <strong>{{ report.payment_mode }}</strong>
+        </div>
+
+        <div class="summary-box">
             <span>Total Pending</span>
             <strong>{{ report.total_pending }}</strong>
         </div>
@@ -170,4 +175,19 @@
     </div>
 </div>
 {% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var paymentDateInput = document.getElementById("payment_date");
+
+        if (paymentDateInput && !paymentDateInput.value) {
+            var today = new Date();
+            var yyyy = today.getFullYear();
+            var mm = String(today.getMonth() + 1).padStart(2, "0");
+            var dd = String(today.getDate()).padStart(2, "0");
+
+            paymentDateInput.value = yyyy + "-" + mm + "-" + dd;
+        }
+    });
+</script>
 {% endblock %}
