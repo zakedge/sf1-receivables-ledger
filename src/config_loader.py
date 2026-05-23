@@ -43,6 +43,7 @@ def _patch_all_balances_rows(config, attempts_left=30):
                         "customer_name": customer_name,
                         "area": area,
                         "date": "-",
+                        "modified_date": "",
                         "amount": 0,
                         "credit": 0,
                         "payment": "",
@@ -53,6 +54,7 @@ def _patch_all_balances_rows(config, attempts_left=30):
 
             for credit in credits:
                 credit_amount = credit.get("amount", 0)
+                modified_date = credit.get("modified_date") or credit.get("created_at") or credit.get("date", "")
 
                 rows.append(
                     {
@@ -60,6 +62,7 @@ def _patch_all_balances_rows(config, attempts_left=30):
                         "customer_name": customer_name,
                         "area": area,
                         "date": credit.get("date", ""),
+                        "modified_date": modified_date,
                         "amount": credit_amount,
                         "credit": credit_amount,
                         "payment": "",
@@ -77,12 +80,15 @@ def _patch_all_balances_rows(config, attempts_left=30):
             payment_history = []
 
         for payment in payment_history:
+            modified_date = payment.get("processed_timestamp") or payment.get("payment_date", "")
+
             rows.append(
                 {
                     "customer_id": payment.get("customer_id", ""),
                     "customer_name": payment.get("customer_name", ""),
                     "area": payment.get("area", ""),
                     "date": payment.get("payment_date", ""),
+                    "modified_date": modified_date,
                     "amount": "",
                     "credit": "",
                     "payment": payment.get("payment_amount", 0),
@@ -92,17 +98,13 @@ def _patch_all_balances_rows(config, attempts_left=30):
             )
 
         def sort_key(row):
-            date_value = row.get("date") or "9999-12-31"
-            if date_value == "-":
-                date_value = "9999-12-31"
+            modified_date = row.get("modified_date") or row.get("date") or "0000-00-00"
+            if modified_date == "-":
+                modified_date = "0000-00-00"
 
-            return (
-                row.get("customer_name", ""),
-                date_value,
-                str(row.get("payment", "")),
-            )
+            return modified_date
 
-        rows.sort(key=sort_key)
+        rows.sort(key=sort_key, reverse=True)
         return rows
 
     api_module.build_all_balance_rows = build_all_balance_rows_with_payments
