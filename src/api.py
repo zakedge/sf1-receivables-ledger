@@ -227,6 +227,43 @@ def customer_exists_in_area(customers, customer_name, area):
     return False
 
 
+def customer_exists_in_area_excluding_id(customers, customer_id_to_exclude, customer_name, area):
+    for customer_id, customer in customers.items():
+        if customer_id == customer_id_to_exclude:
+            continue
+
+        existing_name = customer.get("customer_name", "").strip().lower()
+        existing_area = customer.get("area", "").strip().lower()
+
+        if (
+            existing_name == customer_name.strip().lower()
+            and existing_area == area.strip().lower()
+        ):
+            return True
+
+    return False
+
+
+def build_area_rows(customers, areas):
+    area_rows = []
+
+    for area in areas:
+        customer_count = 0
+
+        for customer in customers.values():
+            if customer.get("area", "") == area:
+                customer_count += 1
+
+        area_rows.append(
+            {
+                "area": area,
+                "customer_count": customer_count,
+            }
+        )
+
+    return area_rows
+
+
 def get_customer_options(customers, selected_area=None):
     customer_options = []
 
@@ -422,11 +459,7 @@ def build_last_7_days_report_rows(customers, reference_date):
     date_keys = [column["date_key"] for column in date_columns]
 
     reference = datetime.strptime(reference_date, "%Y-%m-%d").date()
-
-    # Last 7 days range
     last_7_start = reference - timedelta(days=6)
-
-    # Very old means older than 2 months / 60 days
     very_old_cutoff = reference - timedelta(days=60)
 
     rows = []
@@ -1234,6 +1267,261 @@ def process_payment(
     )
 
     return templates.TemplateResponse(request, "add_payment.html", context)
+
+
+@app.get("/customers", response_class=HTMLResponse)
+def show_customers(request: Request):
+    access_response = require_page_access(request, "customer_management")
+
+    if access_response:
+        return access_response
+
+    customers = load_customers_from_config()
+    areas = load_areas_from_config()
+
+    return templates.TemplateResponse(
+        request,
+        "customers.html",
+        {
+            "customers": customers,
+            "areas": areas,
+            "message": None,
+            "errors": None,
+        },
+    )
+
+
+@app.post("/customers/update", response_class=HTMLResponse)
+def update_customer(
+    request: Request,
+    customer_id: str = Form(...),
+    customer_name: str = Form(...),
+    area: str = Form(...),
+):
+    access_response = require_page_access(request, "customer_management")
+
+    if access_response:
+        return access_response
+
+    customers = load_customers_from_config()
+    areas = load_areas_from_config()
+
+    cleaned_name = customer_name.strip()
+    cleaned_area = area.strip()
+
+    if customer_id not in customers:
+        return templates.TemplateResponse(
+            request,
+            "customers.html",
+            {
+                "customers": customers,
+                "areas": areas,
+                "message": None,
+                "errors": ["Customer not found."],
+            },
+        )
+
+    if not cleaned_name:
+        return templates.TemplateResponse(
+            request,
+            "customers.html",
+            {
+                "customers": customers,
+                "areas": areas,
+                "message": None,
+                "errors": ["Customer name cannot be empty."],
+            },
+        )
+
+    if not cleaned_area:
+        return templates.TemplateResponse(
+            request,
+            "customers.html",
+            {
+                "customers": customers,
+                "areas": areas,
+                "message": None,
+                "errors": ["Area cannot be empty."],
+            },
+        )
+
+    if customer_exists_in_area_excluding_id(customers, customer_id, cleaned_name, cleaned_area):
+        return templates.TemplateResponse(
+            request,
+            "customers.html",
+            {
+                "customers": customers,
+                "areas": areas,
+                "message": None,
+                "errors": ["Another customer with the same name already exists in this area."],
+            },
+        )
+
+    customers[customer_id]["customer_name"] = cleaned_name
+    customers[customer_id]["area"] = cleaned_area
+
+    if cleaned_area not in areas:
+        areas.append(cleaned_area)
+        areas.sort()
+        save_areas_to_config(areas)
+
+    save_customers_to_config(customers)
+
+    return templates.TemplateResponse(
+        request,
+        "customers.html",
+        {
+            "customers": customers,
+            "areas": areas,
+            "message": "Customer updated successfully.",
+            "errors": None,
+        },
+    )
+
+
+@app.get("/areas", response_class=HTMLResponse)
+def show_areas(request: Request):
+    access_response = require_page_access(request, "area_management")
+
+    if access_response:
+        return access_response
+
+    customers = load_customers_from_config()
+    areas = load_areas_from_config()
+    area_rows = build_area_rows(customers, areas)
+
+    return templates.TemplateResponse(
+        request,
+        "areas.html",
+        {
+            "area_rows": area_rows,
+            "message": None,
+            "errors": None,
+        },
+    )
+
+
+@app.post("/areas/update", response_class=HTMLResponse)
+def update_area(
+    request: Request,
+    old_area: str = Form(...),
+    new_area: str = Form(...),
+):
+    access_response = require_page_access(request, "area_management")
+
+    if access_response:
+        return access_response
+
+    customers = load_customers_from_config()
+    areas = load_areas_from_config()
+
+    cleaned_old_area = old_area.strip()
+    cleaned_new_area = new_area.strip()
+
+    if not cleaned_new_area:
+        area_rows = build_area_rows(customers, areas)
+
+        return templates.TemplateResponse(
+            request,
+            "areas.html",
+            {
+                "area_rows": area_rows,
+                "message": None,
+                "errors": ["New area name cannot be empty."],
+            },
+        )
+
+    if cleaned_old_area not in areas:
+        area_rows = build_area_rows(customers, areas)
+
+        return templates.TemplateResponse(
+            request,
+            "areas.html",
+            {
+                "area_rows": area_rows,
+                "message": None,
+                "errors": ["Area not found."],
+            },
+        )
+
+    updated_areas = []
+
+    for area in areas:
+        if area == cleaned_old_area:
+            updated_areas.append(cleaned_new_area)
+        else:
+            updated_areas.append(area)
+
+    updated_areas = sorted(list(set(updated_areas)))
+
+    for customer in customers.values():
+        if customer.get("area", "") == cleaned_old_area:
+            customer["area"] = cleaned_new_area
+
+    save_areas_to_config(updated_areas)
+    save_customers_to_config(customers)
+
+    area_rows = build_area_rows(customers, updated_areas)
+
+    return templates.TemplateResponse(
+        request,
+        "areas.html",
+        {
+            "area_rows": area_rows,
+            "message": "Area updated successfully.",
+            "errors": None,
+        },
+    )
+
+
+@app.post("/areas/delete", response_class=HTMLResponse)
+def delete_area(
+    request: Request,
+    area: str = Form(...),
+):
+    access_response = require_page_access(request, "area_management")
+
+    if access_response:
+        return access_response
+
+    customers = load_customers_from_config()
+    areas = load_areas_from_config()
+
+    cleaned_area = area.strip()
+
+    customer_count = 0
+
+    for customer in customers.values():
+        if customer.get("area", "") == cleaned_area:
+            customer_count += 1
+
+    if customer_count > 0:
+        area_rows = build_area_rows(customers, areas)
+
+        return templates.TemplateResponse(
+            request,
+            "areas.html",
+            {
+                "area_rows": area_rows,
+                "message": None,
+                "errors": ["Cannot delete area because customers still exist under this area."],
+            },
+        )
+
+    updated_areas = [existing_area for existing_area in areas if existing_area != cleaned_area]
+    save_areas_to_config(updated_areas)
+
+    area_rows = build_area_rows(customers, updated_areas)
+
+    return templates.TemplateResponse(
+        request,
+        "areas.html",
+        {
+            "area_rows": area_rows,
+            "message": "Area deleted successfully.",
+            "errors": None,
+        },
+    )
 
 
 @app.get("/last-7-days-report", response_class=HTMLResponse)
