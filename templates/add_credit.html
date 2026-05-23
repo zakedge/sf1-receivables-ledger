@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card">
+    <h1>Add Credit Entry</h1>
+    <p class="subtitle">Add a new credit amount for an existing customer.</p>
+
+    {% if not customer_options %}
+        <div class="empty">
+            No customers found. Please add a customer first.
+        </div>
+    {% else %}
+        <form method="post" action="/add-credit">
+            <label for="customer_id">Customer</label>
+            <select name="customer_id" id="customer_id" required>
+                <option value="">Select Customer</option>
+
+                {% for customer in customer_options %}
+                    <option value="{{ customer.customer_id }}">
+                        {{ customer.customer_name }} - {{ customer.area }} - {{ customer.customer_id }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label for="credit_date">Credit Date</label>
+            <input type="date" name="credit_date" id="credit_date" required>
+
+            <label for="amount">Credit Amount</label>
+            <input
+                type="number"
+                name="amount"
+                id="amount"
+                min="0.01"
+                step="0.01"
+                required
+            >
+
+            <button type="submit">Add Credit</button>
+        </form>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -383,6 +383,36 @@ def build_payment_page_context(
     }
 
 
+def build_add_credit_context(
+    customers,
+    selected_area="",
+    selected_customer_id="",
+    message=None,
+    errors=None,
+):
+    areas = load_areas_from_config()
+
+    if not selected_area:
+        for area in areas:
+            if get_customer_options(customers, selected_area=area):
+                selected_area = area
+                break
+
+    customer_options = get_customer_options(
+        customers,
+        selected_area=selected_area,
+    )
+
+    return {
+        "areas": areas,
+        "selected_area": selected_area,
+        "selected_customer_id": selected_customer_id,
+        "customer_options": customer_options,
+        "message": message,
+        "errors": errors,
+    }
+
+
 def build_last_7_day_columns(reference_date):
     reference = datetime.strptime(reference_date, "%Y-%m-%d").date()
     start_date = reference - timedelta(days=6)
@@ -884,6 +914,100 @@ def all_balances(request: Request):
             "errors": None,
         },
     )
+
+
+@app.get("/add-credit", response_class=HTMLResponse)
+def show_add_credit(
+    request: Request,
+    area: str = Query(None),
+):
+    access_response = require_page_access(request, "add_payment")
+
+    if access_response:
+        return access_response
+
+    customers = load_customers_from_config()
+
+    context = build_add_credit_context(
+        customers=customers,
+        selected_area=area or "",
+        message=None,
+        errors=None,
+    )
+
+    return templates.TemplateResponse(request, "add_credit.html", context)
+
+
+@app.post("/add-credit", response_class=HTMLResponse)
+def add_credit(
+    request: Request,
+    customer_id: str = Form(...),
+    credit_date: str = Form(...),
+    amount: float = Form(...),
+):
+    access_response = require_page_access(request, "add_payment")
+
+    if access_response:
+        return access_response
+
+    customers = load_customers_from_config()
+
+    if customer_id not in customers:
+        context = build_add_credit_context(
+            customers=customers,
+            selected_customer_id=customer_id,
+            errors=["Selected customer does not exist"],
+        )
+        return templates.TemplateResponse(request, "add_credit.html", context)
+
+    selected_customer = customers[customer_id]
+    area = selected_customer.get("area", "")
+
+    errors = []
+
+    try:
+        datetime.strptime(credit_date, "%Y-%m-%d")
+    except ValueError:
+        errors.append("Credit date must be a valid date")
+
+    if amount <= 0:
+        errors.append("Credit amount must be greater than zero")
+
+    if errors:
+        context = build_add_credit_context(
+            customers=customers,
+            selected_area=area,
+            selected_customer_id=customer_id,
+            errors=errors,
+        )
+        return templates.TemplateResponse(request, "add_credit.html", context)
+
+    credit_entry = {
+        "date": credit_date,
+        "amount": amount,
+        "remaining": amount,
+    }
+
+    if "credits" not in customers[customer_id]:
+        customers[customer_id]["credits"] = []
+
+    customers[customer_id]["credits"].append(credit_entry)
+
+    customers[customer_id]["credits"].sort(
+        key=lambda credit: credit.get("date", "")
+    )
+
+    save_customers_to_config(customers)
+
+    context = build_add_credit_context(
+        customers=customers,
+        selected_area=area,
+        selected_customer_id=customer_id,
+        message="Credit entry added successfully",
+        errors=None,
+    )
+
+    return templates.TemplateResponse(request, "add_credit.html", context)
 
 
 @app.get("/add-payment", response_class=HTMLResponse)
