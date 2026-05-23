@@ -128,3 +128,36 @@ def user_has_access(user, page_key):
         return True
 
     return page_key in user.get("allowed_pages", [])
+
+
+def delete_user(username):
+    users = load_users()
+
+    updated_users = [
+        user for user in users
+        if user["username"].lower() != username.lower()
+    ]
+
+    if len(updated_users) == len(users):
+        return False, "User not found"
+
+    save_users(updated_users)
+
+    return True, "User deleted successfully"
+
+
+def change_user_password(username, new_password):
+    users = load_users()
+
+    for user in users:
+        if user["username"].lower() == username.lower():
+            password_data = hash_password(new_password)
+
+            user["salt"] = password_data["salt"]
+            user["password_hash"] = password_data["password_hash"]
+
+            save_users(users)
+
+            return True, "Password changed successfully"
+
+    return False, "User not found"

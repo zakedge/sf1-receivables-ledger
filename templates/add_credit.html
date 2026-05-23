@@ -4,11 +4,26 @@
 
 <div class="card">
     <h1>Add Credit Entry</h1>
-    <p class="subtitle">Add a new credit amount for an existing customer.</p>
+    <p class="subtitle">Select an area, then add a new credit amount for a customer in that area.</p>
 
-    {% if not customer_options %}
-        <div class="empty">
-            No customers found. Please add a customer first.
+    <form method="get" action="/add-credit">
+        <label for="area">Area</label>
+        <select name="area" id="area" onchange="this.form.submit()" required>
+            {% for area in areas %}
+                <option value="{{ area }}" {% if area == selected_area %}selected{% endif %}>
+                    {{ area }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    {% if not areas %}
+        <div class="empty" style="margin-top: 16px;">
+            No areas found. Please add or import customers first.
+        </div>
+    {% elif not customer_options %}
+        <div class="empty" style="margin-top: 16px;">
+            No customers found under this area.
         </div>
     {% else %}
         <form method="post" action="/add-credit">
@@ -17,8 +32,10 @@
                 <option value="">Select Customer</option>
 
                 {% for customer in customer_options %}
-                    <option value="{{ customer.customer_id }}">
-                        {{ customer.customer_name }} - {{ customer.area }} - {{ customer.customer_id }}
+                    <option value="{{ customer.customer_id }}"
+                        {% if customer.customer_id == selected_customer_id %}selected{% endif %}
+                    >
+                        {{ customer.customer_name }} - {{ customer.customer_id }}
                     </option>
                 {% endfor %}
             </select>
@@ -28,13 +45,16 @@
 
             <label for="amount">Credit Amount</label>
             <input
-                type="number"
+                type="text"
                 name="amount"
                 id="amount"
-                min="0.01"
-                step="0.01"
+                inputmode="numeric"
+                pattern="[0-9]+"
+                placeholder="Enter amount"
                 required
             >
+
+            <p class="hint">Enter whole numbers only. Example: 5000</p>
 
             <button type="submit">Add Credit</button>
         </form>

@@ -3,7 +3,7 @@
 {% block content %}
 <div class="card">
     <h1>User Management</h1>
-    <p class="subtitle">Add users and assign page access.</p>
+    <p class="subtitle">Add users, assign page access, change passwords, and delete users.</p>
 
     <form method="post" action="/users">
         <label>Username</label>
@@ -40,6 +40,8 @@
                 <th>Admin</th>
                 <th>Active</th>
                 <th>Allowed Pages</th>
+                <th>Change Password</th>
+                <th>Delete</th>
             </tr>
 
             {% for user in users %}
@@ -48,6 +50,34 @@
                     <td>{{ user.is_admin }}</td>
                     <td>{{ user.is_active }}</td>
                     <td>{{ user.allowed_pages }}</td>
+
+                    <td>
+                        <form method="post" action="/users/change-password">
+                            <input type="hidden" name="username" value="{{ user.username }}">
+                            <input
+                                type="password"
+                                name="new_password"
+                                placeholder="New password"
+                                required
+                            >
+                            <button type="submit" class="secondary-button">
+                                Change
+                            </button>
+                        </form>
+                    </td>
+
+                    <td>
+                        <form
+                            method="post"
+                            action="/users/delete"
+                            onsubmit="return confirm('Are you sure you want to delete this user?');"
+                        >
+                            <input type="hidden" name="username" value="{{ user.username }}">
+                            <button type="submit">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </table>

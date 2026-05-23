@@ -12,7 +12,9 @@ from src.aging import split_balances_by_age
 from src.auth import (
     PAGE_ACCESS_OPTIONS,
     authenticate_user,
+    change_user_password,
     create_user,
+    delete_user,
     load_users,
     user_has_access,
     users_exist,
@@ -316,12 +318,6 @@ def build_payment_page_context(
 ):
     areas = load_areas_from_config()
 
-    if not selected_area:
-        for area in areas:
-            if get_customer_options(customers, selected_area=area):
-                selected_area = area
-                break
-
     if not selected_area and areas:
         selected_area = areas[0]
 
@@ -329,18 +325,6 @@ def build_payment_page_context(
         customers,
         selected_area=selected_area,
     )
-
-    if not customer_options:
-        for area in areas:
-            area_customer_options = get_customer_options(
-                customers,
-                selected_area=area,
-            )
-
-            if area_customer_options:
-                selected_area = area
-                customer_options = area_customer_options
-                break
 
     if selected_customer_id not in customers:
         if customer_options:
@@ -350,11 +334,12 @@ def build_payment_page_context(
 
     selected_customer = customers.get(selected_customer_id)
 
-    if selected_customer:
+    if selected_customer and selected_customer.get("area", "") == selected_area:
         selected_customer_name = selected_customer.get("customer_name", "")
         selected_customer_area = selected_customer.get("area", "")
         selected_customer_credits = selected_customer.get("credits", [])
     else:
+        selected_customer_id = ""
         selected_customer_name = ""
         selected_customer_area = ""
         selected_customer_credits = []
@@ -663,6 +648,81 @@ def create_new_user(
     )
 
 
+@app.post("/users/delete", response_class=HTMLResponse)
+def delete_existing_user(
+    request: Request,
+    username: str = Form(...),
+):
+    access_response = require_page_access(request, "user_management")
+
+    if access_response:
+        return access_response
+
+    logged_in_user = get_logged_in_user(request)
+
+    if logged_in_user and logged_in_user["username"].lower() == username.lower():
+        return templates.TemplateResponse(
+            request,
+            "users.html",
+            {
+                "users": load_users(),
+                "page_options": PAGE_ACCESS_OPTIONS,
+                "message": None,
+                "errors": ["You cannot delete your own logged-in user."],
+            },
+        )
+
+    success, message = delete_user(username)
+
+    return templates.TemplateResponse(
+        request,
+        "users.html",
+        {
+            "users": load_users(),
+            "page_options": PAGE_ACCESS_OPTIONS,
+            "message": message if success else None,
+            "errors": None if success else [message],
+        },
+    )
+
+
+@app.post("/users/change-password", response_class=HTMLResponse)
+def change_existing_user_password(
+    request: Request,
+    username: str = Form(...),
+    new_password: str = Form(...),
+):
+    access_response = require_page_access(request, "user_management")
+
+    if access_response:
+        return access_response
+
+    if not new_password.strip():
+        return templates.TemplateResponse(
+            request,
+            "users.html",
+            {
+                "users": load_users(),
+                "page_options": PAGE_ACCESS_OPTIONS,
+                "message": None,
+                "errors": ["Password cannot be empty."],
+            },
+        )
+
+    success, message = change_user_password(username, new_password)
+
+    return templates.TemplateResponse(
+        request,
+        "users.html",
+        {
+            "users": load_users(),
+            "page_options": PAGE_ACCESS_OPTIONS,
+            "message": message if success else None,
+            "errors": None if success else [message],
+        },
+    )
+
+
 # -------------------------
 # App routes
 # -------------------------
@@ -943,7 +1003,7 @@ def add_credit(
     request: Request,
     customer_id: str = Form(...),
     credit_date: str = Form(...),
-    amount: float = Form(...),
+    amount: int = Form(...),
 ):
     access_response = require_page_access(request, "add_payment")
 
