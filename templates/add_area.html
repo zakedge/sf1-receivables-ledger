@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <h1>Add Area</h1>
+    <p class="subtitle">Create a new area that can be used when adding or editing customers.</p>
+
+    <form method="post" action="/add-area">
+        <label for="area">Area Name</label>
+        <input
+            type="text"
+            name="area"
+            id="area"
+            placeholder="Enter area name"
+            required
+        >
+
+        <button type="submit">Add Area</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2>Existing Areas</h2>
+
+    {% if areas %}
+        <table>
+            <tr>
+                <th>Area</th>
+            </tr>
+
+            {% for area in areas %}
+                <tr>
+                    <td>{{ area }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="empty">No areas found.</p>
+    {% endif %}
+</div>
+{% endblock %}
