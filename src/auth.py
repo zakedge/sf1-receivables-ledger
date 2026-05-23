@@ -13,6 +13,8 @@ PAGE_ACCESS_OPTIONS = [
     {"key": "all_balances", "label": "All Balances"},
     {"key": "add_payment", "label": "Add Payment"},
     {"key": "last_7_days_report", "label": "Last 7 Days Report"},
+    {"key": "customer_management", "label": "Customer Management"},
+    {"key": "area_management", "label": "Area Management"},
     {"key": "user_management", "label": "User Management"},
 ]
 
