@@ -3,7 +3,7 @@
 {% block content %}
 <div class="card">
     <h1>All Transactions & Balances</h1>
-    <p class="subtitle">View all customers, areas, transactions, and balances in one place.</p>
+    <p class="subtitle">View all customers, areas, transactions, payments, and balances in one place.</p>
 
     {% if rows %}
         <table>
@@ -12,7 +12,9 @@
                 <th>Customer</th>
                 <th>Area</th>
                 <th>Date</th>
-                <th>Amount</th>
+                <th>Credit</th>
+                <th>Payment</th>
+                <th>Mode</th>
                 <th>Remaining</th>
             </tr>
 
@@ -22,7 +24,9 @@
                     <td>{{ row.customer_name }}</td>
                     <td>{{ row.area }}</td>
                     <td>{{ row.date }}</td>
-                    <td>{{ row.amount }}</td>
+                    <td>{{ row.credit or row.amount }}</td>
+                    <td>{{ row.payment }}</td>
+                    <td>{{ row.payment_mode }}</td>
                     <td>{{ row.remaining }}</td>
                 </tr>
             {% endfor %}
