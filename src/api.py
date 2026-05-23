@@ -498,7 +498,7 @@ def build_last_7_days_report_rows(customers, reference_date):
             if credit_date_text in date_keys:
                 date_balances[credit_date_text] += remaining
 
-            elif credit_date < very_old_cutoff:
+            elif credit_date <= very_old_cutoff:
                 very_old_balance += remaining
 
             elif credit_date < last_7_start:
