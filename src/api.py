@@ -887,6 +887,77 @@ def add_customer(
     )
 
 
+@app.get("/add-area", response_class=HTMLResponse)
+def show_add_area(request: Request):
+    access_response = require_page_access(request, "area_management")
+
+    if access_response:
+        return access_response
+
+    areas = load_areas_from_config()
+
+    return templates.TemplateResponse(
+        request,
+        "add_area.html",
+        {
+            "areas": areas,
+            "message": None,
+            "errors": None,
+        },
+    )
+
+
+@app.post("/add-area", response_class=HTMLResponse)
+def add_area(
+    request: Request,
+    area: str = Form(...),
+):
+    access_response = require_page_access(request, "area_management")
+
+    if access_response:
+        return access_response
+
+    areas = load_areas_from_config()
+    cleaned_area = area.strip()
+
+    if not cleaned_area:
+        return templates.TemplateResponse(
+            request,
+            "add_area.html",
+            {
+                "areas": areas,
+                "message": None,
+                "errors": ["Area name cannot be empty."],
+            },
+        )
+
+    for existing_area in areas:
+        if existing_area.strip().lower() == cleaned_area.lower():
+            return templates.TemplateResponse(
+                request,
+                "add_area.html",
+                {
+                    "areas": areas,
+                    "message": None,
+                    "errors": ["Area already exists."],
+                },
+            )
+
+    areas.append(cleaned_area)
+    areas.sort()
+    save_areas_to_config(areas)
+
+    return templates.TemplateResponse(
+        request,
+        "add_area.html",
+        {
+            "areas": areas,
+            "message": "Area added successfully.",
+            "errors": None,
+        },
+    )
+
+
 @app.get("/import-customers", response_class=HTMLResponse)
 def show_import_customers(request: Request):
     access_response = require_page_access(request, "import_customers")
