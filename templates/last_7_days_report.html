@@ -10,20 +10,18 @@
     <form method="get" action="/last-7-days-report">
         <label>Reference Date</label>
         <input type="date" name="reference_date" value="{{ reference_date }}" required>
-
-        <label>Retailer Name</label>
-        <input type="text" name="retailer_name" value="{{ retailer_name_filter }}" placeholder="Search retailer">
-
-        <label>Area</label>
-        <select name="area">
-            <option value="">All Areas</option>
-            {% for area in areas %}
-                <option value="{{ area }}" {% if area == area_filter %}selected{% endif %}>{{ area }}</option>
-            {% endfor %}
-        </select>
-
         <button type="submit" class="secondary-button">Generate Report</button>
     </form>
+</div>
+
+<div class="card">
+    <h2>Filters</h2>
+
+    <label>Retailer Name</label>
+    <input type="text" id="retailerFilter" placeholder="Search retailer" onkeyup="filterReport()">
+
+    <label>Area</label>
+    <input type="text" id="areaFilter" placeholder="Search area" onkeyup="filterReport()">
 </div>
 
 <div class="card">
@@ -31,7 +29,7 @@
 
     {% if rows %}
         <div style="overflow-x: auto;">
-            <table>
+            <table id="reportTable">
                 <tr>
                     <th>Sr No</th>
                     <th>Retailer Name</th>
@@ -83,4 +81,32 @@
         <p class="empty">No report data available.</p>
     {% endif %}
 </div>
+
+<script>
+function filterReport() {
+    var retailerFilter = document.getElementById("retailerFilter").value.toLowerCase();
+    var areaFilter = document.getElementById("areaFilter").value.toLowerCase();
+    var table = document.getElementById("reportTable");
+
+    if (!table) {
+        return;
+    }
+
+    var rows = table.getElementsByTagName("tr");
+
+    for (var i = 1; i < rows.length; i++) {
+        var retailerText = rows[i].cells[1].innerText.toLowerCase();
+        var areaText = rows[i].cells[2].innerText.toLowerCase();
+
+        var retailerMatch = retailerText.indexOf(retailerFilter) !== -1;
+        var areaMatch = areaText.indexOf(areaFilter) !== -1;
+
+        if (retailerMatch && areaMatch) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+}
+</script>
 {% endblock %}
