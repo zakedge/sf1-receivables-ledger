@@ -422,8 +422,12 @@ def build_last_7_days_report_rows(customers, reference_date):
     date_keys = [column["date_key"] for column in date_columns]
 
     reference = datetime.strptime(reference_date, "%Y-%m-%d").date()
+
+    # Last 7 days range
     last_7_start = reference - timedelta(days=6)
-    very_old_cutoff = reference - timedelta(days=30)
+
+    # Very old means older than 2 months / 60 days
+    very_old_cutoff = reference - timedelta(days=60)
 
     rows = []
     sr_no = 1
