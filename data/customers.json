@@ -1,1906 +1,1641 @@
 {
-  "CUST001": {
-    "customer_name": "Ven Fresh & Fruity",
-    "area": "Unassigned",
-    "credits": []
-  },
-  "CUST002": {
-    "customer_name": "Arun",
-    "area": "Dekaha",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 900,
-        "remaining": 900
-      }
-    ]
-  },
-  "CUST003": {
-    "customer_name": "Vimal",
-    "area": "S Cwk",
-    "credits": []
-  },
-  "CUST004": {
-    "customer_name": "Rajesh (Baba)",
-    "area": "Dekaha",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 9310,
-        "remaining": 9310
-      }
-    ]
-  },
-  "CUST005": {
-    "customer_name": "Kamal Dhekaha",
-    "area": "Dhekaha",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 70460,
-        "remaining": 70460
-      }
-    ]
-  },
-  "CUST006": {
-    "customer_name": "Ajay",
-    "area": "S Cwk",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 440,
-        "remaining": 440
-      }
-    ]
-  },
-  "CUST007": {
-    "customer_name": "Sahil Rajak",
-    "area": "Badi Pul",
-    "credits": []
-  },
-  "CUST008": {
-    "customer_name": "Kapil Gupta",
-    "area": "Dhekaha",
-    "credits": [
-      {
-        "date": "2026-05-08",
-        "amount": 9000,
-        "remaining": 9000
-      }
-    ]
-  },
-  "CUST009": {
-    "customer_name": "Sonu Pandit",
-    "area": "S Chowk",
-    "credits": []
-  },
-  "CUST010": {
-    "customer_name": "Shambhu",
-    "area": "S Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 2956,
-        "remaining": 2956
-      }
-    ]
-  },
-  "CUST011": {
-    "customer_name": "Dinesh (Shambhu)",
-    "area": "S Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 500,
-        "remaining": 500
-      }
-    ]
-  },
-  "CUST012": {
-    "customer_name": "HARIOM JUICE",
-    "area": "S Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 37335,
-        "remaining": 37335
-      }
-    ]
-  },
-  "CUST013": {
-    "customer_name": "Shivam",
-    "area": "S Chowk",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 4800,
-        "remaining": 4800
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 6500,
-        "remaining": 6500
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 6500,
-        "remaining": 6500
-      }
-    ]
-  },
-  "CUST014": {
-    "customer_name": "Vikash",
-    "area": "Bajrang Nagar",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 6960,
-        "remaining": 6960
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 1800,
-        "remaining": 1800
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 12000,
-        "remaining": 12000
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 3150,
-        "remaining": 3150
-      }
-    ]
-  },
-  "CUST015": {
-    "customer_name": "Amit Gupta",
-    "area": "Bajrang Nagar",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 40000,
-        "remaining": 40000
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 7900,
-        "remaining": 7900
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 9450,
-        "remaining": 9450
-      }
-    ]
-  },
-  "CUST016": {
-    "customer_name": "Santosh Patel",
-    "area": "Trand",
-    "credits": []
-  },
-  "CUST017": {
-    "customer_name": "PURSHOTTAM",
-    "area": "Trand",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 9210,
-        "remaining": 9210
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 7040,
-        "remaining": 7040
-      }
-    ]
-  },
-  "CUST018": {
-    "customer_name": "Rajbahor",
-    "area": "N Nagar",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 2320,
-        "remaining": 2320
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 400,
-        "remaining": 400
-      }
-    ]
-  },
-  "CUST019": {
-    "customer_name": "Ram Sajeevan",
-    "area": "Saman",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 8000,
-        "remaining": 8000
-      }
-    ]
-  },
-  "CUST020": {
-    "customer_name": "Ram Nihor",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 5570,
-        "remaining": 5570
-      }
-    ]
-  },
-  "CUST021": {
-    "customer_name": "kanha Dairy",
-    "area": "Trand",
-    "credits": []
-  },
-  "CUST022": {
-    "customer_name": "Satyam",
-    "area": "Trand",
-    "credits": []
-  },
-  "CUST023": {
-    "customer_name": "Santosh Gupta",
-    "area": "Saman",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 6550,
-        "remaining": 6550
-      }
-    ]
-  },
-  "CUST024": {
-    "customer_name": "Dharmendra",
-    "area": "N B STND",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 4500,
-        "remaining": 4500
-      }
-    ]
-  },
-  "CUST025": {
-    "customer_name": "Satish LandMark",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 1000,
-        "remaining": 1000
-      }
-    ]
-  },
-  "CUST026": {
-    "customer_name": "Vivek Singh",
-    "area": "Landmark",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 4400,
-        "remaining": 4400
-      }
-    ]
-  },
-  "CUST027": {
-    "customer_name": "Akku (RTO)",
-    "area": "RTO Office",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 2690,
-        "remaining": 2690
-      }
-    ]
-  },
-  "CUST028": {
-    "customer_name": "Pramod",
-    "area": "Saman",
-    "credits": []
-  },
-  "CUST029": {
-    "customer_name": "Abhilash",
-    "area": "Saman",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 2900,
-        "remaining": 2900
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 43060,
-        "remaining": 43060
-      }
-    ]
-  },
-  "CUST030": {
-    "customer_name": "Ram Ujagar",
-    "area": "Saman",
-    "credits": []
-  },
-  "CUST031": {
-    "customer_name": "BALMIKI",
-    "area": "SAMAN",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 64333,
-        "remaining": 64333
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 15350,
-        "remaining": 15350
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 16800,
-        "remaining": 16800
-      },
-      {
-        "date": "2026-05-05",
-        "amount": 13000,
-        "remaining": 13000
-      },
-      {
-        "date": "2026-05-06",
-        "amount": 18000,
-        "remaining": 18000
-      }
-    ]
-  },
-  "CUST032": {
-    "customer_name": "Jeewan",
-    "area": "SAMAN",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 58723,
-        "remaining": 58723
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 9450,
-        "remaining": 9450
-      }
-    ]
-  },
-  "CUST033": {
-    "customer_name": "Mohan RTO",
-    "area": "RTO Office",
-    "credits": []
-  },
-  "CUST034": {
-    "customer_name": "Pankaj (ratahra)",
-    "area": "Ratahra",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 2520,
-        "remaining": 2520
-      }
-    ]
-  },
-  "CUST035": {
-    "customer_name": "Sudhir",
-    "area": "Ratahra",
-    "credits": []
-  },
-  "CUST036": {
-    "customer_name": "Rajesh (NBS)",
-    "area": "NBS",
-    "credits": []
-  },
-  "CUST037": {
-    "customer_name": "Munna Singh",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 2070,
-        "remaining": 2070
-      }
-    ]
-  },
-  "CUST038": {
-    "customer_name": "Shivendra",
-    "area": "Neem Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 4950,
-        "remaining": 4950
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 31600,
-        "remaining": 31600
-      }
-    ]
-  },
-  "CUST039": {
-    "customer_name": "Neem Chowk",
-    "area": "Neem Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 9650,
-        "remaining": 9650
-      }
-    ]
-  },
-  "CUST040": {
-    "customer_name": "Raja Sahu",
-    "area": "Stadium",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 11600,
-        "remaining": 11600
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 2800,
-        "remaining": 2800
-      }
-    ]
-  },
-  "CUST041": {
-    "customer_name": "Raj Stadium",
-    "area": "Stadium",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 650,
-        "remaining": 650
-      }
-    ]
-  },
-  "CUST042": {
-    "customer_name": "Umesh #Manish",
-    "area": "Khutehi",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 350,
-        "remaining": 350
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 8190,
-        "remaining": 8190
-      }
-    ]
-  },
-  "CUST043": {
-    "customer_name": "Vijay Tea Rewa Js",
-    "area": "Stadium",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 6000,
-        "remaining": 6000
-      }
-    ]
-  },
-  "CUST044": {
-    "customer_name": "Brijnath (Khutehi)",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 5420,
-        "remaining": 5420
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 3610,
-        "remaining": 3610
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 6800,
-        "remaining": 6800
-      },
-      {
-        "date": "2026-05-05",
-        "amount": 3250,
-        "remaining": 3250
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 3250,
-        "remaining": 3250
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 48050,
-        "remaining": 48050
-      }
-    ]
-  },
-  "CUST045": {
-    "customer_name": "Manish (Khutehi)",
-    "area": "Khutehi",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 250,
-        "remaining": 250
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 10000,
-        "remaining": 10000
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 18900,
-        "remaining": 18900
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 65860,
-        "remaining": 65860
-      }
-    ]
-  },
-  "CUST046": {
-    "customer_name": "Sanjay (Anantpur)",
-    "area": "Anantpur Mod",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 21260,
-        "remaining": 21260
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 900,
-        "remaining": 900
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 5542,
-        "remaining": 5542
-      }
-    ]
-  },
-  "CUST047": {
-    "customer_name": "Golu Itaora",
-    "area": "Itaora",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 7410,
-        "remaining": 7410
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 6400,
-        "remaining": 6400
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 30000,
-        "remaining": 30000
-      },
-      {
-        "date": "2026-05-05",
-        "amount": 42000,
-        "remaining": 42000
-      }
-    ]
-  },
-  "CUST048": {
-    "customer_name": "Ramjee",
-    "area": "Janta clg",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 1080,
-        "remaining": 1080
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 900,
-        "remaining": 900
-      }
-    ]
-  },
-  "CUST049": {
-    "customer_name": "Sujit Janta Clg",
-    "area": "Janta clg",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 10660,
-        "remaining": 10660
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 14500,
-        "remaining": 14500
-      },
-      {
-        "date": "2026-05-05",
-        "amount": 13000,
-        "remaining": 13000
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 10080,
-        "remaining": 10080
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 3700,
-        "remaining": 3700
-      }
-    ]
-  },
-  "CUST050": {
-    "customer_name": "Deepak Janta CLG",
-    "area": "Janta clg",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 3780,
-        "remaining": 3780
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 6200,
-        "remaining": 6200
-      }
-    ]
-  },
-  "CUST051": {
-    "customer_name": "Rahul Panday",
-    "area": "Janta clg",
-    "credits": []
-  },
-  "CUST052": {
-    "customer_name": "Arun Varma",
-    "area": "Boda Bagh",
-    "credits": []
-  },
-  "CUST053": {
-    "customer_name": "Manish (OldBalance)",
-    "area": "Old",
-    "credits": [
-      {
-        "date": "2026-05-09",
-        "amount": 188155,
-        "remaining": 188155
-      }
-    ]
-  },
-  "CUST054": {
-    "customer_name": "Safar (Auto)",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 1700,
-        "remaining": 1700
-      }
-    ]
-  },
-  "CUST055": {
-    "customer_name": "Kunj Bihari",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 5650,
-        "remaining": 5650
-      }
-    ]
-  },
-  "CUST056": {
-    "customer_name": "Love Kush (JP)",
-    "area": "Unassigned",
-    "credits": []
-  },
-  "CUST057": {
-    "customer_name": "Pankaj Gammal",
-    "area": "Unassigned",
-    "credits": []
-  },
-  "CUST058": {
-    "customer_name": "Ram Sumiran",
-    "area": "Unassigned",
-    "credits": []
-  },
-  "CUST059": {
-    "customer_name": "Pushpendra",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 1300,
-        "remaining": 1300
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 5685,
-        "remaining": 5685
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 10400,
-        "remaining": 10400
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 10140,
-        "remaining": 10140
-      }
-    ]
-  },
-  "CUST060": {
-    "customer_name": "Golu Landmark",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 2280,
-        "remaining": 2280
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 5200,
-        "remaining": 5200
-      },
-      {
-        "date": "2026-05-05",
-        "amount": 1300,
-        "remaining": 1300
-      },
-      {
-        "date": "2026-05-06",
-        "amount": 2275,
-        "remaining": 2275
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 6500,
-        "remaining": 6500
-      }
-    ]
-  },
-  "CUST061": {
-    "customer_name": "Veeru",
-    "area": "Unassigned",
-    "credits": []
-  },
-  "CUST062": {
-    "customer_name": "Rampal",
-    "area": "Gadhariya mod",
-    "credits": []
-  },
-  "CUST063": {
-    "customer_name": "Neeraj",
-    "area": "khutehu",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 5450,
-        "remaining": 5450
-      }
-    ]
-  },
-  "CUST064": {
-    "customer_name": "Rajesh Maidani",
-    "area": "Unassigned",
-    "credits": []
-  },
-  "CUST065": {
-    "customer_name": "Abhishek Itaura",
-    "area": "Itaora",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 6500,
-        "remaining": 6500
-      }
-    ]
-  },
-  "CUST066": {
-    "customer_name": "Sunil",
-    "area": "Neem Chowk",
-    "credits": []
-  },
-  "CUST067": {
-    "customer_name": "NIJAM",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 2710,
-        "remaining": 2710
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 146400,
-        "remaining": 146400
-      }
-    ]
-  },
-  "CUST068": {
-    "customer_name": "Sanny Chhoti Pul",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 13692,
-        "remaining": 13692
-      }
-    ]
-  },
-  "CUST069": {
-    "customer_name": "Anup",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 21735,
-        "remaining": 21735
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 44100,
-        "remaining": 44100
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 142000,
-        "remaining": 142000
-      }
-    ]
-  },
-  "CUST070": {
-    "customer_name": "Jagat Gorelal",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 3200,
-        "remaining": 3200
-      }
-    ]
-  },
-  "CUST071": {
-    "customer_name": "GorelalNetaG",
-    "area": "Jai Stambh",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 30230,
-        "remaining": 30230
-      }
-    ]
-  },
-  "CUST072": {
-    "customer_name": "Baba",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 900,
-        "remaining": 900
-      }
-    ]
-  },
-  "CUST073": {
-    "customer_name": "Shantosh (Old BS)",
-    "area": "Old Bus Stand",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 3100,
-        "remaining": 3100
-      }
-    ]
-  },
-  "CUST074": {
-    "customer_name": "Abhishek (Gopal)",
-    "area": "Bus stand",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 82410,
-        "remaining": 82410
-      }
-    ]
-  },
-  "CUST075": {
-    "customer_name": "Lala Thela",
-    "area": "Old Bus Stand",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 300,
-        "remaining": 300
-      }
-    ]
-  },
-  "CUST076": {
-    "customer_name": "R K Varma",
-    "area": "Mrignaini",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 500,
-        "remaining": 500
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 6820,
-        "remaining": 6820
-      }
-    ]
-  },
-  "CUST077": {
-    "customer_name": "Agrawal Juice",
-    "area": "Shilpi Plaza",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 24110,
-        "remaining": 24110
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 55270,
-        "remaining": 55270
-      }
-    ]
-  },
-  "CUST078": {
-    "customer_name": "Sanjay (S. hsptl)",
-    "area": "Super",
-    "credits": []
-  },
-  "CUST079": {
-    "customer_name": "Pappu Sindhi",
-    "area": "P Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 1450,
-        "remaining": 1450
-      }
-    ]
-  },
-  "CUST080": {
-    "customer_name": "Aslam  Bhai",
-    "area": "P Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 1360,
-        "remaining": 1360
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 1050,
-        "remaining": 1050
-      }
-    ]
-  },
-  "CUST081": {
-    "customer_name": "Amritlal",
-    "area": "H Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 5610,
-        "remaining": 5610
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 1650,
-        "remaining": 1650
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 1450,
-        "remaining": 1450
-      }
-    ]
-  },
-  "CUST082": {
-    "customer_name": "Satyam (Chhedi)",
-    "area": "H Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 8850,
-        "remaining": 8850
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 3858,
-        "remaining": 3858
-      }
-    ]
-  },
-  "CUST083": {
-    "customer_name": "Mukesh Sindhi",
-    "area": "H Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 16080,
-        "remaining": 16080
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 4500,
-        "remaining": 4500
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 3600,
-        "remaining": 3600
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 8215,
-        "remaining": 8215
-      }
-    ]
-  },
-  "CUST084": {
-    "customer_name": "Munna Pyare",
-    "area": "H Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 2260,
-        "remaining": 2260
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 4250,
-        "remaining": 4250
-      }
-    ]
-  },
-  "CUST085": {
-    "customer_name": "Shubham (H,Chwk)",
-    "area": "H Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 5380,
-        "remaining": 5380
-      }
-    ]
-  },
-  "CUST086": {
-    "customer_name": "Raju Taj Pen",
-    "area": "Ghoda Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 2600,
-        "remaining": 2600
-      }
-    ]
-  },
-  "CUST087": {
-    "customer_name": "RamCharitra",
-    "area": "Sai Baba",
-    "credits": []
-  },
-  "CUST088": {
-    "customer_name": "RamDyal",
-    "area": "Sai Baba",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 3050,
-        "remaining": 3050
-      }
-    ]
-  },
-  "CUST089": {
-    "customer_name": "Vijay",
-    "area": "Mrignaini",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 3100,
-        "remaining": 3100
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 3100,
-        "remaining": 3100
-      }
-    ]
-  },
-  "CUST090": {
-    "customer_name": "Rahul Ka Papa",
-    "area": "Mrignaini",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 3160,
-        "remaining": 3160
-      }
-    ]
-  },
-  "CUST091": {
-    "customer_name": "Rahul Radha",
-    "area": "Mrignaini",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 4930,
-        "remaining": 4930
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 1600,
-        "remaining": 1600
-      }
-    ]
-  },
-  "CUST092": {
-    "customer_name": "Jeetendra",
-    "area": "Mrignaini",
-    "credits": []
-  },
-  "CUST093": {
-    "customer_name": "Babbu Gupta",
-    "area": "Mrignaini",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 11040,
-        "remaining": 11040
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 665,
-        "remaining": 665
-      }
-    ]
-  },
-  "CUST094": {
-    "customer_name": "Jeetendra Babbu",
-    "area": "Sai Baba",
-    "credits": []
-  },
-  "CUST095": {
-    "customer_name": "Mama",
-    "area": "Mrignaini",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 9150,
-        "remaining": 9150
-      }
-    ]
-  },
-  "CUST096": {
-    "customer_name": "Rajkumar Gupta",
-    "area": "Mrignaini",
-    "credits": [
-      {
-        "date": "2026-05-08",
-        "amount": 7130,
-        "remaining": 7130
-      }
-    ]
-  },
-  "CUST097": {
-    "customer_name": "Mukesh Ki Amma",
-    "area": "Dhobiya",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 8050,
-        "remaining": 8050
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 8740,
-        "remaining": 8740
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 18000,
-        "remaining": 18000
-      },
-      {
-        "date": "2026-05-05",
-        "amount": 5750,
-        "remaining": 5750
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 8250,
-        "remaining": 8250
-      }
-    ]
-  },
-  "CUST098": {
-    "customer_name": "SAMBHU SAHU",
-    "area": "Dhobiya",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 75933,
-        "remaining": 75933
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 54000,
-        "remaining": 54000
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 15600,
-        "remaining": 15600
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 1640,
-        "remaining": 1640
-      }
-    ]
-  },
-  "CUST099": {
-    "customer_name": "Lakhan (Shambhu)",
-    "area": "Dhobiya",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 70150,
-        "remaining": 70150
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 3000,
-        "remaining": 3000
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 32360,
-        "remaining": 32360
-      },
-      {
-        "date": "2026-05-05",
-        "amount": 13500,
-        "remaining": 13500
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 30250,
-        "remaining": 30250
-      }
-    ]
-  },
-  "CUST100": {
-    "customer_name": "Chhedi Shankar",
-    "area": "Dhobiya",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 5600,
-        "remaining": 5600
-      }
-    ]
-  },
-  "CUST101": {
-    "customer_name": "Betu",
-    "area": "Dhobiya",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 1420,
-        "remaining": 1420
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 3720,
-        "remaining": 3720
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 3575,
-        "remaining": 3575
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 3250,
-        "remaining": 3250
-      }
-    ]
-  },
-  "CUST102": {
-    "customer_name": "Kamal",
-    "area": "Dhobiya",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 500,
-        "remaining": 500
-      }
-    ]
-  },
-  "CUST103": {
-    "customer_name": "Bhaiyan (Dtanki)",
-    "area": "Dhobiya",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 14020,
-        "remaining": 14020
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 9100,
-        "remaining": 9100
-      }
-    ]
-  },
-  "CUST104": {
-    "customer_name": "Vijay Tea Rewa Js",
-    "area": "Dhobiya",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 4480,
-        "remaining": 4480
-      }
-    ]
-  },
-  "CUST105": {
-    "customer_name": "Shahnawaz",
-    "area": "Bansagar",
-    "credits": []
-  },
-  "CUST106": {
-    "customer_name": "Munna (PTS)",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 25070,
-        "remaining": 25070
-      }
-    ]
-  },
-  "CUST107": {
-    "customer_name": "Rewa Hospital",
-    "area": "Bansagar",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 5340,
-        "remaining": 5340
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 1100,
-        "remaining": 1100
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 3100,
-        "remaining": 3100
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 3840,
-        "remaining": 3840
-      }
-    ]
-  },
-  "CUST108": {
-    "customer_name": "Rajju (PTS)",
-    "area": "PTS",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 2052,
-        "remaining": 2052
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 6200,
-        "remaining": 6200
-      },
-      {
-        "date": "2026-05-05",
-        "amount": 3000,
-        "remaining": 3000
-      },
-      {
-        "date": "2026-05-06",
-        "amount": 6500,
-        "remaining": 6500
-      }
-    ]
-  },
-  "CUST109": {
-    "customer_name": "Bittu Rajju (PTS)",
-    "area": "PTS",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 23875,
-        "remaining": 23875
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 2100,
-        "remaining": 2100
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 1400,
-        "remaining": 1400
-      }
-    ]
-  },
-  "CUST110": {
-    "customer_name": "Ajay (Chirahula)",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 3290,
-        "remaining": 3290
-      }
-    ]
-  },
-  "CUST111": {
-    "customer_name": "Dinesh (Ramdeen)",
-    "area": "SF Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 18955,
-        "remaining": 18955
-      }
-    ]
-  },
-  "CUST112": {
-    "customer_name": "Shiv Das (FS)",
-    "area": "SF Chowk",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 12140,
-        "remaining": 12140
-      }
-    ]
-  },
-  "CUST113": {
-    "customer_name": "jeetu (Chirahula)",
-    "area": "Chirahula",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 10390,
-        "remaining": 10390
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 3320,
-        "remaining": 3320
-      },
-      {
-        "date": "2026-05-05",
-        "amount": 6500,
-        "remaining": 6500
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 3250,
-        "remaining": 3250
-      }
-    ]
-  },
-  "CUST114": {
-    "customer_name": "Cash",
-    "area": "Rewa",
-    "credits": []
-  },
-  "CUST115": {
-    "customer_name": "Rajkumar (Raj)",
-    "area": "SF Chowk",
-    "credits": []
-  },
-  "CUST116": {
-    "customer_name": "Nirmala",
-    "area": "Bichhiya",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 4481,
-        "remaining": 4481
-      }
-    ]
-  },
-  "CUST117": {
-    "customer_name": "Arun",
-    "area": "SF Chowk",
-    "credits": []
-  },
-  "CUST118": {
-    "customer_name": "Rohit Auto",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 15400,
-        "remaining": 15400
-      }
-    ]
-  },
-  "CUST119": {
-    "customer_name": "Rjendra",
-    "area": "Kuthuliya",
-    "credits": []
-  },
-  "CUST120": {
-    "customer_name": "Shyam (PTS)",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 350,
-        "remaining": 350
-      }
-    ]
-  },
-  "CUST121": {
-    "customer_name": "Sanjog",
-    "area": "Unassigned",
-    "credits": []
-  },
-  "CUST122": {
-    "customer_name": "Anurag kela",
-    "area": "Unassigned",
-    "credits": []
-  },
-  "CUST123": {
-    "customer_name": "Vicky",
-    "area": "Mrignaini",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 28210,
-        "remaining": 28210
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 3400,
-        "remaining": 3400
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 12800,
-        "remaining": 12800
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 3600,
-        "remaining": 3600
-      }
-    ]
-  },
-  "CUST124": {
-    "customer_name": "Radha Gupta",
-    "area": "Mrignaini",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 10150,
-        "remaining": 10150
-      }
-    ]
-  },
-  "CUST125": {
-    "customer_name": "Polo",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 3800,
-        "remaining": 3800
-      }
-    ]
-  },
-  "CUST126": {
-    "customer_name": "Rajnish",
-    "area": "RewaHSPTL",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 3940,
-        "remaining": 3940
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 10000,
-        "remaining": 10000
-      },
-      {
-        "date": "2026-05-05",
-        "amount": 10200,
-        "remaining": 10200
-      }
-    ]
-  },
-  "CUST127": {
-    "customer_name": "Deepak kela",
-    "area": "Unassigned",
-    "credits": []
-  },
-  "CUST128": {
-    "customer_name": "Manish Jaiswal",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 1800,
-        "remaining": 1800
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 1000,
-        "remaining": 1000
-      }
-    ]
-  },
-  "CUST129": {
-    "customer_name": "jeetendra Sidhi",
-    "area": "sidhi",
-    "credits": []
-  },
-  "CUST130": {
-    "customer_name": "Bombay Juice",
-    "area": "Sidhi",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 5300,
-        "remaining": 5300
-      }
-    ]
-  },
-  "CUST131": {
-    "customer_name": "Raja Sidhi",
-    "area": "Sidhi",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 105530,
-        "remaining": 105530
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 35800,
-        "remaining": 35800
-      }
-    ]
-  },
-  "CUST132": {
-    "customer_name": "Husain",
-    "area": "Chhatarpur",
-    "credits": []
-  },
-  "CUST133": {
-    "customer_name": "Rahul",
-    "area": "Sidhi",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 46400,
-        "remaining": 46400
-      }
-    ]
-  },
-  "CUST134": {
-    "customer_name": "Jeetendra",
-    "area": "Waidhan",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 10720,
-        "remaining": 10720
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 140620,
-        "remaining": 140620
-      }
-    ]
-  },
-  "CUST135": {
-    "customer_name": "Sonu Gupta",
-    "area": "Nawanagar",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 7753,
-        "remaining": 7753
-      }
-    ]
-  },
-  "CUST136": {
-    "customer_name": "Rinku Albd",
-    "area": "ALBD",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 119410,
-        "remaining": 119410
-      }
-    ]
-  },
-  "CUST137": {
-    "customer_name": "Sahil",
-    "area": "Rampur",
-    "credits": []
-  },
-  "CUST138": {
-    "customer_name": "Amar Satna",
-    "area": "Satna",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 20000,
-        "remaining": 20000
-      }
-    ]
-  },
-  "CUST139": {
-    "customer_name": "Sahil Satna",
-    "area": "Satna",
-    "credits": []
-  },
-  "CUST140": {
-    "customer_name": "Ramesh",
-    "area": "Mirzapur",
-    "credits": [
-      {
-        "date": "2026-05-08",
-        "amount": 80000,
-        "remaining": 80000
-      }
-    ]
-  },
-  "CUST141": {
-    "customer_name": "Rakesh (Sdl)",
-    "area": "Shahdol",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 6800,
-        "remaining": 6800
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 20200,
-        "remaining": 20200
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 5100,
-        "remaining": 5100
-      },
-      {
-        "date": "2026-05-05",
-        "amount": 54000,
-        "remaining": 54000
-      }
-    ]
-  },
-  "CUST142": {
-    "customer_name": "Pradeep Katni",
-    "area": "Katni",
-    "credits": [
-      {
-        "date": "2026-05-03",
-        "amount": 14000,
-        "remaining": 14000
-      },
-      {
-        "date": "2026-05-04",
-        "amount": 16640,
-        "remaining": 16640
-      },
-      {
-        "date": "2026-05-05",
-        "amount": 14500,
-        "remaining": 14500
-      },
-      {
-        "date": "2026-05-06",
-        "amount": 27470,
-        "remaining": 27470
-      },
-      {
-        "date": "2026-05-08",
-        "amount": 120350,
-        "remaining": 120350
-      }
-    ]
-  },
-  "CUST143": {
-    "customer_name": "Ashish",
-    "area": "Mangawan",
-    "credits": []
-  },
-  "CUST144": {
-    "customer_name": "Ahmad (Gopiganj)",
-    "area": "Unassigned",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 6600,
-        "remaining": 6600
-      },
-      {
-        "date": "2026-05-03",
-        "amount": 18000,
-        "remaining": 18000
-      }
-    ]
-  },
-  "CUST145": {
-    "customer_name": "Kallu",
-    "area": "MRZPR",
-    "credits": [
-      {
-        "date": "2026-05-08",
-        "amount": 62000,
-        "remaining": 62000
-      }
-    ]
-  },
-  "CUST146": {
-    "customer_name": "Shakeel",
-    "area": "MRZPR",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 14070,
-        "remaining": 14070
-      },
-      {
-        "date": "2026-05-09",
-        "amount": 84600,
-        "remaining": 84600
-      }
-    ]
-  },
-  "CUST147": {
-    "customer_name": "Waseem (Shanu)",
-    "area": "Jabalpur",
-    "credits": [
-      {
-        "date": "2026-03-25",
-        "amount": 187200,
-        "remaining": 187200
-      }
-    ]
-  }
+    "CUST001": {
+        "customer_name": "Arun",
+        "area": "Dekaha",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 900,
+                "remaining": 900
+            }
+        ]
+    },
+    "CUST002": {
+        "customer_name": "Vimal",
+        "area": "S Cwk",
+        "credits": []
+    },
+    "CUST003": {
+        "customer_name": "Rajesh (Baba)",
+        "area": "Dekaha",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 9310,
+                "remaining": 9310
+            }
+        ]
+    },
+    "CUST004": {
+        "customer_name": "Kamal Dhekaha",
+        "area": "Dhekaha",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 70460,
+                "remaining": 70460
+            }
+        ]
+    },
+    "CUST005": {
+        "customer_name": "Ajay",
+        "area": "S Cwk",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 440,
+                "remaining": 440
+            }
+        ]
+    },
+    "CUST006": {
+        "customer_name": "Sahil Rajak",
+        "area": "Badi Pul",
+        "credits": []
+    },
+    "CUST007": {
+        "customer_name": "Kapil Gupta",
+        "area": "Dhekaha",
+        "credits": [
+            {
+                "date": "2026-05-08",
+                "amount": 9000,
+                "remaining": 9000
+            }
+        ]
+    },
+    "CUST008": {
+        "customer_name": "Sonu Pandit",
+        "area": "S Chowk",
+        "credits": []
+    },
+    "CUST009": {
+        "customer_name": "Shambhu",
+        "area": "S Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 2956,
+                "remaining": 2956
+            }
+        ]
+    },
+    "CUST010": {
+        "customer_name": "Dinesh (Shambhu)",
+        "area": "S Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 500,
+                "remaining": 500
+            }
+        ]
+    },
+    "CUST011": {
+        "customer_name": "HARIOM JUICE",
+        "area": "S Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 37335,
+                "remaining": 37335
+            }
+        ]
+    },
+    "CUST012": {
+        "customer_name": "Shivam",
+        "area": "S Chowk",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 4800,
+                "remaining": 4800
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 6500,
+                "remaining": 6500
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 6500,
+                "remaining": 6500
+            }
+        ]
+    },
+    "CUST013": {
+        "customer_name": "Vikash",
+        "area": "Bajrang Nagar",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 6960,
+                "remaining": 6960
+            },
+            {
+                "date": "2026-05-09",
+                "amount": 3150,
+                "remaining": 3150
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 1800,
+                "remaining": 1800
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 12000,
+                "remaining": 12000
+            }
+        ]
+    },
+    "CUST014": {
+        "customer_name": "Amit Gupta",
+        "area": "Bajrang Nagar",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 40000,
+                "remaining": 40000
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 7900,
+                "remaining": 7900
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 9450,
+                "remaining": 9450
+            }
+        ]
+    },
+    "CUST015": {
+        "customer_name": "Santosh Patel",
+        "area": "Trand",
+        "credits": []
+    },
+    "CUST016": {
+        "customer_name": "PURSHOTTAM",
+        "area": "Trand",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 9210,
+                "remaining": 9210
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 7040,
+                "remaining": 7040
+            }
+        ]
+    },
+    "CUST017": {
+        "customer_name": "Rajbahor",
+        "area": "N Nagar",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 2320,
+                "remaining": 2320
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 400,
+                "remaining": 400
+            }
+        ]
+    },
+    "CUST018": {
+        "customer_name": "Ram Sajeevan",
+        "area": "Saman",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 8000,
+                "remaining": 8000
+            }
+        ]
+    },
+    "CUST019": {
+        "customer_name": "kanha Dairy",
+        "area": "Trand",
+        "credits": []
+    },
+    "CUST020": {
+        "customer_name": "Satyam",
+        "area": "Trand",
+        "credits": []
+    },
+    "CUST021": {
+        "customer_name": "Santosh Gupta",
+        "area": "Saman",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 6550,
+                "remaining": 6550
+            }
+        ]
+    },
+    "CUST022": {
+        "customer_name": "Dharmendra",
+        "area": "N B STND",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 4500,
+                "remaining": 4500
+            }
+        ]
+    },
+    "CUST023": {
+        "customer_name": "Satish LandMark",
+        "area": "9165767579",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 1000,
+                "remaining": 1000
+            }
+        ]
+    },
+    "CUST024": {
+        "customer_name": "Vivek Singh",
+        "area": "Landmark",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 4400,
+                "remaining": 4400
+            }
+        ]
+    },
+    "CUST025": {
+        "customer_name": "Akku (RTO)",
+        "area": "RTO Office",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 2690,
+                "remaining": 2690
+            }
+        ]
+    },
+    "CUST026": {
+        "customer_name": "Pramod",
+        "area": "Saman",
+        "credits": []
+    },
+    "CUST027": {
+        "customer_name": "Abhilash",
+        "area": "Saman",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 2900,
+                "remaining": 2900
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 43060,
+                "remaining": 43060
+            }
+        ]
+    },
+    "CUST028": {
+        "customer_name": "Ram Ujagar",
+        "area": "Saman",
+        "credits": []
+    },
+    "CUST029": {
+        "customer_name": "BALMIKI",
+        "area": "SAMAN",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 64333,
+                "remaining": 64333
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 15350,
+                "remaining": 15350
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 16800,
+                "remaining": 16800
+            },
+            {
+                "date": "2026-05-05",
+                "amount": 13000,
+                "remaining": 13000
+            },
+            {
+                "date": "2026-05-06",
+                "amount": 18000,
+                "remaining": 18000
+            }
+        ]
+    },
+    "CUST030": {
+        "customer_name": "Jeewan",
+        "area": "SAMAN",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 58723,
+                "remaining": 58723
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 9450,
+                "remaining": 9450
+            }
+        ]
+    },
+    "CUST031": {
+        "customer_name": "Mohan RTO",
+        "area": "RTO Office",
+        "credits": []
+    },
+    "CUST032": {
+        "customer_name": "Pankaj (ratahra)",
+        "area": "Ratahra",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 2520,
+                "remaining": 2520
+            }
+        ]
+    },
+    "CUST033": {
+        "customer_name": "Sudhir",
+        "area": "Ratahra",
+        "credits": []
+    },
+    "CUST034": {
+        "customer_name": "Rajesh (NBS)",
+        "area": "NBS",
+        "credits": []
+    },
+    "CUST035": {
+        "customer_name": "Shivendra",
+        "area": "Neem Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 4950,
+                "remaining": 4950
+            },
+            {
+                "date": "2026-05-09",
+                "amount": 31600,
+                "remaining": 31600
+            }
+        ]
+    },
+    "CUST036": {
+        "customer_name": "Neem Chowk",
+        "area": "Neem Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 9650,
+                "remaining": 9650
+            }
+        ]
+    },
+    "CUST037": {
+        "customer_name": "Raja Sahu",
+        "area": "Stadium",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 11600,
+                "remaining": 11600
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 2800,
+                "remaining": 2800
+            }
+        ]
+    },
+    "CUST038": {
+        "customer_name": "Raj Stadium",
+        "area": "Stadium",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 650,
+                "remaining": 650
+            }
+        ]
+    },
+    "CUST039": {
+        "customer_name": "Umesh #Manish",
+        "area": "Khutehi",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 350,
+                "remaining": 350
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 8190,
+                "remaining": 8190
+            }
+        ]
+    },
+    "CUST040": {
+        "customer_name": "Vijay Tea Rewa Js",
+        "area": "Stadium",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 6000,
+                "remaining": 6000
+            }
+        ]
+    },
+    "CUST041": {
+        "customer_name": "Brijnath (Khutehi)",
+        "area": "8370079247",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 5420,
+                "remaining": 5420
+            },
+            {
+                "date": "2026-05-09",
+                "amount": 48050,
+                "remaining": 48050
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 3610,
+                "remaining": 3610
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 6800,
+                "remaining": 6800
+            },
+            {
+                "date": "2026-05-05",
+                "amount": 3250,
+                "remaining": 3250
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 3250,
+                "remaining": 3250
+            }
+        ]
+    },
+    "CUST042": {
+        "customer_name": "Manish (Khutehi)",
+        "area": "Khutehi",
+        "credits": [
+            {
+                "date": "2026-05-09",
+                "amount": 65860,
+                "remaining": 65860
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 250,
+                "remaining": 250
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 10000,
+                "remaining": 10000
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 18900,
+                "remaining": 18900
+            }
+        ]
+    },
+    "CUST043": {
+        "customer_name": "Sanjay (Anantpur)",
+        "area": "Anantpur Mod",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 21260,
+                "remaining": 21260
+            },
+            {
+                "date": "2026-05-09",
+                "amount": 5542,
+                "remaining": 5542
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 900,
+                "remaining": 900
+            }
+        ]
+    },
+    "CUST044": {
+        "customer_name": "Golu Itaora",
+        "area": "Itaora",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 7410,
+                "remaining": 7410
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 6400,
+                "remaining": 6400
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 30000,
+                "remaining": 30000
+            },
+            {
+                "date": "2026-05-05",
+                "amount": 42000,
+                "remaining": 42000
+            }
+        ]
+    },
+    "CUST045": {
+        "customer_name": "Ramjee",
+        "area": "Janta clg",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 1080,
+                "remaining": 1080
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 900,
+                "remaining": 900
+            }
+        ]
+    },
+    "CUST046": {
+        "customer_name": "Sujit Janta Clg",
+        "area": "Janta clg",
+        "credits": [
+            {
+                "date": "2026-05-09",
+                "amount": 3700,
+                "remaining": 3700
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 10660,
+                "remaining": 10660
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 14500,
+                "remaining": 14500
+            },
+            {
+                "date": "2026-05-05",
+                "amount": 13000,
+                "remaining": 13000
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 10080,
+                "remaining": 10080
+            }
+        ]
+    },
+    "CUST047": {
+        "customer_name": "Deepak Janta CLG",
+        "area": "Janta clg",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 3780,
+                "remaining": 3780
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 6200,
+                "remaining": 6200
+            }
+        ]
+    },
+    "CUST048": {
+        "customer_name": "Rahul Panday",
+        "area": "Janta clg",
+        "credits": []
+    },
+    "CUST049": {
+        "customer_name": "Arun Varma",
+        "area": "Boda Bagh",
+        "credits": []
+    },
+    "CUST050": {
+        "customer_name": "Manish (OldBalance)",
+        "area": "Old",
+        "credits": [
+            {
+                "date": "2026-05-09",
+                "amount": 188155,
+                "remaining": 188155
+            }
+        ]
+    },
+    "CUST051": {
+        "customer_name": "Safar (Auto)",
+        "area": "7898282026",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 1700,
+                "remaining": 1700
+            }
+        ]
+    },
+    "CUST052": {
+        "customer_name": "Kunj Bihari",
+        "area": "9340300365",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 5650,
+                "remaining": 5650
+            }
+        ]
+    },
+    "CUST053": {
+        "customer_name": "Love Kush (JP)",
+        "area": "8839973430",
+        "credits": []
+    },
+    "CUST054": {
+        "customer_name": "Rampal",
+        "area": "Gadhariya mod",
+        "credits": []
+    },
+    "CUST055": {
+        "customer_name": "Neeraj",
+        "area": "khutehu",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 5450,
+                "remaining": 5450
+            }
+        ]
+    },
+    "CUST056": {
+        "customer_name": "Abhishek Itaura",
+        "area": "Itaora",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 6500,
+                "remaining": 6500
+            }
+        ]
+    },
+    "CUST057": {
+        "customer_name": "Sunil",
+        "area": "Neem Chowk",
+        "credits": []
+    },
+    "CUST058": {
+        "customer_name": "GorelalNetaG",
+        "area": "Jai Stambh",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 30230,
+                "remaining": 30230
+            }
+        ]
+    },
+    "CUST059": {
+        "customer_name": "Shantosh (Old BS)",
+        "area": "Old Bus Stand",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 3100,
+                "remaining": 3100
+            }
+        ]
+    },
+    "CUST060": {
+        "customer_name": "Abhishek (Gopal)",
+        "area": "Bus stand",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 82410,
+                "remaining": 82410
+            }
+        ]
+    },
+    "CUST061": {
+        "customer_name": "Lala Thela",
+        "area": "Old Bus Stand",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 300,
+                "remaining": 300
+            }
+        ]
+    },
+    "CUST062": {
+        "customer_name": "R K Varma",
+        "area": "Mrignaini",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 500,
+                "remaining": 500
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 6820,
+                "remaining": 6820
+            }
+        ]
+    },
+    "CUST063": {
+        "customer_name": "Agrawal Juice",
+        "area": "Shilpi Plaza",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 24110,
+                "remaining": 24110
+            },
+            {
+                "date": "2026-05-09",
+                "amount": 55270,
+                "remaining": 55270
+            }
+        ]
+    },
+    "CUST064": {
+        "customer_name": "Sanjay (S. hsptl)",
+        "area": "Super",
+        "credits": []
+    },
+    "CUST065": {
+        "customer_name": "Pappu Sindhi",
+        "area": "P Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 1450,
+                "remaining": 1450
+            }
+        ]
+    },
+    "CUST066": {
+        "customer_name": "Aslam  Bhai",
+        "area": "P Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 1360,
+                "remaining": 1360
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 1050,
+                "remaining": 1050
+            }
+        ]
+    },
+    "CUST067": {
+        "customer_name": "Amritlal",
+        "area": "H Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 5610,
+                "remaining": 5610
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 1650,
+                "remaining": 1650
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 1450,
+                "remaining": 1450
+            }
+        ]
+    },
+    "CUST068": {
+        "customer_name": "Satyam (Chhedi)",
+        "area": "H Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 8850,
+                "remaining": 8850
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 3858,
+                "remaining": 3858
+            }
+        ]
+    },
+    "CUST069": {
+        "customer_name": "Mukesh Sindhi",
+        "area": "H Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 16080,
+                "remaining": 16080
+            },
+            {
+                "date": "2026-05-09",
+                "amount": 8215,
+                "remaining": 8215
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 4500,
+                "remaining": 4500
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 3600,
+                "remaining": 3600
+            }
+        ]
+    },
+    "CUST070": {
+        "customer_name": "Munna Pyare",
+        "area": "H Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 2260,
+                "remaining": 2260
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 4250,
+                "remaining": 4250
+            }
+        ]
+    },
+    "CUST071": {
+        "customer_name": "Shubham (H,Chwk)",
+        "area": "H Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 5380,
+                "remaining": 5380
+            }
+        ]
+    },
+    "CUST072": {
+        "customer_name": "Raju Taj Pen",
+        "area": "Ghoda Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 2600,
+                "remaining": 2600
+            }
+        ]
+    },
+    "CUST073": {
+        "customer_name": "RamCharitra",
+        "area": "Sai Baba",
+        "credits": []
+    },
+    "CUST074": {
+        "customer_name": "RamDyal",
+        "area": "Sai Baba",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 3050,
+                "remaining": 3050
+            }
+        ]
+    },
+    "CUST075": {
+        "customer_name": "Vijay",
+        "area": "Mrignaini",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 3100,
+                "remaining": 3100
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 3100,
+                "remaining": 3100
+            }
+        ]
+    },
+    "CUST076": {
+        "customer_name": "Rahul Ka Papa",
+        "area": "Mrignaini",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 3160,
+                "remaining": 3160
+            }
+        ]
+    },
+    "CUST077": {
+        "customer_name": "Rahul Radha",
+        "area": "Mrignaini",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 4930,
+                "remaining": 4930
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 1600,
+                "remaining": 1600
+            }
+        ]
+    },
+    "CUST078": {
+        "customer_name": "Jeetendra",
+        "area": "Mrignaini",
+        "credits": []
+    },
+    "CUST079": {
+        "customer_name": "Babbu Gupta",
+        "area": "Mrignaini",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 11040,
+                "remaining": 11040
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 665,
+                "remaining": 665
+            }
+        ]
+    },
+    "CUST080": {
+        "customer_name": "Jeetendra Babbu",
+        "area": "Sai Baba",
+        "credits": []
+    },
+    "CUST081": {
+        "customer_name": "Mama",
+        "area": "Mrignaini",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 9150,
+                "remaining": 9150
+            }
+        ]
+    },
+    "CUST082": {
+        "customer_name": "Rajkumar Gupta",
+        "area": "Mrignaini",
+        "credits": [
+            {
+                "date": "2026-05-08",
+                "amount": 7130,
+                "remaining": 7130
+            }
+        ]
+    },
+    "CUST083": {
+        "customer_name": "Mukesh Ki Amma",
+        "area": "Dhobiya",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 8050,
+                "remaining": 8050
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 8740,
+                "remaining": 8740
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 18000,
+                "remaining": 18000
+            },
+            {
+                "date": "2026-05-05",
+                "amount": 5750,
+                "remaining": 5750
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 8250,
+                "remaining": 8250
+            }
+        ]
+    },
+    "CUST084": {
+        "customer_name": "SAMBHU SAHU",
+        "area": "Dhobiya",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 75933,
+                "remaining": 75933
+            },
+            {
+                "date": "2026-05-09",
+                "amount": 1640,
+                "remaining": 1640
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 54000,
+                "remaining": 54000
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 15600,
+                "remaining": 15600
+            }
+        ]
+    },
+    "CUST085": {
+        "customer_name": "Lakhan (Shambhu)",
+        "area": "Dhobiya",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 70150,
+                "remaining": 70150
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 3000,
+                "remaining": 3000
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 32360,
+                "remaining": 32360
+            },
+            {
+                "date": "2026-05-05",
+                "amount": 13500,
+                "remaining": 13500
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 30250,
+                "remaining": 30250
+            }
+        ]
+    },
+    "CUST086": {
+        "customer_name": "Chhedi Shankar",
+        "area": "Dhobiya",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 5600,
+                "remaining": 5600
+            }
+        ]
+    },
+    "CUST087": {
+        "customer_name": "Betu",
+        "area": "Dhobiya",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 1420,
+                "remaining": 1420
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 3720,
+                "remaining": 3720
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 3575,
+                "remaining": 3575
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 3250,
+                "remaining": 3250
+            }
+        ]
+    },
+    "CUST088": {
+        "customer_name": "Kamal",
+        "area": "Dhobiya",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 500,
+                "remaining": 500
+            }
+        ]
+    },
+    "CUST089": {
+        "customer_name": "Bhaiyan (Dtanki)",
+        "area": "Dhobiya",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 14020,
+                "remaining": 14020
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 9100,
+                "remaining": 9100
+            }
+        ]
+    },
+    "CUST090": {
+        "customer_name": "Vijay Tea Rewa Js",
+        "area": "Dhobiya",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 4480,
+                "remaining": 4480
+            }
+        ]
+    },
+    "CUST091": {
+        "customer_name": "Shahnawaz",
+        "area": "Bansagar",
+        "credits": []
+    },
+    "CUST092": {
+        "customer_name": "Rewa Hospital",
+        "area": "Bansagar",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 5340,
+                "remaining": 5340
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 1100,
+                "remaining": 1100
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 3100,
+                "remaining": 3100
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 3840,
+                "remaining": 3840
+            }
+        ]
+    },
+    "CUST093": {
+        "customer_name": "Rajju (PTS)",
+        "area": "PTS",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 2052,
+                "remaining": 2052
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 6200,
+                "remaining": 6200
+            },
+            {
+                "date": "2026-05-05",
+                "amount": 3000,
+                "remaining": 3000
+            },
+            {
+                "date": "2026-05-06",
+                "amount": 6500,
+                "remaining": 6500
+            }
+        ]
+    },
+    "CUST094": {
+        "customer_name": "Bittu Rajju (PTS)",
+        "area": "PTS",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 23875,
+                "remaining": 23875
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 2100,
+                "remaining": 2100
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 1400,
+                "remaining": 1400
+            }
+        ]
+    },
+    "CUST095": {
+        "customer_name": "Ajay (Chirahula)",
+        "area": "9752400138",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 3290,
+                "remaining": 3290
+            }
+        ]
+    },
+    "CUST096": {
+        "customer_name": "Dinesh (Ramdeen)",
+        "area": "SF Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 18955,
+                "remaining": 18955
+            }
+        ]
+    },
+    "CUST097": {
+        "customer_name": "Shiv Das (FS)",
+        "area": "SF Chowk",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 12140,
+                "remaining": 12140
+            }
+        ]
+    },
+    "CUST098": {
+        "customer_name": "jeetu (Chirahula)",
+        "area": "Chirahula",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 10390,
+                "remaining": 10390
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 3320,
+                "remaining": 3320
+            },
+            {
+                "date": "2026-05-05",
+                "amount": 6500,
+                "remaining": 6500
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 3250,
+                "remaining": 3250
+            }
+        ]
+    },
+    "CUST099": {
+        "customer_name": "Cash",
+        "area": "Rewa",
+        "credits": []
+    },
+    "CUST100": {
+        "customer_name": "Rajkumar (Raj)",
+        "area": "SF Chowk",
+        "credits": []
+    },
+    "CUST101": {
+        "customer_name": "Nirmala",
+        "area": "Bichhiya",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 4481,
+                "remaining": 4481
+            }
+        ]
+    },
+    "CUST102": {
+        "customer_name": "Arun",
+        "area": "SF Chowk",
+        "credits": []
+    },
+    "CUST103": {
+        "customer_name": "Rjendra",
+        "area": "Kuthuliya",
+        "credits": []
+    },
+    "CUST104": {
+        "customer_name": "Vicky",
+        "area": "Mrignaini",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 28210,
+                "remaining": 28210
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 3400,
+                "remaining": 3400
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 12800,
+                "remaining": 12800
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 3600,
+                "remaining": 3600
+            }
+        ]
+    },
+    "CUST105": {
+        "customer_name": "Radha Gupta",
+        "area": "Mrignaini",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 10150,
+                "remaining": 10150
+            }
+        ]
+    },
+    "CUST106": {
+        "customer_name": "Rajnish",
+        "area": "RewaHSPTL",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 3940,
+                "remaining": 3940
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 10000,
+                "remaining": 10000
+            },
+            {
+                "date": "2026-05-05",
+                "amount": 10200,
+                "remaining": 10200
+            }
+        ]
+    },
+    "CUST107": {
+        "customer_name": "jeetendra Sidhi",
+        "area": "sidhi",
+        "credits": []
+    },
+    "CUST108": {
+        "customer_name": "Bombay Juice",
+        "area": "Sidhi",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 5300,
+                "remaining": 5300
+            }
+        ]
+    },
+    "CUST109": {
+        "customer_name": "Raja Sidhi",
+        "area": "Sidhi",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 105530,
+                "remaining": 105530
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 35800,
+                "remaining": 35800
+            }
+        ]
+    },
+    "CUST110": {
+        "customer_name": "Husain",
+        "area": "Chhatarpur",
+        "credits": []
+    },
+    "CUST111": {
+        "customer_name": "Rahul",
+        "area": "Sidhi",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 46400,
+                "remaining": 46400
+            }
+        ]
+    },
+    "CUST112": {
+        "customer_name": "Jeetendra",
+        "area": "Waidhan",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 10720,
+                "remaining": 10720
+            },
+            {
+                "date": "2026-05-09",
+                "amount": 140620,
+                "remaining": 140620
+            }
+        ]
+    },
+    "CUST113": {
+        "customer_name": "Sonu Gupta",
+        "area": "Nawanagar",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 7753,
+                "remaining": 7753
+            }
+        ]
+    },
+    "CUST114": {
+        "customer_name": "Rinku Albd",
+        "area": "ALBD",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 119410,
+                "remaining": 119410
+            }
+        ]
+    },
+    "CUST115": {
+        "customer_name": "Sahil",
+        "area": "Rampur",
+        "credits": []
+    },
+    "CUST116": {
+        "customer_name": "Amar Satna",
+        "area": "Satna",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 20000,
+                "remaining": 20000
+            }
+        ]
+    },
+    "CUST117": {
+        "customer_name": "Sahil Satna",
+        "area": "Satna",
+        "credits": []
+    },
+    "CUST118": {
+        "customer_name": "Ramesh",
+        "area": "Mirzapur",
+        "credits": [
+            {
+                "date": "2026-05-08",
+                "amount": 80000,
+                "remaining": 80000
+            }
+        ]
+    },
+    "CUST119": {
+        "customer_name": "Rakesh (Sdl)",
+        "area": "Shahdol",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 6800,
+                "remaining": 6800
+            },
+            {
+                "date": "2026-05-03",
+                "amount": 20200,
+                "remaining": 20200
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 5100,
+                "remaining": 5100
+            },
+            {
+                "date": "2026-05-05",
+                "amount": 54000,
+                "remaining": 54000
+            }
+        ]
+    },
+    "CUST120": {
+        "customer_name": "Pradeep Katni",
+        "area": "Katni",
+        "credits": [
+            {
+                "date": "2026-05-03",
+                "amount": 14000,
+                "remaining": 14000
+            },
+            {
+                "date": "2026-05-04",
+                "amount": 16640,
+                "remaining": 16640
+            },
+            {
+                "date": "2026-05-05",
+                "amount": 14500,
+                "remaining": 14500
+            },
+            {
+                "date": "2026-05-06",
+                "amount": 27470,
+                "remaining": 27470
+            },
+            {
+                "date": "2026-05-08",
+                "amount": 120350,
+                "remaining": 120350
+            }
+        ]
+    },
+    "CUST121": {
+        "customer_name": "Ashish",
+        "area": "Mangawan",
+        "credits": []
+    },
+    "CUST122": {
+        "customer_name": "Kallu",
+        "area": "MRZPR",
+        "credits": [
+            {
+                "date": "2026-05-08",
+                "amount": 62000,
+                "remaining": 62000
+            }
+        ]
+    },
+    "CUST123": {
+        "customer_name": "Shakeel",
+        "area": "MRZPR",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 14070,
+                "remaining": 14070
+            },
+            {
+                "date": "2026-05-09",
+                "amount": 84600,
+                "remaining": 84600
+            }
+        ]
+    },
+    "CUST124": {
+        "customer_name": "Waseem (Shanu)",
+        "area": "Jabalpur",
+        "credits": [
+            {
+                "date": "2026-03-25",
+                "amount": 187200,
+                "remaining": 187200
+            }
+        ]
+    }
 }

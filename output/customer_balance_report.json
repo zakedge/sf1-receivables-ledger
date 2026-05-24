@@ -1,19 +1,54 @@
 {
     "status": "SUCCESS",
-    "customer_id": "CUST005",
-    "customer_name": "ABC",
+    "customer_id": "CUST136",
+    "customer_name": "Rinku Albd",
     "area": "ALBD",
-    "payment_date": "2026-03-10",
-    "payment_amount": 56,
+    "payment_date": "2026-05-24",
+    "payment_amount": 100,
+    "payment_mode": "UPI",
     "allocation_method": "FIFO",
-    "target_date": null,
-    "updated_credits": [],
-    "advance_payment": 56,
-    "total_pending": 0,
-    "previous_total_pending": 0,
+    "target_date": "2026-03-25",
+    "updated_credits": [
+        {
+            "date": "2026-03-25",
+            "amount": 119410,
+            "remaining": 119206,
+            "modified_date": "2026-05-24T05:59:42",
+            "modified_by": "Azhar"
+        },
+        {
+            "date": "2026-05-24",
+            "amount": 20,
+            "remaining": 20,
+            "created_at": "2026-05-24T05:46:04",
+            "modified_date": "2026-05-24T05:59:42",
+            "modified_by": "Azhar"
+        }
+    ],
+    "advance_payment": 0,
+    "total_pending": 119226,
+    "previous_total_pending": 119326,
+    "created_by": "Azhar",
     "aging": {
-        "last_7_days": [],
-        "old_balance": 0,
-        "old_balance_breakdown": []
+        "last_7_days": [
+            {
+                "date": "2026-05-24",
+                "amount": 20,
+                "remaining": 20,
+                "created_at": "2026-05-24T05:46:04",
+                "modified_date": "2026-05-24T05:59:42",
+                "modified_by": "Azhar"
+            }
+        ],
+        "old_balance": 119206,
+        "old_balance_breakdown": [
+            {
+                "date": "2026-03-25",
+                "amount": 119410,
+                "remaining": 119206,
+                "modified_date": "2026-05-24T05:59:42",
+                "modified_by": "Azhar"
+            }
+        ]
     }
 }
