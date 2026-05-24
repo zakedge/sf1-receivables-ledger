@@ -1,9 +1,12 @@
+import contextvars
 import json
 import sys
 import threading
 
 
 _PATCH_TIMER_STARTED = False
+_PAYMENT_MODE_CONTEXT = contextvars.ContextVar("payment_mode", default="")
+_MIDDLEWARE_ADDED = False
 
 
 def _load_json_file(path, default_value):
@@ -27,6 +30,8 @@ def _patch_all_balances_rows(config, attempts_left=30):
             timer.daemon = True
             timer.start()
         return
+
+    _patch_payment_mode_capture(api_module)
 
     def build_all_balance_rows_with_payments(customers):
         rows = []
@@ -108,6 +113,77 @@ def _patch_all_balances_rows(config, attempts_left=30):
         return rows
 
     api_module.build_all_balance_rows = build_all_balance_rows_with_payments
+
+
+def _patch_payment_mode_capture(api_module):
+    global _MIDDLEWARE_ADDED
+
+    if hasattr(api_module, "_payment_mode_patch_applied"):
+        return
+
+    original_add_payment_history_record = api_module.add_payment_history_record
+
+    def add_payment_history_record_with_mode(
+        customer_id,
+        customer_name,
+        area,
+        payment_date,
+        payment_amount,
+        allocation_method,
+        target_date,
+        advance_payment,
+        total_pending,
+    ):
+        payment_mode = _PAYMENT_MODE_CONTEXT.get() or ""
+        payment_history = api_module.load_payment_history()
+
+        history_record = {
+            "customer_id": customer_id,
+            "customer_name": customer_name,
+            "area": area,
+            "payment_date": payment_date,
+            "payment_amount": payment_amount,
+            "payment_mode": payment_mode,
+            "allocation_method": allocation_method,
+            "target_date": target_date,
+            "advance_payment": advance_payment,
+            "total_pending_after_payment": total_pending,
+            "processed_timestamp": api_module.datetime.now().isoformat(timespec="seconds"),
+        }
+
+        payment_history.append(history_record)
+        api_module.save_payment_history(payment_history)
+
+    api_module.add_payment_history_record = add_payment_history_record_with_mode
+    api_module._payment_mode_patch_applied = True
+
+    if _MIDDLEWARE_ADDED:
+        return
+
+    try:
+        @api_module.app.middleware("http")
+        async def capture_payment_mode(request, call_next):
+            token = None
+
+            if request.url.path == "/process-payment" and request.method.upper() == "POST":
+                try:
+                    form_data = await request.form()
+                    payment_mode = form_data.get("payment_mode", "")
+                    token = _PAYMENT_MODE_CONTEXT.set(payment_mode)
+                except Exception:
+                    token = _PAYMENT_MODE_CONTEXT.set("")
+
+            try:
+                response = await call_next(request)
+            finally:
+                if token is not None:
+                    _PAYMENT_MODE_CONTEXT.reset(token)
+
+            return response
+
+        _MIDDLEWARE_ADDED = True
+    except RuntimeError:
+        api_module.add_payment_history_record = original_add_payment_history_record
 
 
 def _schedule_runtime_patches(config):
