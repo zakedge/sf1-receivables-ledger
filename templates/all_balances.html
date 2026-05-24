@@ -1,42 +1,183 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    .transaction-table-wrapper {
+        overflow-x: auto;
+    }
+
+    .transaction-table {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 1100px;
+    }
+
+    .transaction-table th,
+    .transaction-table td {
+        border: 1px solid #cbd5e1;
+        padding: 8px;
+        white-space: nowrap;
+    }
+
+    .transaction-table th {
+        background: #f3f4f6;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .transaction-table .filter-row th {
+        top: 36px;
+        background: #ffffff;
+        z-index: 1;
+    }
+
+    .column-filter {
+        width: 100%;
+        min-width: 95px;
+        padding: 6px;
+        margin: 0;
+        font-size: 13px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        box-sizing: border-box;
+    }
+
+    .amount-cell {
+        text-align: right;
+    }
+
+    .filtered-count {
+        color: #666;
+        font-size: 13px;
+        margin-top: 8px;
+    }
+
+    .clear-filter-button {
+        max-width: 160px;
+        margin-top: 12px;
+    }
+</style>
+
 <div class="card">
     <h1>All Transactions & Balances</h1>
     <p class="subtitle">View all customers, areas, transactions, payments, and balances in one place.</p>
 
     {% if rows %}
-        <table>
-            <tr>
-                <th>Modified Date</th>
-                <th>User</th>
-                <th>Customer ID</th>
-                <th>Customer</th>
-                <th>Area</th>
-                <th>Date</th>
-                <th>Credit</th>
-                <th>Payment</th>
-                <th>Mode</th>
-                <th>Remaining</th>
-            </tr>
+        <button type="button" class="secondary-button clear-filter-button" onclick="clearTransactionFilters()">
+            Clear Filters
+        </button>
 
-            {% for row in rows %}
-                <tr>
-                    <td>{{ row.modified_date }}</td>
-                    <td>{{ row.user }}</td>
-                    <td>{{ row.customer_id }}</td>
-                    <td>{{ row.customer_name }}</td>
-                    <td>{{ row.area }}</td>
-                    <td>{{ row.date }}</td>
-                    <td>{{ row.credit or row.amount }}</td>
-                    <td>{{ row.payment }}</td>
-                    <td>{{ row.payment_mode }}</td>
-                    <td>{{ row.remaining }}</td>
-                </tr>
-            {% endfor %}
-        </table>
+        <p class="filtered-count">
+            Showing <span id="visibleRowCount">{{ rows|length }}</span> of {{ rows|length }} transactions
+        </p>
+
+        <div class="transaction-table-wrapper">
+            <table id="transactionTable" class="transaction-table">
+                <thead>
+                    <tr>
+                        <th>Modified Date</th>
+                        <th>User</th>
+                        <th>Customer ID</th>
+                        <th>Customer</th>
+                        <th>Area</th>
+                        <th>Date</th>
+                        <th>Credit</th>
+                        <th>Payment</th>
+                        <th>Mode</th>
+                        <th>Remaining</th>
+                    </tr>
+
+                    <tr class="filter-row">
+                        <th><input class="column-filter" data-column="0" type="text" placeholder="Filter date" onkeyup="filterTransactions()"></th>
+                        <th><input class="column-filter" data-column="1" type="text" placeholder="Filter user" onkeyup="filterTransactions()"></th>
+                        <th><input class="column-filter" data-column="2" type="text" placeholder="Filter ID" onkeyup="filterTransactions()"></th>
+                        <th><input class="column-filter" data-column="3" type="text" placeholder="Filter customer" onkeyup="filterTransactions()"></th>
+                        <th><input class="column-filter" data-column="4" type="text" placeholder="Filter area" onkeyup="filterTransactions()"></th>
+                        <th><input class="column-filter" data-column="5" type="text" placeholder="Filter date" onkeyup="filterTransactions()"></th>
+                        <th><input class="column-filter" data-column="6" type="text" placeholder="Filter credit" onkeyup="filterTransactions()"></th>
+                        <th><input class="column-filter" data-column="7" type="text" placeholder="Filter payment" onkeyup="filterTransactions()"></th>
+                        <th><input class="column-filter" data-column="8" type="text" placeholder="Filter mode" onkeyup="filterTransactions()"></th>
+                        <th><input class="column-filter" data-column="9" type="text" placeholder="Filter remaining" onkeyup="filterTransactions()"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in rows %}
+                        <tr>
+                            <td>{{ row.modified_date }}</td>
+                            <td>{{ row.user }}</td>
+                            <td>{{ row.customer_id }}</td>
+                            <td>{{ row.customer_name }}</td>
+                            <td>{{ row.area }}</td>
+                            <td>{{ row.date }}</td>
+                            <td class="amount-cell">{{ row.credit or row.amount }}</td>
+                            <td class="amount-cell">{{ row.payment }}</td>
+                            <td>{{ row.payment_mode }}</td>
+                            <td class="amount-cell">{{ row.remaining }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% else %}
         <p class="empty">No balances available.</p>
     {% endif %}
 </div>
+
+<script>
+    function filterTransactions() {
+        var table = document.getElementById("transactionTable");
+        var countElement = document.getElementById("visibleRowCount");
+
+        if (!table) {
+            return;
+        }
+
+        var filters = document.querySelectorAll(".column-filter");
+        var rows = table.querySelectorAll("tbody tr");
+        var visibleCount = 0;
+
+        rows.forEach(function (row) {
+            var shouldShow = true;
+
+            filters.forEach(function (filter) {
+                var columnIndex = parseInt(filter.getAttribute("data-column"), 10);
+                var filterValue = filter.value.trim().toLowerCase();
+
+                if (!filterValue) {
+                    return;
+                }
+
+                var cell = row.cells[columnIndex];
+                var cellValue = cell ? cell.innerText.trim().toLowerCase() : "";
+
+                if (cellValue.indexOf(filterValue) === -1) {
+                    shouldShow = false;
+                }
+            });
+
+            if (shouldShow) {
+                row.style.display = "";
+                visibleCount += 1;
+            } else {
+                row.style.display = "none";
+            }
+        });
+
+        if (countElement) {
+            countElement.innerText = visibleCount;
+        }
+    }
+
+    function clearTransactionFilters() {
+        var filters = document.querySelectorAll(".column-filter");
+
+        filters.forEach(function (filter) {
+            filter.value = "";
+        });
+
+        filterTransactions();
+    }
+</script>
 {% endblock %}
