@@ -29,6 +29,7 @@ def _patch_all_balances_rows(config, attempts_left=30):
         return
 
     _add_process_payment_with_mode_route(api_module)
+    _add_credit_with_modified_route(api_module)
 
     def build_all_balance_rows_with_payments(customers):
         rows = []
@@ -109,6 +110,80 @@ def _patch_all_balances_rows(config, attempts_left=30):
         return rows
 
     api_module.build_all_balance_rows = build_all_balance_rows_with_payments
+
+
+def _add_credit_with_modified_route(api_module):
+    if hasattr(api_module, "_add_credit_with_modified_route_added"):
+        return
+
+    Form = api_module.Form
+
+    @api_module.app.post("/add-credit-with-modified", response_class=api_module.HTMLResponse)
+    def add_credit_with_modified(
+        request: api_module.Request,
+        customer_id: str = Form(...),
+        credit_date: str = Form(...),
+        amount: int = Form(...),
+    ):
+        access_response = api_module.require_page_access(request, "add_payment")
+        if access_response:
+            return access_response
+
+        customers = api_module.load_customers_from_config()
+
+        if customer_id not in customers:
+            context = api_module.build_add_credit_context(
+                customers=customers,
+                selected_customer_id=customer_id,
+                errors=["Selected customer does not exist"],
+            )
+            return api_module.templates.TemplateResponse(request, "add_credit.html", context)
+
+        selected_customer = customers[customer_id]
+        area = selected_customer.get("area", "")
+        errors = []
+
+        try:
+            api_module.datetime.strptime(credit_date, "%Y-%m-%d")
+        except ValueError:
+            errors.append("Credit date must be a valid date")
+
+        if amount <= 0:
+            errors.append("Credit amount must be greater than zero")
+
+        if errors:
+            context = api_module.build_add_credit_context(
+                customers=customers,
+                selected_area=area,
+                selected_customer_id=customer_id,
+                errors=errors,
+            )
+            return api_module.templates.TemplateResponse(request, "add_credit.html", context)
+
+        now_text = api_module.datetime.now().isoformat(timespec="seconds")
+
+        credit_entry = {
+            "date": credit_date,
+            "amount": amount,
+            "remaining": amount,
+            "created_at": now_text,
+            "modified_date": now_text,
+        }
+
+        customers[customer_id].setdefault("credits", []).append(credit_entry)
+        customers[customer_id]["credits"].sort(key=lambda credit: credit.get("date", ""))
+        api_module.save_customers_to_config(customers)
+
+        context = api_module.build_add_credit_context(
+            customers=customers,
+            selected_area=area,
+            selected_customer_id=customer_id,
+            message="Credit entry added successfully",
+            errors=None,
+        )
+        return api_module.templates.TemplateResponse(request, "add_credit.html", context)
+
+    api_module._add_credit_with_modified_route_added = True
 
 
 def _add_process_payment_with_mode_route(api_module):
@@ -209,6 +284,10 @@ def _add_process_payment_with_mode_route(api_module):
 
         updated_credits = allocation_result["updated_credits"]
         advance_payment = allocation_result["advance_payment"]
+        now_text = api_module.datetime.now().isoformat(timespec="seconds")
+
+        for credit in updated_credits:
+            credit["modified_date"] = now_text
 
         customers[customer_id]["credits"] = updated_credits
         api_module.save_customers_to_config(customers)
@@ -232,7 +311,7 @@ def _add_process_payment_with_mode_route(api_module):
                 "target_date": target_date,
                 "advance_payment": advance_payment,
                 "total_pending_after_payment": total_pending,
-                "processed_timestamp": api_module.datetime.now().isoformat(timespec="seconds"),
+                "processed_timestamp": now_text,
             }
         )
         api_module.save_payment_history(payment_history)
