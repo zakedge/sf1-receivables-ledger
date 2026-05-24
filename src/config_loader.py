@@ -39,27 +39,17 @@ def _patch_all_balances_rows(config, attempts_left=30):
             area = customer.get("area", "")
             credits = customer.get("credits", [])
 
-            if not credits:
-                rows.append(
-                    {
-                        "customer_id": customer_id,
-                        "customer_name": customer_name,
-                        "area": area,
-                        "date": "-",
-                        "modified_date": "",
-                        "user": "",
-                        "amount": 0,
-                        "credit": 0,
-                        "payment": "",
-                        "payment_mode": "",
-                        "remaining": 0,
-                    }
-                )
-
             for credit in credits:
+                if not credit.get("created_at"):
+                    continue
+
                 credit_amount = credit.get("amount", 0)
-                modified_date = credit.get("modified_date") or credit.get("created_at") or credit.get("date", "")
-                entry_user = credit.get("created_by") or credit.get("modified_by") or ""
+                modified_date = credit.get("created_at") or credit.get("modified_date") or credit.get("date", "")
+                entry_user = credit.get("created_by") or ""
+                total_after_credit = credit.get("total_pending_after_credit")
+
+                if total_after_credit is None:
+                    total_after_credit = api_module.calculate_total_pending(customer.get("credits", []))
 
                 rows.append(
                     {
@@ -73,7 +63,7 @@ def _patch_all_balances_rows(config, attempts_left=30):
                         "credit": credit_amount,
                         "payment": "",
                         "payment_mode": "",
-                        "remaining": credit.get("remaining", 0),
+                        "remaining": total_after_credit,
                     }
                 )
 
@@ -166,6 +156,8 @@ def _add_credit_with_modified_route(api_module):
             return api_module.templates.TemplateResponse(request, "add_credit.html", context)
 
         now_text = api_module.datetime.now().isoformat(timespec="seconds")
+        existing_credits = customers[customer_id].setdefault("credits", [])
+        total_pending_after_credit = api_module.calculate_total_pending(existing_credits) + amount
 
         credit_entry = {
             "date": credit_date,
@@ -175,9 +167,10 @@ def _add_credit_with_modified_route(api_module):
             "modified_date": now_text,
             "created_by": entry_user,
             "modified_by": entry_user,
+            "total_pending_after_credit": total_pending_after_credit,
         }
 
-        customers[customer_id].setdefault("credits", []).append(credit_entry)
+        existing_credits.append(credit_entry)
         customers[customer_id]["credits"].sort(key=lambda credit: credit.get("date", ""))
         api_module.save_customers_to_config(customers)
 
@@ -293,10 +286,6 @@ def _add_process_payment_with_mode_route(api_module):
         updated_credits = allocation_result["updated_credits"]
         advance_payment = allocation_result["advance_payment"]
         now_text = api_module.datetime.now().isoformat(timespec="seconds")
-
-        for credit in updated_credits:
-            credit["modified_date"] = now_text
-            credit["modified_by"] = entry_user
 
         customers[customer_id]["credits"] = updated_credits
         api_module.save_customers_to_config(customers)
