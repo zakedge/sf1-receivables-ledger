@@ -47,6 +47,7 @@ def _patch_all_balances_rows(config, attempts_left=30):
                         "area": area,
                         "date": "-",
                         "modified_date": "",
+                        "user": "",
                         "amount": 0,
                         "credit": 0,
                         "payment": "",
@@ -58,6 +59,7 @@ def _patch_all_balances_rows(config, attempts_left=30):
             for credit in credits:
                 credit_amount = credit.get("amount", 0)
                 modified_date = credit.get("modified_date") or credit.get("created_at") or credit.get("date", "")
+                entry_user = credit.get("created_by") or credit.get("modified_by") or ""
 
                 rows.append(
                     {
@@ -66,6 +68,7 @@ def _patch_all_balances_rows(config, attempts_left=30):
                         "area": area,
                         "date": credit.get("date", ""),
                         "modified_date": modified_date,
+                        "user": entry_user,
                         "amount": credit_amount,
                         "credit": credit_amount,
                         "payment": "",
@@ -92,6 +95,7 @@ def _patch_all_balances_rows(config, attempts_left=30):
                     "area": payment.get("area", ""),
                     "date": payment.get("payment_date", ""),
                     "modified_date": modified_date,
+                    "user": payment.get("created_by", ""),
                     "amount": "",
                     "credit": "",
                     "payment": payment.get("payment_amount", 0),
@@ -130,6 +134,7 @@ def _add_credit_with_modified_route(api_module):
             return access_response
 
         customers = api_module.load_customers_from_config()
+        entry_user = request.session.get("username", "")
 
         if customer_id not in customers:
             context = api_module.build_add_credit_context(
@@ -168,6 +173,8 @@ def _add_credit_with_modified_route(api_module):
             "remaining": amount,
             "created_at": now_text,
             "modified_date": now_text,
+            "created_by": entry_user,
+            "modified_by": entry_user,
         }
 
         customers[customer_id].setdefault("credits", []).append(credit_entry)
@@ -208,6 +215,7 @@ def _add_process_payment_with_mode_route(api_module):
 
         allowed_payment_modes = ["UPI", "Cash", "Bank Transfer"]
         customers = api_module.load_customers_from_config()
+        entry_user = request.session.get("username", "")
 
         if customer_id not in customers:
             context = api_module.build_payment_page_context(
@@ -288,6 +296,7 @@ def _add_process_payment_with_mode_route(api_module):
 
         for credit in updated_credits:
             credit["modified_date"] = now_text
+            credit["modified_by"] = entry_user
 
         customers[customer_id]["credits"] = updated_credits
         api_module.save_customers_to_config(customers)
@@ -312,6 +321,7 @@ def _add_process_payment_with_mode_route(api_module):
                 "advance_payment": advance_payment,
                 "total_pending_after_payment": total_pending,
                 "processed_timestamp": now_text,
+                "created_by": entry_user,
             }
         )
         api_module.save_payment_history(payment_history)
@@ -330,6 +340,7 @@ def _add_process_payment_with_mode_route(api_module):
             "advance_payment": advance_payment,
             "total_pending": total_pending,
             "previous_total_pending": current_total_pending,
+            "created_by": entry_user,
             "aging": aging_result,
         }
 
